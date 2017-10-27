@@ -5,13 +5,6 @@ html {
 	text-align: justify;
 }
 
-/*Style the header*/
-.header {
-	font-size: 3em;
-	text-align: center;
-	padding: 4rem;
-}
-
 /*Style the top navigation bar*/
 .topnav {
 	overflow: hidden;
@@ -36,7 +29,7 @@ html {
 	max-width: 40%;
 	max-height: 40%;
 	display: block;
-	margin: 0 auto;
+	margin: 3rem auto;
 }
 
 /*center main headings and increase size*/
