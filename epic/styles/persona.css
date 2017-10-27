@@ -6,7 +6,7 @@ html {
 }
 
 /*resize image for page*/
-#george {
+.persona {
 	max-width: 40%;
 	max-height: 40%;
 	display: block;
@@ -25,7 +25,7 @@ h2 {
 }
 
 /*center main info about George*/
-#about {
+.about {
 	text-align: center;
 }
 
