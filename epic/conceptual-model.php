@@ -7,6 +7,14 @@
 	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet"/>
 </head>
 <body>
+	<header>
+		<nav class="topnav">
+			<a href="george.php">Persona 1</a>
+			<a href="venus.php">Persona 2</a>
+			<a href="use-cases.php">Use Cases</a>
+			<a href="conceptual-model.php">Conceptual Model</a>
+		</nav>
+	</header>
 	<main>
 	<h2>Conceptual Model</h2>
 		<h1>Purpose, Audience and Goal</h1>
