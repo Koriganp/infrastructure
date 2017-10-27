@@ -32,9 +32,9 @@
 				<li>Wishes medium/application had a 'gauge' feature to determine an incident's urgency.</li>
 				<li>Would like an graphical chart that shows percentages of what categories are least/most reported.</li>
 			</ul>
+			<h3>User Story</h3>
+			<p><strong>User Story:</strong> Venus believes that the current medium/web application could be improved
+				so that she can easily manage incident reports.</p>
 		</div>
-		<h3>User Story</h3>
-		<p><strong>User Story:</strong> Venus believes that the current medium/web application could be improved
-			so that she can easily manage incident reports.</p>
 	</body>
 </html>
