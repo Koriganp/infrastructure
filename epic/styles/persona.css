@@ -8,15 +8,15 @@ html {
 /*Style the header*/
 .header {
 	font-size: 3em;
-	background-color: #ffac8e;
 	text-align: center;
-	padding: 20px;
+	padding: 4rem;
 }
 
 /*Style the top navigation bar*/
 .topnav {
 	overflow: hidden;
 	background-color: #333;
+	padding: 3.0rem 0.0rem;
 }
 
 .topnav a {
@@ -24,7 +24,7 @@ html {
 	display: block;
 	color: #f2f2f2;
 	text-align: center;
-	padding: 14px 16px;
+	padding: 2rem 1rem;
 	text-decoration: none;
 }
 
