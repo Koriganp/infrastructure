@@ -20,8 +20,8 @@
 		<img src = "images/issa-rae-edit.jpg" width="400" height="400" alt = "Issa Rae">
 		<h2 class = "about">Venus Bradley</h2>
 		<p>Venus, 37, is the Albuquerque Infrastructure Manager who is responsible for and manages all incoming 311
-			incident reports by local residents so that she can forward incidents to respective departments that
-			resolve and handle specific incidents by their categories. She is detail-oriented and attentive while off/on
+			incident reports by local residents so that she can forward specific incidents to their respective departments
+			that resolve and handle incidents by assigned category. She is detail-oriented and attentive while off/on
 			the job.</p>
 		<h2>User Tech</h2>
 		<p class = "story"><strong>Technology:</strong> Dell Desktop, iPad tablet, Dell Laptop, LG</p>
