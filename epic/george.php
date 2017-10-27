@@ -8,8 +8,16 @@
 		<title>Reporting User Persona</title>
 	</head>
 	<body>
+		<header>
+			<h1 class="header">Persona</h1>
+			<nav class="topnav">
+				<a href="george.php">Persona 1</a>
+				<a href="venus.php">Persona 2</a>
+				<a href="use-cases.php">Use Cases</a>
+				<a href="conceptual-model.php">Conceptual Model</a>
+			</nav>
+		</header>
 		<main>
-			<h1>Persona</h1>
 			<img class="persona" src="images/george.jpg" alt="Image of George Smith"/>
 			<h2 class="about">George Smith</h2>
 			<p>George is 28 single and focused on his career as a marketing director. He has a long commute to his office downtown because he got a condo near the edge of town where the price of homes is cheaper. He likes to go out on the weekends and spends his free time working out, reading, watching movies, and surfing the web.</p>
