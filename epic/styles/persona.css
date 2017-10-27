@@ -5,6 +5,10 @@ html {
 	text-align: justify;
 }
 
+body {
+	margin: 0em;
+}
+
 /*Style the top navigation bar*/
 .topnav {
 	overflow: hidden;
