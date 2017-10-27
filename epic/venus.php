@@ -5,10 +5,17 @@
 		<meta name="description" content="second persona for capstone"/>
 		<link href="styles/persona.css" rel="stylesheet" type="text/css"/>
 		<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet"/>
-		<meta charset="utf-8"/>
 		<title>Infrastructure Manager User Persona</title>
 	</head>
 	<body>
+		<header>
+			<nav class="topnav">
+				<a href="george.php">Persona 1</a>
+				<a href="venus.php">Persona 2</a>
+				<a href="use-cases.php">Use Cases</a>
+				<a href="conceptual-model.php">Conceptual Model</a>
+			</nav>
+		</header>
 		<h1 class = "header">Persona 2</h1>
 		<img src = "images/issa-rae-edit.jpg" width="400" height="400" alt = "Issa Rae">
 		<h2 class = "about">Venus Bradley</h2>
