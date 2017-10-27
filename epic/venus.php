@@ -16,6 +16,7 @@
 				<a href="conceptual-model.php">Conceptual Model</a>
 			</nav>
 		</header>
+		<main>
 		<h1>Persona</h1>
 		<img class="persona" src="images/issa-rae-edit.jpg" width="400" height="400" alt="Issa Rae">
 			<div class="centerList">
@@ -32,5 +33,6 @@
 			</div>
 		<h2>User Story</h2>
 		<p><strong>User Story:</strong></p>
+		</main>
 	</body>
 </html>
