@@ -14,7 +14,7 @@
 			<br>
 			<li><strong>Goal:</strong>This project will create a platform for Albuquerque residents to submit reports of incidents around Albuquerque to city officials and utility workers.</strong></li>
 		</ul>
-		<h3>Persona</h3>
+		<h1>Persona</h1>
 		<img src ="images/issa-rae-edit.jpg" width="400" height="400" alt="Issa Rae">
 		<ul>
 			<li><strong>Name:</strong> Venus Bradley</li>
