@@ -21,8 +21,8 @@
 			<div class="centerList">
 				<ul>
 					<li>Wasting time on hold</li>
-					<li>Lack of imagination</li>
-					<li>Inability to communicate</li>
+					<li>Messed up sidewalks and roads</li>
+					<li>Slow response time</li>
 				</ul>
 				<h2>User Story</h2>
 				<p class="story">George ran over a pothole in the road and wants it fixed.</p>
