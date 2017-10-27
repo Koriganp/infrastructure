@@ -8,6 +8,14 @@
 		<title>Maintenance User Persona</title>
 	</head>
 	<body>
+		<header>
+			<nav class="topnav">
+				<a href="george.php">Persona 1</a>
+				<a href="venus.php">Persona 2</a>
+				<a href="use-cases.php">Use Cases</a>
+				<a href="conceptual-model.php">Conceptual Model</a>
+			</nav>
+		</header>
 		<h1>Persona</h1>
 		<img class="persona" src="images/issa-rae-edit.jpg" width="400" height="400" alt="Issa Rae">
 			<div class="centerList">
