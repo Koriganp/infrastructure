@@ -26,12 +26,13 @@
 		<h2>User Tech</h2>
 		<p class = "story"><strong>Technology:</strong> Dell Desktop, iPad tablet, Dell Laptop, LG</p>
 		<h2>Frustrations</h2>
-		<div class = "centerList"></div>
-		<ul>
-			<li>Unsorted Incident Reports are overwhelming</li>
-			<li>Wishes medium/application had a 'gauge' feature to determine an incident's urgency.</li>
-			<li>Would like an graphical chart that shows percentages of what categories are least/most reported.</li>
-		</ul>
+		<div class = "centerList">
+			<ul>
+				<li>Unsorted Incident Reports are overwhelming</li>
+				<li>Wishes medium/application had a 'gauge' feature to determine an incident's urgency.</li>
+				<li>Would like an graphical chart that shows percentages of what categories are least/most reported.</li>
+			</ul>
+		</div>
 		<h3>User Story</h3>
 		<p><strong>User Story:</strong> Venus believes that the current medium/web application could be improved
 			so that she can easily manage incident reports.</p>
