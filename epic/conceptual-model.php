@@ -3,7 +3,7 @@
 <head>
 	<title>Conceptual Model</title>
 	<meta charset="UTF-8">
-	<link href="styles/george.css" rel="stylesheet" type="text/css"/>
+	<link href="styles/persona.css" rel="stylesheet" type="text/css"/>
 	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet"/>
 </head>
 <body>
