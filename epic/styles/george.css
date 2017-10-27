@@ -1,0 +1,50 @@
+/*Change font for page and make universal for devices*/
+html {
+	font-size: 1em;
+	font-family: 'Raleway', sans-serif;
+	text-align: justify;
+}
+
+/*resize image for page*/
+#george {
+	max-width: 40%;
+	max-height: 40%;
+	display: block;
+	margin: 0 auto;
+}
+
+/*center main headings and increase size*/
+h1 {
+	font-size: 3em;
+	text-align: center;
+}
+
+h2 {
+	font-size: 2em;
+	text-align: center;
+}
+
+/*center main info about George*/
+#about {
+	text-align: center;
+}
+
+p {
+	padding: 15px 100px;
+	text-align: justify;
+}
+
+/*Added <div> tag to allow centering of child elements*/
+.centerList {
+	text-align: center;
+}
+
+/*Centered list*/
+ul {
+	display: inline-block;
+	text-align: left;
+}
+
+.story {
+	text-align: center;
+}
