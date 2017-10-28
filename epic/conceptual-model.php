@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en-US">
 	<head>
-		<title>Conceptual Model</title>
-		<meta charset="UTF-8">
+		<meta charset="utf-8">
 		<link href="styles/persona.css" rel="stylesheet" type="text/css"/>
 		<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet"/>
+		<title>Conceptual Model</title>
 	</head>
 	<body>
 		<header>
@@ -16,14 +16,11 @@
 			</nav>
 		</header>
 		<main>
-		<h2>Conceptual Model</h2>
-			<h1>Purpose, Audience and Goal</h1>
-			<div class="centerList">
-				<p><strong>Purpose:</strong>This project aims to serve as a medium where Albuquerque residents can report infrastructure incidents
-						to city officials and utility workers so that they can resolve them.</p>
-				<p><strong>Audience:</strong>The audience of this project will be utility workers, city officials and Albuquerque residents.</p>
-				<p><strong>Goal:</strong>This project will create a platform for Albuquerque residents to submit reports of incidents around Albuquerque to city officials and utility workers.</strong></p>
-			</div>
+		<h1>Conceptual Model</h1>
+			<h2>Purpose, Audience and Goal</h2>
+				<p><strong>Purpose: </strong>This project aims to serve as a medium where Albuquerque residents can report infrastructure incidents to city officials and utility workers so that they can resolve them.</p>
+				<p><strong>Audience: </strong>The audience of this project will be utility workers, city officials and Albuquerque residents.</p>
+				<p><strong>Goal: </strong>This project will create a platform for Albuquerque residents to submit reports of incidents around Albuquerque to city officials and utility workers.</strong></p>
 			<h2>Profile</h2>
 			<div class="centerList">
 				<ul>
