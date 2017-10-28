@@ -18,7 +18,7 @@
 		</header>
 		<main>
 			<h1>Persona 2</h1>
-			<img class = "persona" src = "images/issa-rae-edit.jpg" alt = "Issa Rae">
+			<img class = "persona" src = "images/issa-rae-edit.jpg" alt = "Image of Venus Bradley">
 			<h2 class = "about">Venus Bradley</h2>
 			<p>Venus, 37, is the Albuquerque Infrastructure Manager who is responsible managing all incoming 311
 				reports by local residents so that she can forward specific incidents to their respective departments
@@ -33,10 +33,10 @@
 					<li>Wishes medium/application had a 'gauge' feature to determine an incident's urgency.</li>
 					<li>Would like an graphical chart that shows percentages of what categories are least/most reported.</li>
 				</ul>
-				<h3>User Story</h3>
-				<p><strong>User Story:</strong> Venus believes that the current medium/web application could be improved
-					so that she can easily manage incident reports.</p>
 			</div>
+			<h2>User Story</h2>
+				<p class="story">Venus believes that the current medium/web application could be improved
+					so that she can easily manage incident reports.</p>
 		</main>
 	</body>
 </html>
