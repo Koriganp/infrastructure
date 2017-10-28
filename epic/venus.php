@@ -17,7 +17,7 @@
 			</nav>
 		</header>
 		<h1 class = "header">Persona 2</h1>
-		<img src = "images/issa-rae-edit.jpg" width="400" height="400" alt = "Issa Rae">
+		<img class = "persona" src = "images/issa-rae-edit.jpg" width="400" height="400" alt = "Issa Rae">
 		<h2 class = "about">Venus Bradley</h2>
 		<p>Venus, 37, is the Albuquerque Infrastructure Manager who is responsible for and manages all incoming 311
 			incident reports by local residents so that she can forward specific incidents to their respective departments
