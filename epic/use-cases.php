@@ -17,7 +17,8 @@
 			</nav>
 		</header>
 		<main>
-
+			<h1>Use Cases</h1>
+			<p></p>
 		</main>
 	</body>
 </html>
