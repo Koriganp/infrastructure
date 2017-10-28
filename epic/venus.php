@@ -25,7 +25,7 @@
 				that resolve and handle incidents by assigned category. She is detail-oriented and attentive while off/on
 				the job.</p>
 			<h2>User Tech</h2>
-			<p class = "story"><strong>Technology:</strong> Dell Desktop, iPad tablet, Dell Laptop, LG</p>
+			<p class = "story">Venus uses a Dell Desktop, iPad tablet, Dell Laptop, and an LG smartphone.</p>
 			<h2>Frustrations</h2>
 			<div class = "centerList">
 				<ul>
