@@ -63,7 +63,12 @@ p {
 }
 
 /*Centered list*/
-ul, ol {
+ul {
+	display: inline-block;
+	text-align: left;
+}
+
+ol {
 	display: inline-block;
 	text-align: left;
 }
