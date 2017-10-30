@@ -48,12 +48,14 @@
 				</ul>
 			</div>
 			<h2>Image</h2>
-			<ul>
-				<li>imageId(primary key)</li>
-				<li>imageProfileId(foreign key)</li>
-				<li>imageReportId(foreign key)</li>
-				<li>imageLocation</li>
-			</ul>
+			<div class="centerList">
+				<ul>
+					<li>imageId(primary key)</li>
+					<li>imageProfileId(foreign key)</li>
+					<li>imageReportId(foreign key)</li>
+					<li>imageLocation</li>
+				</ul>
+			</div>
 			<h2>Comments</h2>
 				<div class="centerList">
 					<ul>
