@@ -22,26 +22,33 @@
 			<div class="centerList">
 				<ul>
 					<li>profileId(primary key)</li>
-					<li>profileUserName</li>
+					<li>profileActivationToken</li>
 					<li>profileEmail</li>
 					<li>profileHash</li>
 					<li>profileSalt</li>
-					<li>profileAdmin</li>
+					<li>profileUserName</li>
+				</ul>
+			</div>
+			<h2>Category</h2>
+			<div class="centerList">
+				<ul>
+					<li>categoryId (primary key)</li>
+					<li>categoryName</li>
 				</ul>
 			</div>
 			<h2>Report</h2>
 			<div class="centerList">
 				<ul>
 					<li>reportId(primary key)</li>
-					<li>reportIpAddress</li>
-					<li>reportUserAgent</li>
+					<li>reportCategoryId (foreign key)</li>
 					<li>reportContent</li>
-					<li>reportCategory</li>
-					<li>reportStatus</li>
-					<li>reportUrgency</li>
+					<li>reportDate</li>
+					<li>reportIpAddress</li>
 					<li>reportLat</li>
 					<li>reportLong</li>
-					<li>reportDate</li>
+					<li>reportStatus</li>
+					<li>reportUrgency</li>
+					<li>reportUserAgent</li>
 				</ul>
 			</div>
 			<h2>Image</h2>
