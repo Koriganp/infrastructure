@@ -18,7 +18,11 @@
 			</nav>
 		</header>
 		<main>
-			<h1>This is EPIC!!!</h1>
+			<h1>Executive Summary</h1>
+			<h2>Purpose, Audience and Goal</h2>
+			<p><strong>Purpose: </strong>This project aims to serve as a medium where Albuquerque residents can report infrastructure incidents to city officials and utility workers so that they can resolve them.</p>
+			<p><strong>Audience: </strong>The audience of this project will be utility workers, city officials and Albuquerque residents.</p>
+			<p><strong>Goal: </strong>This project will create a platform for Albuquerque residents to submit reports of incidents around Albuquerque to city officials and utility workers.</strong></p>
 			<p></p>
 		</main>
 	</body>
