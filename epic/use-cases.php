@@ -18,6 +18,17 @@
 		</header>
 		<main>
 			<h1>Use Cases</h1>
+			<h2>Interaction Flow</h2>
+			<div class="centerList">
+				<ol>
+					<li>George accesses site</li>
+					<li>George creates account and logs in</li>
+					<li>Site redirects to user page</li>
+					<li>George clicks form field to create new report</li>
+					<li>Site opens new report form field</li>
+					<li>George creates new report</li>
+				</ol>
+			</div>
 			<p></p>
 		</main>
 	</body>
