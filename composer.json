@@ -1,5 +1,9 @@
 {
   "require": {
     "ramsey/uuid": "@stable"
+  },
+
+  "require-dev": {
+    "phpunit/phpunit": "^6.4"
   }
 }
