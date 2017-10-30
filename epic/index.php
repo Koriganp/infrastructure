@@ -19,9 +19,7 @@
 		</header>
 		<main>
 			<h1>Executive Summary</h1>
-			<h2>Purpose, Audience and Goal</h2>
-			<p>This project aims to serve as a medium where Albuquerque residents can report infrastructure incidents to city officials and utility workers so that they can resolve them. The audience of this project will be utility workers, city officials and Albuquerque residents. This project will create a platform for Albuquerque residents to submit reports of incidents around Albuquerque to city officials and utility workers.</p>
-			<p></p>
+			<p>This project aims to serve as a medium where Albuquerque residents can report infrastructure incidents to city officials. City officials will then relay to utility workers the report so that the issue can be resolved in a timely manner. Users of this project will be city officials and Albuquerque residents.</p>
 		</main>
 	</body>
 </html>
