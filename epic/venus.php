@@ -31,7 +31,9 @@
 				<li>Would like an graphical chart that shows percentages of what categories are least/most reported.</li>
 			</ul>
 			<h2>User Story</h2>
-			<p>Venus believes that the current medium/web application could be improved
+			<p class = "story">Venus logs into admin dashboard to retrieve and view incident reports.</p>
+			<h2>User Goal</h2>
+			<p class = "story">Venus believes that the current medium/web application could be improved
 				so that she can easily manage incident reports.</p>
 		</div>
 	</body>
