@@ -28,7 +28,10 @@
 					<li>George clicks form field to create new report</li>
 					<li>Site opens new report form field</li>
 					<li>George selects from drop down the category report would be under</li>
-					<li>George creates and submits new report</li>
+					<li>George adds location of incident/report</li>
+					<li>George uploads photos of issue reported</li>
+					<li>George fills out report content</li>
+					<li>George submits new report</li>
 					<li>Site sends the report to admin dashboard under specified category</li>
 				</ol>
 			</div>
