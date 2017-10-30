@@ -6,7 +6,7 @@ html {
 }
 
 body {
-	margin: 0em;
+	margin: 0;
 }
 
 /*Style the top navigation bar*/
@@ -47,7 +47,7 @@ h2 {
 	text-align: center;
 }
 
-/*center main info about George*/
+/*center main info about Persona*/
 .about {
 	text-align: center;
 }
@@ -63,7 +63,7 @@ p {
 }
 
 /*Centered list*/
-ul {
+ul, ol {
 	display: inline-block;
 	text-align: left;
 }
