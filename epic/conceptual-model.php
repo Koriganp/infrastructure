@@ -47,14 +47,14 @@
 			</div>
 			<h2>Comments</h2>
 				<div class="centerList">
-				<ul>
-					<li>commentsId(primary key)</li>
-					<li>commentsProfileId(foreign key)</li>
-					<li>commentsReportId(foreign key)</li>
-					<li>commentsContent</li>
-					<li>commentsDate</li>
-				</ul>
-			</div>
+					<ul>
+						<li>commentsId(primary key)</li>
+						<li>commentsProfileId(foreign key)</li>
+						<li>commentsReportId(foreign key)</li>
+						<li>commentsContent</li>
+						<li>commentsDate</li>
+					</ul>
+				</div>
 		</main>
 	</body>
 </html>
