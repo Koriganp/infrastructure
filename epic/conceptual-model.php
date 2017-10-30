@@ -30,7 +30,6 @@
 					<li>profileEmail</li>
 					<li>profileHash</li>
 					<li>profileSalt</li>
-					<li>profilePhone</li>
 					<li>profileAdmin</li>
 				</ul>
 			</div>
@@ -38,7 +37,8 @@
 			<div class="centerList">
 				<ul>
 					<li>reportId(primary key)</li>
-					<li>reportProfileId(foreign key)</li>
+					<li>reportIpAddress</li>
+					<li>reportUserAgent</li>
 					<li>reportContent</li>
 					<li>reportCategory</li>
 					<li>reportStatus</li>
