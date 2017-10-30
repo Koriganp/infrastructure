@@ -54,7 +54,8 @@
 					<li>imageId(primary key)</li>
 					<li>imageProfileId(foreign key)</li>
 					<li>imageReportId(foreign key)</li>
-					<li>imageLocation</li>
+					<li>imageLat</li>
+					<li>imageLong</li>
 				</ul>
 			</div>
 			<h2>Comments</h2>
