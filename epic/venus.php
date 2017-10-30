@@ -21,7 +21,6 @@
 		<img class="persona" src="images/issa-rae-edit.jpg" alt = "Image of Venus Bradley">
 		<h2 class="about">Venus Bradley</h2>
 		<p>Venus, 37, is the Albuquerque Infrastructure Manager who is responsible managing all incoming 311 reports by local residents. She forwards specific incidents to the respective department that resolves and handles an incident by its assigned category. She is detail-oriented and attentive while off/on the job.</p>
-		<p>Mrs. Bradley is a single mom of two teenage boys. She loves that her job doesn't make her work late because she really enjoys spending time with her two sons, who are both on the varsity basketball team. She enjoys going to their games and is very proud of how their relationship has improved since they have been playing on the same team.</p>
 		<h2>User Tech</h2>
 		<p class = "story">Venus uses a Dell Desktop at work and has an iPad, Dell Laptop, and an LG smartphone.</p>
 		<h2>Frustrations</h2>
