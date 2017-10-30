@@ -10,6 +10,7 @@
 	<body>
 		<header>
 			<nav class="topnav">
+				<a href="index.php">Home</a>
 				<a href="george.php">Persona 1</a>
 				<a href="venus.php">Persona 2</a>
 				<a href="use-cases.php">Use Cases</a>
