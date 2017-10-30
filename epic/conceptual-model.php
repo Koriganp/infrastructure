@@ -26,6 +26,7 @@
 			<div class="centerList">
 				<ul>
 					<li>profileId(primary key)</li>
+					<li>profileUserName</li>
 					<li>profileEmail</li>
 					<li>profileHash</li>
 					<li>profileSalt</li>
