@@ -35,7 +35,7 @@
 					<li>Site sends the report to admin dashboard under specified category</li>
 				</ol>
 			</div>
-			<h2>Venus' Interaction Flow</h2>
+			<h2>Venus's Interaction Flow</h2>
 			<div class="centerList">
 				<ol>
 					<li>Venus accesses site</li>
