@@ -43,7 +43,8 @@
 					<li>reportCategory</li>
 					<li>reportStatus</li>
 					<li>reportUrgency</li>
-					<li>reportLocation</li>
+					<li>reportLat</li>
+					<li>reportLong</li>
 					<li>reportDate</li>
 				</ul>
 			</div>
