@@ -52,8 +52,8 @@
 			<div class="centerList">
 				<ul>
 					<li>imageId(primary key)</li>
-					<li>imageProfileId(foreign key)</li>
 					<li>imageReportId(foreign key)</li>
+					<li>imageCloudinaryId</li>
 					<li>imageLat</li>
 					<li>imageLong</li>
 				</ul>
