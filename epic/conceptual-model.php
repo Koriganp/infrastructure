@@ -39,12 +39,20 @@
 					<li>reportId(primary key)</li>
 					<li>reportProfileId(foreign key)</li>
 					<li>reportContent</li>
-					<li>reportDate</li>
+					<li>reportCategory</li>
 					<li>reportStatus</li>
 					<li>reportUrgency</li>
 					<li>reportLocation</li>
+					<li>reportDate</li>
 				</ul>
 			</div>
+			<h2>Image</h2>
+			<ul>
+				<li>imageId(primary key)</li>
+				<li>imageProfileId(foreign key)</li>
+				<li>imageReportId(foreign key)</li>
+				<li>imageLocation</li>
+			</ul>
 			<h2>Comments</h2>
 				<div class="centerList">
 					<ul>
