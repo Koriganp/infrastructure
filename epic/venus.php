@@ -20,7 +20,7 @@
 		<h1>Persona 2</h1>
 		<img class="persona" src="images/issa-rae-edit.jpg" alt = "Image of Venus Bradley">
 		<h2 class="about">Venus Bradley</h2>
-		<p>Venus, 37, is the Albuquerque Infrastructure Manager who is responsible for managing all incoming 311 reports by local residents so that she can forward specific incidents to their respective departmentsthat resolve and handle incidents by assigned category. She is detail-oriented and attentive while off/on the job. She has a Masters' in Civil Engineering and applies her knowledge to further the betterment of the city's infrastructure.</p>
+		<p>Venus, 37, is the Albuquerque Infrastructure Manager who is responsible for managing all incoming 311 reports by local residents so that she can forward specific incidents to their respective departments that resolve and handle incidents by assigned category. She is detail-oriented and attentive while off/on the job. She has a Masters' in Civil Engineering and applies her knowledge to further the betterment of the city's infrastructure.</p>
 		<h2>User Tech</h2>
 		<p class = "story">Venus uses a Dell Desktop at work and has an iPad, Dell Laptop, and an LG smartphone.</p>
 		<h2>Frustrations</h2>
