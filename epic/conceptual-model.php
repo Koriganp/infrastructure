@@ -42,7 +42,7 @@
 					<li>reportId(primary key)</li>
 					<li>reportCategoryId (foreign key)</li>
 					<li>reportContent</li>
-					<li>reportDate</li>
+					<li>reportDateTime</li>
 					<li>reportIpAddress</li>
 					<li>reportLat</li>
 					<li>reportLong</li>
@@ -61,14 +61,14 @@
 					<li>imageLong</li>
 				</ul>
 			</div>
-			<h2>Comments</h2>
+			<h2>Comment</h2>
 				<div class="centerList">
 					<ul>
-						<li>commentsId(primary key)</li>
-						<li>commentsProfileId(foreign key)</li>
-						<li>commentsReportId(foreign key)</li>
-						<li>commentsContent</li>
-						<li>commentsDate</li>
+						<li>commentId(primary key)</li>
+						<li>commentProfileId(foreign key)</li>
+						<li>commentReportId(foreign key)</li>
+						<li>commentContent</li>
+						<li>commentDateTime</li>
 					</ul>
 				</div>
 		</main>
