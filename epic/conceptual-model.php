@@ -39,6 +39,9 @@
 					<li>reportProfileId(foreign key)</li>
 					<li>reportContent</li>
 					<li>reportDate</li>
+					<li>reportStatus</li>
+					<li>reportUrgency</li>
+					<li>reportLocation</li>
 				</ul>
 			</div>
 			<h2>Comments</h2>
