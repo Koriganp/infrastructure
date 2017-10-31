@@ -7,7 +7,7 @@ namespace Edu\Cnm\Infrastructure;
  * convert a string representation to a DateTime object or throw an exception.
  *
  * @author Dylan McDonald <dmcdonald21@cnm.edu>
- * @version 4.0.1
+ * @version 7.1
  **/
 trait ValidateDate {
 	/**
