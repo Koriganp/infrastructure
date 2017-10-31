@@ -250,5 +250,6 @@ class Category implements \JsonSerializable {
 	public function jsonSerialize() {
 		$fields = get_object_vars($this);
 		$fields["categoryId"] = $this->categoryId->toString();
+		return($fields);
 	}
 }
