@@ -66,28 +66,41 @@ class Comment implements \JsonSerializable {
 				$this->setCommentReportId($newCommentReportId);
 				$this->setCommentContent($newCommentContent);
 				$this->setCommentDate($newCommentDate);
-    } catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-        $exceptionType = get_class($exception);
-        throw(new $exceptionType($exception->getMessage(), 0, $exception));
+       } catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+           $exceptionType = get_class($exception);
+           throw(new $exceptionType($exception->getMessage(), 0, $exception));
+       }
     }
-}
 
-/**
- * accessor method for commentId
- *
- * @return Uuid of commentId
- **/
-public function getCommentId() : Uuid {
-    return $this->commentId;
-}
-
-public function setCommentId() : Uuid {
-    try {
-        $uuid = self::validateUuid($newCommentId);
-    } catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-        $exceptionType = get_class($exception);
-        throw(new $exceptionType($exception->getMessage(), 0, $exception));
+    /**
+     * accessor method for commentId
+     *
+     * @return Uuid of commentId
+     **/
+    public function getCommentId() : Uuid {
+        return $this->commentId;
     }
-    $this->commentId = $uuid;
-}
+
+    /**
+     * @param string $newCommentId new value of commentId
+     * @throws \InvalidArgumentException if data types are invalid
+     * @throws \RangeException if string values are too long
+     * @throws \TypeError if data types are invalid
+     * @throws \Exception for any other exception
+     **/
+    public function setCommentId() : Uuid {
+        try {
+            $uuid = self::validateUuid($newCommentId);
+        } catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+            $exceptionType = get_class($exception);
+            throw(new $exceptionType($exception->getMessage(), 0, $exception));
+        }
+        $this->commentId = $uuid;
+    }
+
+    public function jsonSerialize() {
+        $fields = get_object_vars($this);
+        $fields["categoryId"] = $this->categoryId->toString();
+        $fields["categoryName"] = $this->categoryName->toString();
+    }
 }
