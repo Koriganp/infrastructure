@@ -31,5 +31,12 @@ CREATE TABLE report (
 	reportLong DECIMAL(12) NOT NULL,
 	reportStatus VARCHAR(15) NOT NULL,
 	reportUrgency TINYINT(5),
-	reportUserAgent
+	reportUserAgent TINYINT UNSIGNED(1) NOT NULL
 );
+
+CREATE TABLE image (
+	imageId BINARY(16) NOT NULL,
+	imageReportId BINARY(16) NOT NULL,
+	imageCloudinary BINARY(16) NOT NULL,
+	imageLat
+)
