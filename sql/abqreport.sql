@@ -18,7 +18,8 @@ CREATE TABLE profile (
 
 CREATE TABLE category (
 	categoryId BINARY(16) NOT NULL ,
-	categoryName VARCHAR(32) NOT NULL
+	categoryName VARCHAR(32) NOT NULL,
+	PRIMARY KEY (categoryId)
 );
 
 CREATE TABLE report (
@@ -31,7 +32,9 @@ CREATE TABLE report (
 	reportLong DECIMAL(12) NOT NULL ,
 	reportStatus VARCHAR(15) NOT NULL ,
 	reportUrgency TINYINT(5) ,
-	reportUserAgent TINYINT UNSIGNED NOT NULL
+	reportUserAgent TINYINT UNSIGNED NOT NULL ,
+	FOREIGN KEY (reportCategoryId) REFERENCES category(categoryId) ,
+	PRIMARY KEY (reportId)
 );
 
 CREATE TABLE image (
@@ -39,7 +42,9 @@ CREATE TABLE image (
 	imageReportId BINARY(16) NOT NULL ,
 	imageCloudinary BINARY(16) NOT NULL ,
 	imageLat DECIMAL(12) NOT NULL ,
-	imageLong DECIMAL(12) NOT NULL
+	imageLong DECIMAL(12) NOT NULL ,
+	FOREIGN KEY (imageReportId) REFERENCES report(reportId),
+	PRIMARY KEY (imageId)
 );
 
 CREATE TABLE `comment` (
@@ -47,5 +52,8 @@ CREATE TABLE `comment` (
 	commentProfileId BINARY(16) NOT NULL ,
 	commentReportId BINARY(16) NOT NULL ,
 	commentContent VARCHAR(500) ,
-	commentDateTime DATETIME(6) NOT NULL
+	commentDateTime DATETIME(6) NOT NULL ,
+	FOREIGN KEY (commentProfileId) REFERENCES profile(profileId) ,
+	FOREIGN KEY (commentReportId) REFERENCES report(reportId) ,
+	PRIMARY KEY (commentId)
 );
