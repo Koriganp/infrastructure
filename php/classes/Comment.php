@@ -150,6 +150,34 @@ class Comment implements \JsonSerializable {
         $this->commentReportId = $uuid;
     }
 
+    /**
+     * accessor method for commentContent
+     *
+     * @return string 
+     **/
+    public function getCommentContent() : void {
+        return $this->commentContent;
+    }
+
+    /**
+     * @param string $newCommentContent new value of commentContent
+     * @throws \InvalidArgumentException if data types are invalid
+     * @throws \RangeException if string values are too long
+     * @throws \TypeError if $newCommentContent is not a string
+     * @throws \Exception for any other exception
+     **/
+    public function setCommentContent() : void {
+        $newCommentContent = trim($newCommentContent);
+        $newCommentContent = filter_var($newCommentContent, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+        if (empty($newCommentContent) === true) {
+            throw(new \InvalidArgumentException("commentContent is empty or insecure"));
+        }
+        if (strlen($newCommentContent) > 3000) {
+            throw(new \RangeException("commentContent is too large"));
+        }
+        $this->commentsContent = $newCommentsContent;
+    }
+
     public function jsonSerialize() {
         $fields = get_object_vars($this);
         $fields["categoryId"] = $this->categoryId->toString();
