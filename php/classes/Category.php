@@ -131,10 +131,48 @@ class Category implements \JsonSerializable {
 		$statement->execute($parameters);
 	}
 
+	/**
+	 * deletes this category from mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not null (i.e.. don't delete a profile that does not exist)
+	 **/
+	public function delete(\PDO $pdo): void {
+		//enforce the categoryId is not null (don't delete a category that does not exist)
+		if($this->categoryId === null) {
+			throw(new \PDOException("unable to delete a category that does not exist"));
+		}
+		//create query template
+		$query = "DELETE FROM category WHERE categoryId = :categoryId";
+		$statement = $pdo->prepare($query);
+		//bind the member variables to the place holders in the template
+		$parameters = ["categoryId" => $this->categoryId];
+		$statement->execute($parameters);
+	}
+
+	/**
+	 * updates this category in mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function update(\PDO $pdo): void {
+		//Enforce the categoryId is not null (don't update a category that does not exist)
+		if($this->categoryId === null) {
+			throw(new \PDOException("unable to update a category that does not exist"));
+		}
+		//create query template
+		$query = "UPDATE category SET categoryId = :categoryId, categoryName = :categoryName";
+		$statement = $pdo->prepare($query);
+		//bind the member variables to the place holders in the template
+		$parameters=["categoryId=>$this->categoryId", "categoryName=>$this->categoryName"];
+		$statement->execute($parameters);
+	}
 
 	public function jsonSerialize() {
 		$fields = get_object_vars($this);
 		$fields["categoryId"] = $this->categoryId->toString();
-		$fields["categoryName"] = $this->categoryName->toString();
 	}
 }
