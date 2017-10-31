@@ -32,6 +32,7 @@ class Image implements \JsonSerializable {
 	 * this is the cloudinary id received
 	 * @var string $imageCloudinary
 	 */
+	private $imageCloudinary;
 
 	/**
 	 * formats the state variables for JSON serialize
