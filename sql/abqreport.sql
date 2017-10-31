@@ -50,4 +50,4 @@ CREATE TABLE `comment` (
 	commentDateTime DATETIME(6) NOT NULL
 )
 
-
+-- end of tables
