@@ -73,3 +73,21 @@ class Comment implements \JsonSerializable
     }
 }
 
+/**
+ * accessor method for commentId
+ *
+ * @return Uuid of commentId
+ **/
+public function getCommentId() : Uuid {
+    return $this->commentId;
+}
+
+public function setCommentId() : Uuid {
+    try {
+        $uuid = self::validateUuid($newCommentId);
+    } catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+        $exceptionType = get_class($exception);
+        throw(new $exceptionType($exception->getMessage(), 0, $exception));
+    }
+    $this->commentId = $uuid;
+}
