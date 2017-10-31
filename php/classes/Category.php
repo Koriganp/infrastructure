@@ -111,6 +111,27 @@ class Category implements \JsonSerializable {
 		$this->categoryName = $newCategoryName;
 	}
 
+	/**
+	 * inserts this Category into mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function insert(\PDO $pdo): void {
+		// enforce the categoryId is null (don't insert a category that already exists)
+		if($this->categoryId !== null) {
+			throw(new \PDOException("not a new category"));
+		}
+		// create query template
+		$query = "INSERT INTO category (categoryId, categoryName) VALUES (:categoryId, :categoryName)";
+		$statement = $pdo->prepare($query);
+		// bind the member variables to the place holders in the template
+		$parameters = ["categoryId" => $this->categoryId->getBytes(), "categoryName" => $this->categoryName];
+		$statement->execute($parameters);
+	}
+
+
 	public function jsonSerialize() {
 		$fields = get_object_vars($this);
 		$fields["categoryId"] = $this->categoryId->toString();
