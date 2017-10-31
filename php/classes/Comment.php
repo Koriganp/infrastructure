@@ -13,10 +13,9 @@ require_once(dirname(__DIR__, 2) . "/vendor/autoload.php");
 
 use Ramsey\Uuid\Uuid;
 
-class Comment implements \JsonSerializable
-{
-    use \Edu\Cnm\Infrastructure\ValidateDate;
-    use \Edu\Cnm\Infrastructure\ValidateUuid;
+class Comment implements \JsonSerializable {
+    use ValidateDate;
+    use ValidateUuid;
 
     /**
      * Primary key, Id for comments posted on reports
@@ -40,7 +39,7 @@ class Comment implements \JsonSerializable
      * The content of the comment posted by the user profile
      * @var string $commentContent
      **/
-    private $commentContent
+    private $commentContent;
 
     /**
      * This is the date and time the comment was posted
@@ -61,15 +60,15 @@ class Comment implements \JsonSerializable
      * @throws \Exception if some other exception occurs
      **/
     public function __construct($newCommentId, $newCommentProfileId, $newCommentReportId, string $newCommentContent, $newCommentDate = null) {
-        $this->setCommentId($newCommentId);
-        $this->setCommentProfileId($newCommentProfileId);
-        $this->setCommentReportId($newCommentReportId);
-        $this->setCommentContent($newCommentContent);
-        $this->setCommentDate($newCommentDate);
-    }
-    catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+       try {
+      	 	$this->setCommentId($newCommentId);
+				$this->setCommentProfileId($newCommentProfileId);
+				$this->setCommentReportId($newCommentReportId);
+				$this->setCommentContent($newCommentContent);
+				$this->setCommentDate($newCommentDate);
+    } catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
         $exceptionType = get_class($exception);
-        throw(new($exceptionType($exception->getMessage(), 0, $exception));
+        throw(new $exceptionType($exception->getMessage(), 0, $exception));
     }
 }
 
@@ -90,4 +89,5 @@ public function setCommentId() : Uuid {
         throw(new $exceptionType($exception->getMessage(), 0, $exception));
     }
     $this->commentId = $uuid;
+}
 }
