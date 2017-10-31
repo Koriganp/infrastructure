@@ -1,8 +1,8 @@
-DROP TABLE IF EXISTS `profile`;
-DROP TABLE IF EXISTS category;
-DROP TABLE IF EXISTS report;
-DROP TABLE IF EXISTS image;
-DROP TABLE IF EXISTS `comment`;
+-- DROP TABLE IF EXISTS `profile`;
+-- DROP TABLE IF EXISTS category;
+-- DROP TABLE IF EXISTS report;
+-- DROP TABLE IF EXISTS image;
+-- DROP TABLE IF EXISTS `comment`;
 
 CREATE TABLE profile (
 	profileId BINARY(16) NOT NULL ,
