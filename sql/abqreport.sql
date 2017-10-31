@@ -1,8 +1,8 @@
--- DROP TABLE IF EXISTS `profile`;
--- DROP TABLE IF EXISTS category;
--- DROP TABLE IF EXISTS report;
--- DROP TABLE IF EXISTS image;
--- DROP TABLE IF EXISTS `comment`;
+DROP TABLE IF EXISTS `profile`;
+DROP TABLE IF EXISTS category;
+DROP TABLE IF EXISTS report;
+DROP TABLE IF EXISTS image;
+DROP TABLE IF EXISTS `comment`;
 
 CREATE TABLE profile (
 	profileId BINARY(16) NOT NULL ,
@@ -33,6 +33,7 @@ CREATE TABLE report (
 	reportStatus VARCHAR(15) NOT NULL ,
 	reportUrgency TINYINT(5) ,
 	reportUserAgent TINYINT UNSIGNED NOT NULL ,
+	INDEX (reportCategoryId) ,
 	FOREIGN KEY (reportCategoryId) REFERENCES category(categoryId) ,
 	PRIMARY KEY (reportId)
 );
@@ -43,7 +44,8 @@ CREATE TABLE image (
 	imageCloudinary BINARY(16) NOT NULL ,
 	imageLat DECIMAL(12) NOT NULL ,
 	imageLong DECIMAL(12) NOT NULL ,
-	FOREIGN KEY (imageReportId) REFERENCES report(reportId),
+	INDEX (imageReportId) ,
+	FOREIGN KEY (imageReportId) REFERENCES report(reportId) ,
 	PRIMARY KEY (imageId)
 );
 
@@ -53,6 +55,8 @@ CREATE TABLE `comment` (
 	commentReportId BINARY(16) NOT NULL ,
 	commentContent VARCHAR(500) ,
 	commentDateTime DATETIME(6) NOT NULL ,
+	INDEX (commentProfileId) ,
+	INDEX (commentReportId) ,
 	FOREIGN KEY (commentProfileId) REFERENCES profile(profileId) ,
 	FOREIGN KEY (commentReportId) REFERENCES report(reportId) ,
 	PRIMARY KEY (commentId)
