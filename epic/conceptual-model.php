@@ -71,6 +71,7 @@
 						<li>commentDateTime</li>
 					</ul>
 				</div>
+			<img class="infrastructure" src="images/infrastructure-erd.svg" alt="Infrastructure ERD"/>
 		</main>
 	</body>
 </html>
