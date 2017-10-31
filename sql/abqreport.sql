@@ -48,6 +48,4 @@ CREATE TABLE `comment` (
 	commentReportId BINARY(16) NOT NULL ,
 	commentContent VARCHAR(500) ,
 	commentDateTime DATETIME(6) NOT NULL
-)
-
--- end of tables
+);
