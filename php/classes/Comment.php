@@ -98,6 +98,32 @@ class Comment implements \JsonSerializable {
         $this->commentId = $uuid;
     }
 
+    /**
+     * accessor method for commentProfileId
+     *
+     * @return Uuid of commentProfileId
+     **/
+    public function getcommentProfileId() : Uuid {
+        return $this->commentProfileId;
+    }
+
+    /**
+     * @param string $newcommentProfileId new value of commentProfileId
+     * @throws \InvalidArgumentException if data types are invalid
+     * @throws \RangeException if string values are too long
+     * @throws \TypeError if data types are invalid
+     * @throws \Exception for any other exception
+     **/
+    public function setcommentProfileId() : Uuid {
+        try {
+            $uuid = self::validateUuid($newcommentProfileId);
+        } catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+            $exceptionType = get_class($exception);
+            throw(new $exceptionType($exception->getMessage(), 0, $exception));
+        }
+        $this->commentProfileId = $uuid;
+    }
+
     public function jsonSerialize() {
         $fields = get_object_vars($this);
         $fields["categoryId"] = $this->categoryId->toString();
