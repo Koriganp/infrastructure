@@ -102,4 +102,70 @@ class CategoryTest extends InfrastructureTest {
 		$this->assertNull($pdoCategory);
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("category"));
 	}
+
+	/**
+	 * test deleting a Category that does not exist
+	 *
+	 * @expectedException \PDOException
+	 **/
+	public function testDeleteInvalidCategory() : void {
+		// create a Category and try to delete it without actually inserting it
+		$category = new Category(null, $this->VALID_NAME);
+		$category->delete($this->getPDO());
+	}
+
+	/**
+	 * test inserting a Category and re-grabbing it from mySQL
+	 **/
+	public function testGetValidCategoryByCategoryId() : void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("category");
+		// create a new Category and insert to into mySQL
+		$category = new Category(null, $this->VALID_NAME);
+		$category->insert($this->getPDO());
+		// grab the data from mySQL and enforce the fields match our expectations
+		$pdoCategory = Category::getCategoryByCategoryId($this->getPDO(), $category->getCategoryId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("category"));
+		$this->assertEquals($pdoCategory->getCategoryName(), $this->VALID_NAME);
+	}
+
+	/**
+	 * test grabbing a Category that does not exist
+	 **/
+	public function testGetInvalidCategoryByCategoryId() : void {
+		// grab a category id that exceeds the maximum allowable category id
+		$category = Category::getCategoryByCategoryId($this->getPDO(), InfrastructureTest::INVALID_KEY);
+		$this->assertNull($category);
+	}
+
+	/**
+	 * test getting a Category by name
+	 */
+	public function testGetValidCategoryByName() {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("category");
+		// create a new Category and insert to into mySQL
+		$category = new Category(null, $this->VALID_NAME);
+		$category->insert($this->getPDO());
+		//grab the data from MySQL
+		$results = Category::getCategoryByCategoryName($this->getPDO(), $this->VALID_NAME);
+		$this->assertEquals($numRows +1, $this->getConnection()->getRowCount("category"));
+		//enforce no other objects are bleeding into category
+		$this->assertContainsOnlyInstancesOf("Edu\\CNM\\Infrastructure\\Category", $results);
+		//enforce the results meet expectations
+		$pdoCategory = $results[0];
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("category"));
+		$this->assertEquals($pdoCategory->getCategoryName(), $this->VALID_NAME);
+	}
+
+	/**
+	 * test grabbing a Category by at name that does not exist
+	 **/
+	public function testGetInvalidCategoryName() : void {
+		// grab a name that does not exist
+		$category = Category::getCategoryByCategoryName($this->getPDO(), "dog abducted by aliens");
+		$this->assertCount(0, $category);
+	}
+
+
 }
