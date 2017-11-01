@@ -167,5 +167,4 @@ class CategoryTest extends InfrastructureTest {
 		$this->assertCount(0, $category);
 	}
 
-
 }
