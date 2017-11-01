@@ -33,6 +33,16 @@ class Image implements \JsonSerializable {
 	 * @var string $imageCloudinary
 	 */
 	private $imageCloudinary;
+	/**
+	 * this is the latitude of the image
+	 * @var integer $imageLat
+	 */
+	private $imageLong;
+	/**
+	 * this is the longitude of the image
+	 * @var integer $imageLong
+	 */
+	private $imageLat;
 
 	/**
 	 * formats the state variables for JSON serialize
