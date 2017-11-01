@@ -1,6 +1,6 @@
 <?php
 namespace Edu\Cnm\Infrastructure\Test;
-use Edu\Cnm\DataDesign\{Category};
+use Edu\Cnm\Infrastructure\{Category};
 // grab the class under scrutiny
 require_once(dirname(__DIR__) . "/autoload.php");
 require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
