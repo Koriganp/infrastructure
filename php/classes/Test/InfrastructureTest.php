@@ -1,5 +1,5 @@
 <?php
-namespace Edu\Cnm\Infrastructure\test;
+namespace Edu\Cnm\Infrastructure\Test;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\DbUnit\TestCaseTrait;
 use PHPUnit\DbUnit\DataSet\QueryDataSet;
