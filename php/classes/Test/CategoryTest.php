@@ -18,12 +18,12 @@ class CategoryTest extends InfrastructureTest {
 	/**
 	 * valid name to use
 	 * @var string $VALID_NAME
-	 */
+	 **/
 	protected $VALID_NAME = "holes in the ground";
 	/**
 	 * second valid name to use
 	 * @var string $VALID_NAME2
-	 */
+	 **/
 	protected $VALID_NAME2 = "water everywhere";
 
 	/**
@@ -140,7 +140,7 @@ class CategoryTest extends InfrastructureTest {
 
 	/**
 	 * test getting a Category by name
-	 */
+	 **/
 	public function testGetValidCategoryByName() {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("category");

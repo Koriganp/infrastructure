@@ -26,22 +26,22 @@ class Image implements \JsonSerializable {
 	/**
 	 * id for the report this image is on; this is a foreign key
 	 * @var Uuid $imageReportId
-	 */
+	 **/
 	private $imageReportId;
 	/**
 	 * this is the cloudinary id received
 	 * @var string $imageCloudinary
-	 */
+	 **/
 	private $imageCloudinary;
 	/**
 	 * this is the latitude of the image
 	 * @var integer $imageLat
-	 */
+	 **/
 	private $imageLong;
 	/**
 	 * this is the longitude of the image
 	 * @var integer $imageLong
-	 */
+	 **/
 	private $imageLat;
 
 	/**
