@@ -37,14 +37,13 @@ class CategoryTest extends InfrastructureTest {
 		$categoryId = generateUuidV4();
 		// create a new Category and insert to into mySQL
 		$category = new Category($categoryId, $this->VALID_NAME);
-		//var_dump($category);
 		$category->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoCategory = Category::getCategoryByCategoryId($this->getPDO(), $category->getCategoryId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("category"));
-//		$this->assertEquals($pdoCategory->getCategoryId(), $categoryId);
-//		$this->assertEquals($pdoCategory->getCategoryName(), $this->VALID_NAME);
+		$this->assertEquals($pdoCategory->getCategoryId(), $categoryId);
+		$this->assertEquals($pdoCategory->getCategoryName(), $this->VALID_NAME);
 	}
 
 	/**
@@ -64,6 +63,7 @@ class CategoryTest extends InfrastructureTest {
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoCategory = Category::getCategoryByCategoryId($this->getPDO(), $category->getCategoryId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("category"));
+		$this->assertEquals($pdoCategory->getCategoryId(), $categoryId);
 		$this->assertEquals($pdoCategory->getCategoryName(), $this->VALID_NAME);
 	}
 
@@ -119,15 +119,14 @@ class CategoryTest extends InfrastructureTest {
 		$this->assertEquals($pdoCategory->getCategoryName(), $this->VALID_NAME);
 	}
 
-//	/**
-//	 * test grabbing a Category that does not exist
-//	 **/
-//	public function testGetInvalidCategoryByCategoryId() : void {
-//		$categoryId = generateUuidV4();
-//		// grab a category id that exceeds the maximum allowable category id
-//		$category = Category::getCategoryByCategoryId($this->getPDO(), $categoryId);
-//		$this->assertNull($category);
-//	}
+	/**
+	 * test getting a Category that does not exist
+	 **/
+	public function testGetInvalidCategoryByCategoryId() : void {
+		// get a category id that exceeds the maximum allowable category id
+		$category = Category::getCategoryByCategoryId($this->getPDO(), generateUuidV4());
+		$this->assertNull($category);
+	}
 
 	/**
 	 * test getting a Category by name

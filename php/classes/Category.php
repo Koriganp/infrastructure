@@ -154,13 +154,8 @@ class Category implements \JsonSerializable {
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @throws \PDOException when mySQL related errors occur
-	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
 	public function update(\PDO $pdo): void {
-		//Enforce the categoryId is not null (don't update a category that does not exist)
-		if($this->categoryId === null) {
-			throw(new \PDOException("unable to update a category that does not exist"));
-		}
 		//create query template
 		$query = "UPDATE category SET categoryId = :categoryId, categoryName = :categoryName";
 		$statement = $pdo->prepare($query);
