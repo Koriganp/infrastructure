@@ -48,17 +48,6 @@ class CategoryTest extends InfrastructureTest {
 	}
 
 	/**
-	 * test inserting a Category that already exists
-	 *
-	 * @expectedException \PDOException
-	 **/
-	public function testInsertInvalidCategory() : void {
-		// create a category with a non null categoryId and watch it fail
-		$category = new Category(generateUuidV4(), $this->VALID_NAME);
-		$category->insert($this->getPDO());
-	}
-
-	/**
 	 * test inserting a Category, editing it, and then updating it
 	 **/
 	public function testUpdateValidCategory() {
@@ -128,8 +117,9 @@ class CategoryTest extends InfrastructureTest {
 	 * test grabbing a Category that does not exist
 	 **/
 	public function testGetInvalidCategoryByCategoryId() : void {
+		$categoryId = generateUuidV4();
 		// grab a category id that exceeds the maximum allowable category id
-		$category = Category::getCategoryByCategoryId($this->getPDO(), InfrastructureTest::INVALID_KEY);
+		$category = Category::getCategoryByCategoryId($this->getPDO(), $categoryId->getCategoryId());
 		$this->assertNull($category);
 	}
 

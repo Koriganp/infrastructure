@@ -120,10 +120,7 @@ class Category implements \JsonSerializable {
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
 	public function insert(\PDO $pdo): void {
-		// enforce the categoryId is null (don't insert a category that already exists)
-		if($this->categoryId !== null) {
-			throw(new \PDOException("not a new category"));
-		}
+
 		// create query template
 		$query = "INSERT INTO category (categoryId, categoryName) VALUES (:categoryId, :categoryName)";
 		$statement = $pdo->prepare($query);
