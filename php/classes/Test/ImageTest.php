@@ -32,4 +32,21 @@ class ImageTest extends InfrastructureTest {
 	 * valid latitude to use to create an image
 	 * @var float $VALID_LAT;
 	 **/
+	protected $VALID_LAT;
+
+	/**
+	 * valid longitude to use to create an image
+	 * @var float $VALID_LAT;
+	 **/
+	protected $VALID_LONG;
+
+	/**
+	 * create dependant objects before running each test
+	 **/
+	public final function setUp() : void {
+		//run the default setUp() method first
+		parent::setUp();
+
+
+	}
 }
