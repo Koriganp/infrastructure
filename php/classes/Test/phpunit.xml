@@ -2,7 +2,6 @@
 	<testsuites>
 		<testsuite name="Infrastructure">
 			<file>CategoryTest.php</file>
-			<file>ValidateUuidTest.php</file>
 		</testsuite>
 	</testsuites>
 	<filter>
