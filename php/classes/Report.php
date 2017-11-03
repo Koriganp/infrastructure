@@ -180,6 +180,8 @@ class Report implements \JsonSerializable {
 	}
 
 	/**
+	 * mutator method for report date/time
+	 *
 	 * @param \DateTime|string|null $newReportDateTime report date/time as a DateTime object
 	 * or string (or null to load the current date/time)
 	 * @throws \InvalidArgumentException if $newReportDateTime is not a valid object or string
@@ -216,6 +218,8 @@ class Report implements \JsonSerializable {
 	 * @throws
 	 */
 	public function setReportIpAddress($newReportIpAddress) {
+
+
 		$this->reportIpAddress = $newReportIpAddress;
 	}
 
@@ -224,7 +228,7 @@ class Report implements \JsonSerializable {
 	 *
 	 * @return int value of report latitude
 	 **/
-	public function getReportLat() : int {
+	public function getReportLat() : float {
 		return($this->reportLat);
 	}
 
@@ -233,7 +237,7 @@ class Report implements \JsonSerializable {
 	 *
 	 * @return int value of report longitude
 	 **/
-	public function getReportLong() : int {
+	public function getReportLong() : float {
 		return($this->reportLong);
 	}
 
@@ -247,11 +251,27 @@ class Report implements \JsonSerializable {
 	}
 
 	/**
+	 * mutator method for report status
+	 *
 	 * @param string $newReportStatus new value of report status
-	 * @throws \InvalidArgumentException if $newReportStatus
+	 * @throws \InvalidArgumentException if $newReportStatus is not a string or insecure
+	 * @throws \RangeException if $newReportStatus is > 15 characters
+	 * @throws \TypeError if $newReportStatus is not a string
 	 */
-	public function setReportStatus($newReportStatus) {
+	public function setReportStatus($newReportStatus) : void {
+		// verify the report status is secure
+		$newReportStatus = trim($newReportStatus);
+		$newReportStatus = filter_var($newReportStatus, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newReportStatus) === true) {
+			throw(new \InvalidArgumentException("report status is empty or insecure"));
+		}
 
+		// verify the report status will fit in the database
+		if(strlen($newReportStatus) > 15) {
+			throw(new \RangeException("report status too long"));
+		}
+
+		//store the report status
 		$this->reportStatus = $newReportStatus;
 	}
 
@@ -262,6 +282,31 @@ class Report implements \JsonSerializable {
 	 **/
 	public function getReportUrgency() : string {
 		return($this->reportUrgency);
+	}
+
+	/**
+	 * mutator method for report urgency
+	 *
+	 * @param string $newReportUrgency new value of report status
+	 * @throws \InvalidArgumentException if $newReportUrgency is not a string or insecure
+	 * @throws \RangeException if $newReportUrgency is > 5 characters
+	 * @throws \TypeError if $newReportUrgency is not a string
+	 */
+	public function setReportUrgency($newReportUrgency) : void {
+		// verify the report status is secure
+		$newReportUrgency = trim($newReportUrgency);
+		$newReportUrgency = filter_var($newReportUrgency, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newReportUrgency) === true) {
+			throw(new \InvalidArgumentException("report status is empty or insecure"));
+		}
+
+		// verify the report status will fit in the database
+		if(strlen($newReportUrgency) > 15) {
+			throw(new \RangeException("report status too long"));
+		}
+
+		//store the report status
+		$this->reportStatus = $newReportUrgency;
 	}
 
 	/**
