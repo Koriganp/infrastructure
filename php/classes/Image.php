@@ -45,6 +45,33 @@ class Image implements \JsonSerializable {
 	private $imageLat;
 
 	/**
+	 * constructor for this Image
+	 *
+	 * @param Uuid $newImageId id of this Image or null if a new Image
+	 * @param Uuid $newImageReportId id of the Report this image is associated with
+	 * @param string $newImageCloudinary string containing cloudinary data
+	 * @param \DateTime|string|null $newPostDate date and time post was made or null if set to current date and time
+	 * @throws \InvalidArgumentException if data types are not valid
+	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
+	 * @throws \TypeError if data types violate type hints
+	 * @throws \Exception if some other exception occurs
+	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
+	 **/
+	public function __construct($newPostId, $newPostProfileId, string $newPostContent, $newPostDate = null) {
+		try {
+			$this->setPostId($newPostId);
+			$this->setPostProfileId($newPostProfileId);
+			$this->setPostContent($newPostContent);
+			$this->setPostDate($newPostDate);
+		}
+			//determine what exception type was thrown
+		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+	}
+
+	/**
 	 * formats the state variables for JSON serialize
 	 * @return array resulting state variables to serialize
 	 **/
