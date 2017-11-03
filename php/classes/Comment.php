@@ -220,18 +220,48 @@ class Comment implements \JsonSerializable {
      * @throws \TypeError if $pdo is not a PDO connection object
      **/
     public function delete(\PDO $pdo): void {
-        //enforce the commentId is not null (don't delete a category that does not exist)
+        //enforce the commentId is not null (don't delete a comment that does not exist)
         if($this->commentId === null) {
-            throw(new \PDOException("unable to delete a category that does not exist"));
+            throw(new \PDOException("unable to delete a comment that does not exist"));
         }
         //create query template
-        $query = "DELETE FROM category WHERE commentId = :commentId";
+        $query = "DELETE FROM comment WHERE commentId = :commentId";
         $statement = $pdo->prepare($query);
         //bind the member variables to the place holders in the template
         $parameters = ["commentId" => $this->commentId];
         $statement->execute($parameters);
     }
-    
+    /**
+     * gets the Comment by the comment's id
+     *
+     * @param \PDO $pdo PDO connection object
+     * @param Uuid $commentId comment id to search for
+     * @return Comment|null Comment or null if not found
+     * @throws \PDOException when mySQL related errors occur
+     * @throws \TypeError when variables are not the correct data type
+     **/
+    public static function getCommentByCommentId(\PDO $pdo, $commentId) : ?Comment {
+        try {
+            $commentId = self::validateUuid($commentId);
+        } catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+            throw (new \PDOException($exception->getMessage(), 0, $exception));
+        }
+        $query = "SELECT commentId FROM comment WHERE commentId = :commentId";
+        $statement = $pdo->prepare($query);
+        $parameters = ["commentId" = $commentId];
+        $statement->execute($parameters);
+        try {
+            $comment = null;
+            $statement->setFetchMode(\PDO::FETCH_ASSOC);
+            $row = $statement->fetch();
+            if($row !== false) {
+                $comment = new Comment($row["commentId"], $row["commentProfileId"], $row["commentReportId"]);
+        } catch(\Exception $exception) {
+                throw(new\PDOException($exception->getMessage(), 0, $exception));
+            }
+		return ($category);
+    }
+
     public function jsonSerialize() {
         $fields = get_object_vars($this);
         $fields["commentId"] = $this->commentId->toString();
