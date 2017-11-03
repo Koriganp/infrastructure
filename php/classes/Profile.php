@@ -99,15 +99,27 @@ public function  __construct($newProfileId, $newProfileActivationToken, $newProf
 	}
 
 	/**
-	 * mutator method for activation token
+	 *mutator method for account activation token
 	 *
 	 * @param string $newProfileActivationToken
-	 * @throw \InvalidArgumentException if the token is not a string or insecure
-	 * @throws \InvalidArgumentException if token is not exactly 32 characters
+	 * @throws \InvalidArgumentException if the token is not a string or insecure
+	 * @throws \RangeException if token is not exactly 32 characters
 	 * @throws \TypeError if the activation token is not a string
 	 **/
-	public function  setProfileActivationToken() {
-
+	public function setProfileActivationToken(?string $newProfileActivationToken): void {
+		if($newProfileActivationToken === null) {
+			$this->profileActivationToken = null;
+			return;
+		}
+		$newProfileActivationToken = strtolower(trim($newProfileActivationToken));
+		if(ctype_xdigit($newProfileActivationToken) === false) {
+			throw(new\RangeException("user activation is not valid"));
+		}
+		//make sure user activation token is only 32 characters
+		if(strlen($newProfileActivationToken) !== 32) {
+			throw(new\RangeException("user activation token has to be 32"));
+		}
+		$this->profileActivationToken = $newProfileActivationToken;
 	}
 
 	/**
@@ -120,39 +132,126 @@ public function  __construct($newProfileId, $newProfileActivationToken, $newProf
 
 
 	/**
-	 * mutator method for username
+	 * accessor method for username
 	 *
-	 *
-	 **/
-
+	 * @return string value of username
+	 */
+	public function getUsername():string {
+		return $this->username;
+	}
 
 	/**
-	 * accessor method for username
+	 * mutator method for username
+	 *
+	 * @return username
 	 **/
+	public function setUsername() {
+		return($this->Username);
+	}
 
 	/**
 	 * mutator for profileEmail
+	 *
+	 * @param string $newProfileEmail new value of email
+	 * @throws \InvalidArgumentException if $newEmail is not a valid email or insecure
+	 * @throws \RangeException if $newEmail is > 128 characters
+	 * @throws \TypeError if $newEmail is not a string
 	 **/
+	public function setProfileEmail(string $newProfileEmail): void {
+		// verify the email is secure
+		$newProfileEmail = trim($newProfileEmail);
+		$newProfileEmail = filter_var($newProfileEmail, FILTER_VALIDATE_EMAIL);
+		if(empty($newProfileEmail) === true) {
+			throw(new \InvalidArgumentException("profile email is empty or insecure"));
+		}
+		// verify the email will fit in the database
+		if(strlen($newProfileEmail) > 128) {
+			throw(new \RangeException("profile email is too large"));
+		}
+		// store the email
+		$this->profileEmail = $newProfileEmail;
+	}
+
 
 	/**
 	 * accessor method for profileEmail
+	 *
+	 * @return string value of email
 	 **/
+	public function getProfileEmail(): string {
+		return $this->profileEmail;
+	}
 
 	/**
 	 *mutator method for profileHash
+	 *
+	 * param string $newProfileHash
+	 * @throws \InvalidArgumentException if the hash is not secure
+	 * @throws \RangeException if the hash is not 128 characters
+	 * @throws \TypeError if profile hash is not a string
 	 **/
+	public function setProfileHash($newProfileHash): void {
+		//enforce that the hash is properly formatted
+		$newProfileHash = trim($newProfileHash);
+		$newProfileHash = strtolower($newProfileHash);
+		if(empty($newProfileHash) === true) {
+			throw(new \InvalidArgumentException("profile password hash empty or insecure"));
+		}
+		//enforce that the hash is a string representation of a hexadecimal
+		if(!ctype_xdigit($newProfileHash)) {
+			throw(new \InvalidArgumentException("profile password hash is empty or insecure"));
+		}
+		//enforce that the hash is exactly 128 characters.
+		if(strlen($newProfileHash) !== 128) {
+			throw(new \RangeException("profile hash must be 128 characters"));
+		}
+		//store the hash
+		$this->profileHash = $newProfileHash;
+	}
 
 	/**
 	 * accessor method for profileHash
+	 *
+	 * @return string value of hash
 	 **/
+	public function getProfileHash(): string {
+		return $this->profileHash;
+	}
 
 	/**
 	 * mutator method for profileSalt
+	 *
+	 * mutator method for profile salt
+	 *
+	 * @param string $newProfileSalt
+	 * @throws \InvalidArgumentException if the salt is not secure
+	 * @throws \RangeException if the salt is not 64 characters
+	 * @throws \TypeError if the profile salt is not a string
 	 **/
+	public function setProfileSalt($newProfileSalt): void {
+		//enforce that the salt is properly formatted
+		$newProfileSalt = trim($newProfileSalt);
+		$newProfileSalt = strtolower($newProfileSalt);
+		//enforce that the salt is a string representation of a hexadecimal
+		if(!ctype_xdigit($newProfileSalt)) {
+			throw(new \InvalidArgumentException("profile password hash is empty or insecure"));
+		}
+		//enforce that the salt is exactly 64 characters.
+		if(strlen($newProfileSalt) !== 64) {
+			throw(new \RangeException("profile salt must be 128 characters"));
+		}
+		//store the hash
+		$this->profileSalt = $newProfileSalt;
+	}
 
 	/**
 	 * accessor method for profileSalt
+	 *
+	 * @return string representation of the salt hexadecimal
 	 **/
+	public function getProfileSalt(): string {
+		return $this->profileSalt;
+	}
 
 	/**
 	* formats the state variables for JSON serialization
