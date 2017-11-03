@@ -68,6 +68,81 @@ public function  __construct($newProfileId, $newProfileActivationToken, $newProf
 		throw(new $exceptionType($exception->getMessage(), 0, $exception));
 	}
 }
+	/**
+	 * accessor method for profile id
+	 *
+	 * @return Uuid value of profile id
+	 **/
+	public function getProfileId() : Uuid {
+		return($this->profileId);
+	}
+
+	/**
+	 * mutator method for profile id
+	 *
+	 * @param Uuid/string $newProfileId new value of profile id
+	 * @throws \RangeException if $newProfileId is not positive
+	 * @throws \TypeError if $newProfileId is not a uuid or string
+	 **/
+	public function setProfileId( $newProfileId) : void {
+		try {
+			$uuid = self::validateUuid($newProfileId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+
+		// convert and store the profile id
+		$this->profileId = $uuid;
+	}
+	/**
+	 * accessor method for profile id
+	 *
+	 * @return Uuid value of  profile id
+	 **/
+	public function getProfileId() : Uuid{
+		return($this->ProfileId);
+	}
+
+	/**
+	 * mutator method for activation token
+	 **/
+
+	/**
+	 * accessor method for activation token
+	 **/
+
+	/**
+	 * mutator method for username
+	 **/
+
+	/**
+	 * accessor method for username
+	 **/
+
+	/**
+	 * mutator for profileEmail
+	 **/
+
+	/**
+	 * accessor method for profileEmail
+	 **/
+
+	/**
+	 *mutator method for profileHash
+	 **/
+
+	/**
+	 * accessor method for profileHash
+	 **/
+
+	/**
+	 * mutator method for profileSalt
+	 **/
+
+	/**
+	 * accessor method for profileSalt
+	 **/
 	public function jsonSerialize() {
 	// TODO: Implement jsonSerialize() method.
 	}
