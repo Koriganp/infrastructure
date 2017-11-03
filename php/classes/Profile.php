@@ -261,5 +261,43 @@ public function  __construct($newProfileId, $newProfileActivationToken, $newProf
 	public function jsonSerialize() {
 		return(get_object_vars($this));
 	}
+	/**
+	 * inserts this profile into mySQl
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQl related errors occur
+	 *
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function insert(PDO $pdo) : void {
+		//create query template
+		$query = "INSERT INTO profile(ProfileId, ProfileActivationToken, ProfileUserName, ProfileEmail, ProfileHash, ProfileSalt) VALUES(:profileId, :profileActivationToken, :profileUsername, :profileEmail, :profileHash, :profileSalt)";
+		$statement = $pdo->prepare($query);
+		$parameters = ["profileId"=> $this->profileId-> getBytes(),"profileActivationToken"=> $this->getProfileActivationToken(), "profileUsername"=> $this->getProfileUsername(), "profileEmail"=> $this->getProfileEmail(), "profileHash"=> $this->getProfileHash(), "profileSalt"=> $this->getProfileSalt()];
+		$statement->execute($parameters);
+	}
+	/**
+	 * deletes this profile from mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function delete(\PDO $pdo) : void {
+		//create query template
+		$query = "DELETE FROM profile WHERE profileId = : profileId";
+		$statement = $pdo->prepare($query);
+		//bind the member variables to the place in the template
+		$parameters = ["profileId"=> $this->profileId->getBytes()];
+		$statement->execute($parameters);
+	}
+/**
+ * updates this profile in mySQL
+ *
+ * @param \PDO $pdo PDO connection object
+ * @throws \PDOException when mySQL related errors occur
+ * @throws \TypeError if $pdo is not PDO connection object
+ **/
+
 }
 
