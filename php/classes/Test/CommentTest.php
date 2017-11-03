@@ -1,9 +1,9 @@
 <?php
 namespace Edu\Cnm\Infrastructure\Test;
-use Edu\Cnm\DataDesign\{Profile, Report, Comment};
+use Edu\Cnm\Infrastructure\{Profile, Report, Comment};
 // grab the class under scrutiny
 require_once(dirname(__DIR__) . "/autoload.php");
-require_once(dirname(__DIR__, 2) . )
+require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
 
 /**
  * Full PHPUnit test for the Comment class

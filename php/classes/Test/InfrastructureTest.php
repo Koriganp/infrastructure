@@ -1,37 +1,38 @@
 <?php
 namespace Edu\Cnm\Infrastructure\Test;
+
 use PHPUnit\Framework\TestCase;
 use PHPUnit\DbUnit\TestCaseTrait;
 use PHPUnit\DbUnit\DataSet\QueryDataSet;
 use PHPUnit\DbUnit\Database\Connection;
 use PHPUnit\DbUnit\Operation\{Composite, Factory, Operation};
+
 // grab the encrypted properties file
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
+
 require_once(dirname(__DIR__, 3) . "/vendor/autoload.php");
 /**
  * Abstract class containing universal and project specific mySQL parameters
+ *
+ * This class is designed to lay the foundation of the unit tests per project. It loads all the database parameters about the project so that table specific tests can share parameters in one place.
  *
  * @author Dylan McDonald <dmcdonald21@cnm.edu>
  **/
 abstract class InfrastructureTest extends TestCase {
 	use TestCaseTrait;
-	/**
-	 * invalid id to use for an INT UNSIGNED field (maximum allowed INT UNSIGTNED in mySQL) + 1
-	 * @see https://dev.mysql.com/doc/refman/5.6/en/integer-types.html mySQL Integer Types
-	 * @var int INVALID_KEY
-	 **/
-	const INVALID_KEY = 4294967296;
+
 	/**
 	 * PHPUnit database connection interface
 	 * @var Connection $connection
 	 **/
 	protected $connection = null;
+
 	/**
 	 * assembles the table from the schema and provides it to PHPUnit
 	 *
 	 * @return QueryDataSet assembled schema for PHPUnit
 	 **/
-	public final function getDataSet() {
+	public final function getDataSet() : QueryDataSet {
 		$dataset = new QueryDataSet($this->getConnection());
 		// add all the tables for the project here
 		// THESE TABLES *MUST* BE LISTED IN THE SAME ORDER THEY WERE CREATED!!!!
@@ -63,7 +64,7 @@ abstract class InfrastructureTest extends TestCase {
 	 *
 	 * @return Operation delete command for the database
 	 **/
-	public final function getTearDownOperation() {
+	public final function getTearDownOperation() : Operation {
 		return(Factory::DELETE_ALL());
 	}
 
@@ -73,7 +74,7 @@ abstract class InfrastructureTest extends TestCase {
 	 * @see <https://phpunit.de/manual/current/en/database.html#database.configuration-of-a-phpunit-database-testcase>
 	 * @return Connection PHPUnit database connection interface
 	 **/
-	public final function getConnection() {
+	public final function getConnection() : Connection {
 		// if the connection hasn't been established, create it
 		if($this->connection === null) {
 			// connect to mySQL and provide the interface to PHPUnit

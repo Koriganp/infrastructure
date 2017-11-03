@@ -3,6 +3,7 @@ namespace Edu\Cnm\Infrastructure\Test;
 use Edu\Cnm\Infrastructure\{Category};
 // grab the class under scrutiny
 require_once(dirname(__DIR__) . "/autoload.php");
+// grab the uuid generator
 require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
 
 /**
@@ -32,14 +33,17 @@ class CategoryTest extends InfrastructureTest {
 	public function testInsertValidCategory() : void {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("category");
+		//create a uuid
+		$categoryId = generateUuidV4();
 		// create a new Category and insert to into mySQL
-		$category = new Category(null, $this->VALID_NAME);
+		$category = new Category($categoryId, $this->VALID_NAME);
 		//var_dump($category);
 		$category->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
 		$pdoCategory = Category::getCategoryByCategoryId($this->getPDO(), $category->getCategoryId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("category"));
+		$this->assertEquals($pdoCategory->getCategoryId(), $categoryId);
 		$this->assertEquals($pdoCategory->getCategoryName(), $this->VALID_NAME);
 	}
 
@@ -50,7 +54,7 @@ class CategoryTest extends InfrastructureTest {
 	 **/
 	public function testInsertInvalidCategory() : void {
 		// create a category with a non null categoryId and watch it fail
-		$category = new Category(InfrastructureTest::INVALID_KEY, $this->VALID_NAME);
+		$category = new Category(generateUuidV4(), $this->VALID_NAME);
 		$category->insert($this->getPDO());
 	}
 
@@ -80,8 +84,10 @@ class CategoryTest extends InfrastructureTest {
 	 * @expectedException \PDOException
 	 **/
 	public function testUpdateInvalidCategory() {
-		// create a Category and try to update it without actually inserting it
-		$category = new Category(null, $this->VALID_NAME);
+		//create a uuid
+		$categoryId = generateUuidV4();
+		// create a new Category and insert to into mySQL
+		$category = new Category($categoryId, $this->VALID_NAME);
 		$category->update($this->getPDO());
 	}
 
@@ -101,17 +107,6 @@ class CategoryTest extends InfrastructureTest {
 		$pdoCategory = Category::getCategoryByCategoryId($this->getPDO(), $category->getCategoryId());
 		$this->assertNull($pdoCategory);
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("category"));
-	}
-
-	/**
-	 * test deleting a Category that does not exist
-	 *
-	 * @expectedException \PDOException
-	 **/
-	public function testDeleteInvalidCategory() : void {
-		// create a Category and try to delete it without actually inserting it
-		$category = new Category(null, $this->VALID_NAME);
-		$category->delete($this->getPDO());
 	}
 
 	/**

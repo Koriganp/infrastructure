@@ -33,7 +33,7 @@ class Category implements \JsonSerializable {
 	/**
 	 * constructor for category
 	 *
-	 * @param Uuid $newCategoryId id of this category
+	 * @param string|Uuid $newCategoryId id of this category
 	 * @param string $newCategoryName name of this category
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
@@ -41,7 +41,7 @@ class Category implements \JsonSerializable {
 	 * @throws \Exception if some other exception occurs
 	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
 	 **/
-	public function __construct($newCategoryId, $newCategoryName) {
+	public function __construct($newCategoryId, string $newCategoryName) {
 		try {
 			$this->setCategoryId($newCategoryId);
 			$this->setCategoryName($newCategoryName);
@@ -65,8 +65,9 @@ class Category implements \JsonSerializable {
 	/**
 	 * mutator method for category id
 	 *
-	 * @param Uuid $newCategoryId new value of category id
-	 * @throws \UnexpectedValueException if $newCategoryId is not a uuid
+	 * @param Uuid|string $newCategoryId new value of category id
+	 * @throws \RangeException if $newCategoryId is not positive
+	 * @throws \TypeError if the category Id is not a uuid
 	 **/
 	public function setCategoryId($newCategoryId) : void {
 		try {
