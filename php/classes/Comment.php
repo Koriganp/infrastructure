@@ -178,11 +178,21 @@ class Comment implements \JsonSerializable {
         $this->commentsContent = $newCommentsContent;
     }
 
-    public function insert() {
+    public function insert(\PDO $pdo) {
         if ($this->commentId !== false) {
             throw(new \PDOException("Not a new comment"));
         }
         $query = "INSERT INTO comment(commentId, commentProfileId, commentReportId, commentContent, commentDateTime) VALUES(:commentId, :commentProfileId, :commentReportId, :commentContent, :commentDateTime)";
+        $statement = $pdo->prepare($query);
+        $parameters = ["commentId" => $this->commentId->getBytes(), "commentProfileId" => $this->commentProfileId->getBytes(), "commentProfileId" => $this->commentReportId->getBytes(), "commentContent" => $this->commentContent, "commentDateTime" => $this->commentDateTime];
+        $statement->execute($parameters);
+    }
+
+    public function update(\PDO $pdo) {
+        if($this->commentId === null) {
+            throw(new("Unable to update nonexistent comment"));
+        }
+        $query = "UPDATE `comment` SET commentId = :commentId, commentProfileId = :commentProfileId, commentReportId = :commentReportId, commentContent = :commentContnt, commentDateTime = :commentDateTime";
         $statement = $pdo->prepare($query);
         $parameters = ["commentId" => $this->commentId->getBytes(), "commentProfileId" => $this->commentProfileId->getBytes(), "commentProfileId" => $this->commentReportId->getBytes(), "commentContent" => $this->commentContent, "commentDateTime" => $this->commentDateTime];
         $statement->execute($parameters);
