@@ -1,0 +1,13 @@
+<phpunit>
+	<testsuites>
+		<testsuite name="Infrastructure">
+			<file>CategoryTest.php</file>
+			<file>ValidateUuidTest.php</file>
+		</testsuite>
+	</testsuites>
+	<filter>
+		<whitelist processUncoveredFilesFromWhitelist="true">
+			<directory suffix=".php">..</directory>
+		</whitelist>
+	</filter>
+</phpunit>
