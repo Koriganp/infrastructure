@@ -11,11 +11,12 @@
 namespace Edu\Cnm\Infrastructure;
 
 require_once ("autoload.php");
-require_once (dirname(__DIR__, 4) . "/vendor/autoload.php");
+require_once (dirname(__DIR__, 2) . "/vendor/autoload.php");
 
 use Ramsey\Uuid\Uuid;
-class Profile implements \JsonSerialize {
+class Profile implements \JsonSerializeable {
 	use ValidateUuid;
+
 /**
  * id for this profile, this is a primary key
  * @var Uuid $ProfileId
@@ -96,14 +97,6 @@ public function  __construct($newProfileId, $newProfileActivationToken, $newProf
 		// convert and store the profile id
 		$this->profileId = $uuid;
 	}
-	/**
-	 * accessor method for profile id
-	 *
-	 * @return Uuid value of  profile id
-	 **/
-	public function getProfileId() : Uuid{
-		return($this->ProfileId);
-	}
 
 	/**
 	 * mutator method for activation token
@@ -113,19 +106,23 @@ public function  __construct($newProfileId, $newProfileActivationToken, $newProf
 	 * @throws \InvalidArgumentException if token is not exactly 32 characters
 	 * @throws \TypeError if the activation token is not a string
 	 **/
-	public function  setProfileActivationToken
+	public function  setProfileActivationToken() {
+
+	}
 
 	/**
 	 * accessor method for activation token
 	 * @return string value of the activation token
 	 **/
-	public function getProfileActivationToken(): ?string {
+	public function getProfileActivationToken(): string {
 		return ($this->profileActivationToken);
 	}
 
 
 	/**
-	 * mutator method for username j
+	 * mutator method for username
+	 *
+	 *
 	 **/
 
 
@@ -158,6 +155,7 @@ public function  __construct($newProfileId, $newProfileActivationToken, $newProf
 	 **/
 	public function jsonSerialize() {
 	// TODO: Implement jsonSerialize() method.
+		return(get_object_vars($this));
 	}
 }
 
