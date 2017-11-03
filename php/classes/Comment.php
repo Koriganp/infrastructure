@@ -178,7 +178,13 @@ class Comment implements \JsonSerializable {
         $this->commentsContent = $newCommentsContent;
     }
 
-    
+    /**
+     * Inserts this Comment into MySQL
+     *
+     * @param \PDO $pdo PDO connection object
+     * @throws \PDOException when mySQL related errors occur
+     * @throws \TypeError if $pdo is not a PDO connection object
+     **/
     public function insert(\PDO $pdo) {
         if ($this->commentId !== false) {
             throw(new \PDOException("Not a new comment"));
@@ -189,6 +195,13 @@ class Comment implements \JsonSerializable {
         $statement->execute($parameters);
     }
 
+    /**
+     * Updates this Comment in MySQL
+     *
+     * @param \PDO $pdo PDO connection object
+     * @throws \PDOException when mySQL related errors occur
+     * @throws \TypeError if $pdo is not a PDO connection object
+     **/
     public function update(\PDO $pdo) {
         if($this->commentId === null) {
             throw(new("Unable to update nonexistent comment"));
@@ -199,6 +212,13 @@ class Comment implements \JsonSerializable {
         $statement->execute($parameters);
     }
 
+    /**
+     * Deletes this Comment from MySQL
+     *
+     * @param \PDO $pdo PDO connection object
+     * @throws \PDOException when mySQL related errors occur
+     * @throws \TypeError if $pdo is not a PDO connection object
+     **/
     public function delete(\PDO $pdo): void {
         //enforce the commentId is not null (don't delete a category that does not exist)
         if($this->commentId === null) {
