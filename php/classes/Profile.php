@@ -17,7 +17,7 @@ use Ramsey\Uuid\Uuid;
 class Profile implements \JsonSerialize {
 	use ValidateUuid;
 /**
- * id for this profile, this is a primary key
+ * id for this profile, this is a primary keyy
  * @var Uuid $ProfileId
  **/
 
