@@ -32,7 +32,7 @@ CREATE TABLE report (
 	reportLat DECIMAL(12) NOT NULL ,
 	reportLong DECIMAL(12) NOT NULL ,
 	reportStatus VARCHAR(15) NOT NULL ,
-	reportUrgency TINYINT(5) ,
+	reportUrgency VARCHAR (5) ,
 	reportUserAgent TINYINT UNSIGNED NOT NULL ,
 	INDEX (reportCategoryId) ,
 	FOREIGN KEY (reportCategoryId) REFERENCES category(categoryId) ,

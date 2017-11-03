@@ -180,12 +180,43 @@ class Report implements \JsonSerializable {
 	}
 
 	/**
+	 * @param \DateTime|string|null $newReportDateTime report date/time as a DateTime object
+	 * or string (or null to load the current date/time)
+	 * @throws \InvalidArgumentException if $newReportDateTime is not a valid object or string
+	 * @throws \RangeException if $newReportDateTime is a date/time that does exist
+	 */
+	public function setReportDateTime($newReportDateTime = null) : void {
+		// base case: if the date/time is null, use the current date/time
+		if($newReportDateTime === null) {
+			$this->reportDateTime = new \DateTime();
+			return;
+		}
+
+		// store the like date/time using the Validate trait
+		try {
+			$newReportDateTime = self::validateDateTime($newReportDateTime);
+		} catch(\InvalidArgumentException | \RangeException $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+		$this->reportDateTime = $newReportDateTime;
+	}
+
+	/**
 	 * accessor method for report ip address
 	 *
 	 * @return int value of report ip address
 	 **/
 	public function getReportIpAddress() : int {
 		return($this->reportIpAddress);
+	}
+
+	/**
+	 * @param int $newReportIpAddress
+	 * @throws
+	 */
+	public function setReportIpAddress($newReportIpAddress) {
+		$this->reportIpAddress = $newReportIpAddress;
 	}
 
 	/**
@@ -213,6 +244,15 @@ class Report implements \JsonSerializable {
 	 **/
 	public function getReportStatus() : string {
 		return($this->reportStatus);
+	}
+
+	/**
+	 * @param string $newReportStatus new value of report status
+	 * @throws \InvalidArgumentException if $newReportStatus
+	 */
+	public function setReportStatus($newReportStatus) {
+
+		$this->reportStatus = $newReportStatus;
 	}
 
 	/**
