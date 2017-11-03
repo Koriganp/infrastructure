@@ -178,6 +178,7 @@ class Comment implements \JsonSerializable {
         $this->commentsContent = $newCommentsContent;
     }
 
+    
     public function insert(\PDO $pdo) {
         if ($this->commentId !== false) {
             throw(new \PDOException("Not a new comment"));
@@ -198,9 +199,25 @@ class Comment implements \JsonSerializable {
         $statement->execute($parameters);
     }
 
+    public function delete(\PDO $pdo): void {
+        //enforce the commentId is not null (don't delete a category that does not exist)
+        if($this->commentId === null) {
+            throw(new \PDOException("unable to delete a category that does not exist"));
+        }
+        //create query template
+        $query = "DELETE FROM category WHERE commentId = :commentId";
+        $statement = $pdo->prepare($query);
+        //bind the member variables to the place holders in the template
+        $parameters = ["commentId" => $this->commentId];
+        $statement->execute($parameters);
+    }
+    
     public function jsonSerialize() {
         $fields = get_object_vars($this);
-        $fields["categoryId"] = $this->categoryId->toString();
-        $fields["categoryName"] = $this->categoryName->toString();
+        $fields["commentId"] = $this->commentId->toString();
+        $fields["commentProfileId"] = $this->commentProfileId->toString();
+        $fields["commentReportId"] = $this->commentReportId->toString();
+        $fields["commentContent"] = $this->commentContent->toString();
+        $fields["commentDateTime"] = $this->commentDateTime->toString();
     }
 }
