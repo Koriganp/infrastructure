@@ -153,7 +153,7 @@ class Comment implements \JsonSerializable {
     /**
      * accessor method for commentContent
      *
-     * @return string 
+     * @return string returns the comment content
      **/
     public function getCommentContent() : void {
         return $this->commentContent;
@@ -176,6 +176,16 @@ class Comment implements \JsonSerializable {
             throw(new \RangeException("commentContent is too large"));
         }
         $this->commentsContent = $newCommentsContent;
+    }
+
+    public function insert() {
+        if ($this->commentId !== false) {
+            throw(new \PDOException("Not a new comment"));
+        }
+        $query = "INSERT INTO comment(commentId, commentProfileId, commentReportId, commentContent, commentDateTime) VALUES(:commentId, :commentProfileId, :commentReportId, :commentContent, :commentDateTime)";
+        $statement = $pdo->prepare($query);
+        $parameters = ["commentId" => $this->commentId->getBytes(), "commentProfileId" => $this->commentProfileId->getBytes(), "commentProfileId" => $this->commentReportId->getBytes(), "commentContent" => $this->commentContent, "commentDateTime" => $this->commentDateTime];
+        $statement->execute($parameters);
     }
 
     public function jsonSerialize() {
