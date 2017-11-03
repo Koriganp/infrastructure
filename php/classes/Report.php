@@ -99,9 +99,7 @@ class Report implements \JsonSerializable {
 	 * mutator method for report id
 	 *
 	 * @param Uuid/string $newReportId new value of report id
-	 *
 	 * @throws \RangeException if $newReportId is not positive
-	 *
 	 * @throws \TypeError if $newReportId is not a uuid or string
 	 **/
 	public function setReportId($newReportId) : void {
@@ -111,7 +109,7 @@ class Report implements \JsonSerializable {
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
-		$this->reportId = $newReportId;
+		$this->reportId = $uuid;
 	}
 
 	/**
@@ -130,9 +128,16 @@ class Report implements \JsonSerializable {
 	 * @throws \RangeException if $newReportId is not positive
 	 * @throws \TypeError if $newReportCategoryId is not an integer
 	 **/
-	public function setReportCategoryId($newReportCategoryId) : Uuid {
-		$this->reportCategoryId = $newReportCategoryId;
+	public function setReportCategoryId($newReportCategoryId) : void {
+		try {
+			$uuid = self::validateUuid($newReportCategoryId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+		$this->reportCategoryId = $uuid;
 	}
+	
 	/**
 	 * accessor method for report content
 	 *
@@ -142,6 +147,29 @@ class Report implements \JsonSerializable {
 		return($this->reportContent);
 	}
 
+	/**
+	 * mutator method for report content
+	 *
+	 * @param string $newReportContent new value of report content
+	 * @throws \InvalidArgumentException if $newReportContent is not a string or insecure
+	 * @throws \RangeException if $newReportContent is > 3000
+	 * @throws  \TypeError if $newReportContent is not a string
+	 */
+	public function setReportContent(string $newReportContent) : void {
+		//verify the report content is secure
+		$newReportContent = trim($newReportContent);
+		$newReportContent = filter_var($newReportContent, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+
+		if(empty($newReportContent) === true) {
+			throw(new \InvalidArgumentException("report content is empty or insecure"));
+		}
+
+		//verify the report content will fit in the database
+		if(strlen($newReportContent) > 3000) {
+			throw(new \RangeException("report content too large"));
+		}
+		$this->reportContent = $newReportContent;
+	}
 	/**
 	 * accessor method for report date/time
 	 *
