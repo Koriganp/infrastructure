@@ -153,8 +153,13 @@ public function  __construct($newProfileId, $newProfileActivationToken, $newProf
 	/**
 	 * accessor method for profileSalt
 	 **/
+
+	/**
+	* formats the state variables for JSON serialization
+	*
+	* @return array resulting state variables to serialize
+	**/
 	public function jsonSerialize() {
-	// TODO: Implement jsonSerialize() method.
 		return(get_object_vars($this));
 	}
 }
