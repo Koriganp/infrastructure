@@ -154,7 +154,7 @@ class Report implements \JsonSerializable {
 	 * @throws \InvalidArgumentException if $newReportContent is not a string or insecure
 	 * @throws \RangeException if $newReportContent is > 3000
 	 * @throws  \TypeError if $newReportContent is not a string
-	 */
+	 **/
 	public function setReportContent(string $newReportContent) : void {
 		//verify the report content is secure
 		$newReportContent = trim($newReportContent);
@@ -186,7 +186,7 @@ class Report implements \JsonSerializable {
 	 * or string (or null to load the current date/time)
 	 * @throws \InvalidArgumentException if $newReportDateTime is not a valid object or string
 	 * @throws \RangeException if $newReportDateTime is a date/time that does exist
-	 */
+	 **/
 	public function setReportDateTime($newReportDateTime = null) : void {
 		// base case: if the date/time is null, use the current date/time
 		if($newReportDateTime === null) {
@@ -217,7 +217,7 @@ class Report implements \JsonSerializable {
 	 *  mutator method for report ip address
 	 *
 	 * @param $newReportIpAddress
-	 */
+	 **/
 	public function setReportIpAddress($newReportIpAddress) : void {
 		$this->reportIpAddress = $newReportIpAddress;
 	}
@@ -235,7 +235,7 @@ class Report implements \JsonSerializable {
 	 * mutator method  for report latitude
 	 *
 	 * @param $newReportLat
-	 */
+	 **/
 	public function setReportLat($newReportLat) : void {
 		$this->reportLat = $newReportLat;
 	}
@@ -253,7 +253,7 @@ class Report implements \JsonSerializable {
 	 * mutator method  for report longitude
 	 *
 	 * @param $newReportLong
-	 */
+	 **/
 	public function setReportLong($newReportLong) : void {
 		$this->reportLat = $newReportLong;
 	}
@@ -274,7 +274,7 @@ class Report implements \JsonSerializable {
 	 * @throws \InvalidArgumentException if $newReportStatus is not a string or insecure
 	 * @throws \RangeException if $newReportStatus is > 15 characters
 	 * @throws \TypeError if $newReportStatus is not a string
-	 */
+	 **/
 	public function setReportStatus($newReportStatus) : void {
 		// verify the report status is secure
 		$newReportStatus = trim($newReportStatus);
@@ -308,7 +308,7 @@ class Report implements \JsonSerializable {
 	 * @throws \InvalidArgumentException if $newReportUrgency is not a string or insecure
 	 * @throws \RangeException if $newReportUrgency is > 5 characters
 	 * @throws \TypeError if $newReportUrgency is not a string
-	 */
+	 **/
 	public function setReportUrgency($newReportUrgency) : void {
 		// verify the report status is secure
 		$newReportUrgency = trim($newReportUrgency);
@@ -339,9 +339,48 @@ class Report implements \JsonSerializable {
 		$this->reportUserAgent = $newReportUserAgent;
 	}
 
+	/**
+	 * inserts this Report into mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occurs
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function insert(\PDO $pdo) : void {
+		// create query template
+		$query = "INSERT INTO report(reportId, reportCategoryId, reportContent, reportDateTime, reportIpAddress, 
+					reportLat, reportLong, reportStatus, reportUrgency, reportUserAgent) VALUES (:reportId, :reportCategoryId, 
+					:reportContent, :reportDateTime, :reportIpAddress, :reportLat, :reportLong, :reportStatus, :reportUrgency,
+					:reportUserAgent)";
 
+					$statement = $pdo->prepare($query);
 
+					// bind the member variables to the place holders in the template
+					$formattedDateTime = $this->reportDateTime->format("m-d-Y H:i:s.u");
+					$parameters = ["reportId" => $this->reportId->getBytes(), "reportCategoryId" => $this->reportCategoryId->getBytes(),
+					"reportContent" => $this->reportContent, "reportDateTime" => $formattedDateTime, "reportIpAddress" => $this->reportIpAddress,
+					"reportLat" => $this->reportLat, "reportLong" => $this->reportLong, "reportStatus" => $this->reportStatus,
+					"reportUrgency" => $this->reportUrgency, "reportUserAgent" => $this->reportUserAgent];
+					$statement->execute($parameters);
+	}
 
+	/**
+	 * deletes this Report from mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 */
+	public function delete(\PDO $pdo) : void {
+		// create query template
+		$query = "DELETE FROM report WHERE reportId = :reportId";
+
+		$statement = $pdo->prepare($query);
+
+		// bind the member variables to the place holders in the template
+		$parameters = ["reportId" => $this->tweetId->getBytes()];
+		$statement->execute($parameters);
+	}
 
 
 
