@@ -382,6 +382,27 @@ class Report implements \JsonSerializable {
 		$statement->execute($parameters);
 	}
 
+	/**
+	 * updates this Report in mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 */
+	public function update(\PDO $pdo) : void {
+		// create query template
+		$query = "UPDATE report SET reportCategoryId = :reportCategoryId, reportContent = :reportContent, 
+		reportDateTime = :reportDateTime, reportStatus = :reportStatus, reportUrgency = :reportUrgency 
+		WHERE reportId = :reportId";
+
+		$statement = $pdo->prepare($query);
+
+		$formattedDateTime = $this->reportDateTime->format("m-d-Y H:i:s.u");
+		$parameters = ["reportId" => $this->reportId->getBytes(), "reportCategoryId" => $this->reportCategoryId->getBytes(),
+		"reportContent" => $this->reportContent, "reportDateTime" => $formattedDateTime, "reportStatus" => $this->reportStatus,
+		"reportUrgency" => $this->reportUrgency];
+		$statement->execute($parameters);
+	}
 
 
 
