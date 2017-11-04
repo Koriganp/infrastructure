@@ -214,12 +214,11 @@ class Report implements \JsonSerializable {
 	}
 
 	/**
-	 * @param int $newReportIpAddress
-	 * @throws
+	 *  mutator method for report ip address
+	 *
+	 * @param $newReportIpAddress
 	 */
-	public function setReportIpAddress($newReportIpAddress) {
-
-
+	public function setReportIpAddress($newReportIpAddress) : void {
 		$this->reportIpAddress = $newReportIpAddress;
 	}
 
@@ -233,12 +232,30 @@ class Report implements \JsonSerializable {
 	}
 
 	/**
+	 * mutator method  for report latitude
+	 *
+	 * @param $newReportLat
+	 */
+	public function setReportLat($newReportLat) : void {
+		$this->reportLat = $newReportLat;
+	}
+
+	/**
 	 * accessor method for report longitude
 	 *
 	 * @return int value of report longitude
 	 **/
 	public function getReportLong() : float {
 		return($this->reportLong);
+	}
+
+	/**
+	 * mutator method  for report longitude
+	 *
+	 * @param $newReportLong
+	 */
+	public function setReportLong($newReportLong) : void {
+		$this->reportLat = $newReportLong;
 	}
 
 	/**
@@ -301,7 +318,7 @@ class Report implements \JsonSerializable {
 		}
 
 		// verify the report status will fit in the database
-		if(strlen($newReportUrgency) > 15) {
+		if(strlen($newReportUrgency) > 5) {
 			throw(new \RangeException("report status too long"));
 		}
 
@@ -316,6 +333,10 @@ class Report implements \JsonSerializable {
 	 **/
 	public function getReportUserAgent() : int {
 		return($this->reportUserAgent);
+	}
+
+	public function setReportUserAgent($newReportUserAgent) : void {
+		$this->reportUserAgent = $newReportUserAgent;
 	}
 
 
