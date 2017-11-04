@@ -285,7 +285,7 @@ public function  __construct($newProfileId, $newProfileActivationToken, $newProf
 	 **/
 	public function delete(\PDO $pdo) : void {
 		//create query template
-		$query = "DELETE FROM profile WHERE profileId = : profileId";
+		$query = "DELETE FROM profile WHERE profileId = :profileId";
 		$statement = $pdo->prepare($query);
 		//bind the member variables to the place in the template
 		$parameters = ["profileId"=> $this->profileId->getBytes()];
@@ -298,6 +298,13 @@ public function  __construct($newProfileId, $newProfileActivationToken, $newProf
  * @throws \PDOException when mySQL related errors occur
  * @throws \TypeError if $pdo is not PDO connection object
  **/
+public function  update(\PDO $pdo) : void {
 
+	// crate query template
+	$query = "UPDATE profile SET profileEmail = :profileEmail, profileUsername = :profileUsername, WHERE  profileId = :profileId";
+	$statement = $pdo->prepare($query);
+	$parameters = ["profileId" => $this->profileId->getBytes(), "profileEmail" => $this->profileEmail,"profileUsername" => $this->profileUsername];
+	$statement->execute($parameters);
+	}
 }
 
