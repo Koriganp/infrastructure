@@ -488,6 +488,35 @@ class Report implements \JsonSerializable {
 		return($reports);
 	}
 
+	/**
+	 * gets all Reports
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @return \SplFixedArray SplFixedArray of Reports found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getAllReports(\PDO $pdo) : \SPLFixedArray {
+		// create query template
+		$query = "SELECT reportId, reportCategoryId, reportContent, reportDateTime,reportIpAddress, reportLat, reportLong, reportStatus, reportUrgency, reportUserAgent FROM report";
+		$statement = $pdo->prepare($query);
+		$statement->execute();
+
+		// build an array of tweets
+		$reports = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$report = new Report($row["reportId"], $row["reportCategoryId"], $row["reportContent"], $row["reportDateTime"], $row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"], $row["reportUserAgent"]);
+				$reports[$reports->key()] = $report;
+				$reports->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return ($reports);
+	}
 	public function jsonSerialize() {
 		// TODO: Implement jsonSerialize() method.
 	}
