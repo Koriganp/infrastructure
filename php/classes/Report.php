@@ -379,7 +379,7 @@ class Report implements \JsonSerializable {
 		$statement = $pdo->prepare($query);
 
 		// bind the member variables to the place holders in the template
-		$parameters = ["reportId" => $this->tweetId->getBytes()];
+		$parameters = ["reportId" => $this->reportId->getBytes()];
 		$statement->execute($parameters);
 	}
 
@@ -439,7 +439,7 @@ class Report implements \JsonSerializable {
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$tweet = new Report($row["reportId"], $row["reportCategoryId"], $row["reporttContent"], $row["reportDateTime"], 				$row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"]);
+				$report = new Report($row["reportId"], $row["reportCategoryId"], $row["reportContent"], $row["reportDateTime"], 				$row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"]);
 			}
 		} catch(\Exception $exception) {
 			// if the row couldn't be converted, rethrow it
@@ -469,7 +469,7 @@ class Report implements \JsonSerializable {
 		$query = "SELECT reportId, reportCategoryId, reportContent, reportDateTime, reportIpAddress, reportLat, reportLong,
 		reportStatus, reportUrgency FROM report WHERE reportCategoryId = :reportCategoryId";
 		$statement = $pdo->prepare($query);
-		// bind the tweet profile id to the place holder in the template
+		// bind the report profile id to the place holder in the template
 		$parameters = ["reportCategoryId" => $reportCategoryId->getBytes()];
 		$statement->execute($parameters);
 		// build an array of reports
@@ -501,7 +501,7 @@ class Report implements \JsonSerializable {
 		// sanitize the description before searching
 		$reportContent = trim($reportContent);
 		$reportContent = filter_var($reportContent, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($tweetContent) === true) {
+		if(empty($reportContent) === true) {
 			throw(new \PDOException("tweet content is invalid"));
 		}
 
@@ -509,15 +509,105 @@ class Report implements \JsonSerializable {
 		$reportContent = str_replace("_", "\\_", str_replace("%", "\\%", $reportContent));
 
 		// create query template
-		$query = "SELECT reportId, reportCategoryId, reportContent, reportDateTime, reportIpAddress, reportLat, reportLong, reportStatus, reportUrgency, reportUserAgent FROM report WHERE reportContent LIKE :tweetContent";
+		$query = "SELECT reportId, reportCategoryId, reportContent, reportDateTime, reportIpAddress, reportLat, reportLong, reportStatus, reportUrgency, reportUserAgent FROM report WHERE reportContent LIKE :reportContent";
 		$statement = $pdo->prepare($query);
 
-		// bind the tweet content to the place holder in the template
+		// bind the report content to the place holder in the template
 		$reportContent = "%$reportContent%";
 		$parameters = ["reportContent" => $reportContent];
 		$statement->execute($parameters);
 
-		// build an array of tweets
+		// build an array of reports
+		$reports = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$report = new Report($row["reportId"], $row["reportCategoryId"], $row["reportContent"], $row["reportDateTime"], $row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"],$row["reportUserAgent"]);
+				$reports[$reports->key()] = $report;
+				$reports->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($reports);
+	}
+
+	/**
+	 * get the Report by report status
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $reportStatus report status to search for
+	 * @return \SplFixedArray SplFixedArray of Reports found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getReportByReportStatus(\PDO $pdo, string $reportStatus) : \SplFixedArray {
+		// sanitize the description before searching
+		$reportStatus = trim($reportStatus);
+		$reportStatus = filter_var($reportStatus, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($reportStatus) === true) {
+			throw(new \PDOException("tweet content is invalid"));
+		}
+
+		// escape any mySQL wild cards
+		$reportStatus = str_replace("_", "\\_", str_replace("%", "\\%", $reportStatus));
+
+		// create query template
+		$query = "SELECT reportId, reportCategoryId, reportContent, reportDateTime, reportIpAddress, reportLat, reportLong, reportStatus, reportUrgency, reportUserAgent FROM report WHERE reportStatus LIKE :reportStatus";
+		$statement = $pdo->prepare($query);
+
+		// bind the report content to the place holder in the template
+		$reportStatus = "%$reportStatus%";
+		$parameters = ["reportStatus" => $reportStatus];
+		$statement->execute($parameters);
+
+		// build an array of reports
+		$reports = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$report = new Report($row["reportId"], $row["reportCategoryId"], $row["reportContent"], $row["reportDateTime"], $row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"],$row["reportUserAgent"]);
+				$reports[$reports->key()] = $report;
+				$reports->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($reports);
+	}
+
+	/**
+	 * get the Report by report urgency
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $reportUrgency report status to search for
+	 * @return \SplFixedArray SplFixedArray of Reports found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getReportByReportUrgency(\PDO $pdo, string $reportUrgency) : \SplFixedArray {
+		// sanitize the description before searching
+		$reportUrgency = trim($reportUrgency);
+		$reportUrgency = filter_var($reportUrgency, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($reportUrgency) === true) {
+			throw(new \PDOException("tweet content is invalid"));
+		}
+
+		// escape any mySQL wild cards
+		$reportUrgency = str_replace("_", "\\_", str_replace("%", "\\%", $reportUrgency));
+
+		// create query template
+		$query = "SELECT reportId, reportCategoryId, reportContent, reportDateTime, reportIpAddress, reportLat, reportLong, reportStatus, reportUrgency, reportUserAgent FROM report WHERE reportUrgency LIKE :reportUrgency";
+		$statement = $pdo->prepare($query);
+
+		// bind the tweet content to the place holder in the template
+		$reportUrgency = "%$reportUrgency%";
+		$parameters = ["reportStatus" => $reportUrgency];
+		$statement->execute($parameters);
+
+		// build an array of reports
 		$reports = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
@@ -547,7 +637,7 @@ class Report implements \JsonSerializable {
 		$statement = $pdo->prepare($query);
 		$statement->execute();
 
-		// build an array of tweets
+		// build an array of reports
 		$reports = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
@@ -562,6 +652,7 @@ class Report implements \JsonSerializable {
 		}
 		return ($reports);
 	}
+
 	public function jsonSerialize() {
 		// TODO: Implement jsonSerialize() method.
 	}
