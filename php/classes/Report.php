@@ -5,6 +5,7 @@
 namespace Edu\Cnm\Infrastructure;
 
 require_once ("autoload.php");
+require_once (dirname(__DIR__, 2) . "/vendor/autoload.php");
 
 use Ramsey\Uuid\Uuid;
 /**
@@ -404,7 +405,88 @@ class Report implements \JsonSerializable {
 		$statement->execute($parameters);
 	}
 
+	/**
+	 * gets the Report by report id
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $reportId report id to search for
+	 * @return Report|null Report not found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when a variable are not the correct data type
+	 **/
+	public static function getReportByReportId(\PDO $pdo, $reportId) :?Report {
+		//sanitize the reportId before searching
+		try {
+			$reportId = self::validateUuid($reportId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
 
+		// create equal template
+		$query = "SELECT reportId, reportCategoryId, reportContent, reportDateTime, reportIpAddress, reportLat, reportLong,
+		reportStatus, reportUrgency FROM report WHERE reportId = :reportId";
+
+		$statement = $pdo->prepare($query);
+
+		// bind the report id to the place holder in the template
+		$parameters = ["reportId" => $reportId->getBytes()];
+
+		$statement->execute($parameters);
+
+		// grab the report from mySQL
+		try {
+			$report = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$tweet = new Report($row["reportId"], $row["reportCategoryId"], $row["reporttContent"], $row["reportDateTime"], 				$row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($report);
+	}
+
+	/**
+	 * get the Report by category id
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid|string $reportCategoryId category if to search for
+	 * @return \SPLFixedArray SplFixedArray of Reports found
+	 * @throws \PDOException when mySQL related  errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getReportByReportCategoryId (\PDO $pdo, string $reportCategoryId) : \SPLFixedArray {
+
+		try {
+			$reportCategoryId = self::validateUuid($reportCategoryId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+
+		// create query template
+		$query = "SELECT reportId, reportCategoryId, reportContent, reportDateTime, reportIpAddress, reportLat, reportLong,
+		reportStatus, reportUrgency FROM report WHERE reportId = :reportId";
+		$statement = $pdo->prepare($query);
+		// bind the tweet profile id to the place holder in the template
+		$parameters = ["reportCategoryId" => $reportCategoryId->getBytes()];
+		$statement->execute($parameters);
+		// build an array of reports
+		$reports = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$report = new Report($row["reportId"], $row["reportCategory"], $row["reportContent"], $row["reportDateTime"], $row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"]);
+				$reports[$reports->key()] = $report;
+				$reports->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($reports);
+	}
 
 	public function jsonSerialize() {
 		// TODO: Implement jsonSerialize() method.
