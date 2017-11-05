@@ -489,7 +489,7 @@ class Report implements \JsonSerializable {
 	}
 
 	/**
-	 * gets the Report by Content
+	 * get the Report by report content
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param string $reportContent report content to search for
