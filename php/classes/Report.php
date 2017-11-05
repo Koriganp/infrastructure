@@ -654,7 +654,19 @@ class Report implements \JsonSerializable {
 		return ($reports);
 	}
 
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 */
 	public function jsonSerialize() {
-		// TODO: Implement jsonSerialize() method.
+		$fields = get_object_vars($this);
+
+		$fields["reportId"] = $this->reportId;
+		$fields["reportCategoryId"] = $this->reportCategoryId;
+
+		// format the date so that the front end can consume it
+		$fields["reportDateTime"] = round(floatval($this->reportDateTime->format("U.u")) * 1000);
+		return($fields);
 	}
 }
