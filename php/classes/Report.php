@@ -467,7 +467,7 @@ class Report implements \JsonSerializable {
 
 		// create query template
 		$query = "SELECT reportId, reportCategoryId, reportContent, reportDateTime, reportIpAddress, reportLat, reportLong,
-		reportStatus, reportUrgency FROM report WHERE reportId = :reportId";
+		reportStatus, reportUrgency FROM report WHERE reportCategoryId = :reportCategoryId";
 		$statement = $pdo->prepare($query);
 		// bind the tweet profile id to the place holder in the template
 		$parameters = ["reportCategoryId" => $reportCategoryId->getBytes()];
@@ -478,6 +478,51 @@ class Report implements \JsonSerializable {
 		while(($row = $statement->fetch()) !== false) {
 			try {
 				$report = new Report($row["reportId"], $row["reportCategory"], $row["reportContent"], $row["reportDateTime"], $row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"]);
+				$reports[$reports->key()] = $report;
+				$reports->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($reports);
+	}
+
+	/**
+	 * gets the Report by Content
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $reportContent report content to search for
+	 * @return \SplFixedArray SplFixedArray of Reports found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getReportByReportContent(\PDO $pdo, string $reportContent) : \SplFixedArray {
+		// sanitize the description before searching
+		$reportContent = trim($reportContent);
+		$reportContent = filter_var($reportContent, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($tweetContent) === true) {
+			throw(new \PDOException("tweet content is invalid"));
+		}
+
+		// escape any mySQL wild cards
+		$reportContent = str_replace("_", "\\_", str_replace("%", "\\%", $reportContent));
+
+		// create query template
+		$query = "SELECT reportId, reportCategoryId, reportContent, reportDateTime, reportIpAddress, reportLat, reportLong, reportStatus, reportUrgency, reportUserAgent FROM report WHERE reportContent LIKE :tweetContent";
+		$statement = $pdo->prepare($query);
+
+		// bind the tweet content to the place holder in the template
+		$reportContent = "%$reportContent%";
+		$parameters = ["reportContent" => $reportContent];
+		$statement->execute($parameters);
+
+		// build an array of tweets
+		$reports = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$report = new Report($row["reportId"], $row["reportCategoryId"], $row["reportContent"], $row["reportDateTime"], $row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"],$row["reportUserAgent"]);
 				$reports[$reports->key()] = $report;
 				$reports->next();
 			} catch(\Exception $exception) {
