@@ -2,6 +2,7 @@
 	<testsuites>
 		<testsuite name="Infrastructure">
 			<file>CategoryTest.php</file>
+			<file>ReportTest.php</file>
 		</testsuite>
 	</testsuites>
 	<filter>
