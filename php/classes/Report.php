@@ -1,6 +1,8 @@
 <?php
 /**
+ * Entity 'Report' for Infrastructure
  *
+ * @author Kevin Atkins
  **/
 namespace Edu\Cnm\Infrastructure;
 
