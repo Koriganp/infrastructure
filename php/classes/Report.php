@@ -1,6 +1,6 @@
 <?php
 /**
- * Entity 'Report' for Infrastructure
+ * Class 'Report' for Entity 'report' in Infrastructure
  *
  * @author Kevin Atkins
  **/
