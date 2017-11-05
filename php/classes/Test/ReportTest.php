@@ -70,4 +70,32 @@ class ReportTest extends InfrastructureTest {
 	 **/
 	protected $VALID_SUNSETDATETIME = null;
 
+	/**
+	 * create dependent objects before running each test
+	 **/
+	public final function setUp() : void {
+		// run the default setUp() method first
+		parent::setUp();
+		$password = "abc123";
+		$this->VALID_PROFILE_SALT = bin2hex(random_bytes(32));
+		$this->VALID_PROFILE_HASH = hash_pbkdf2("sha512", $password, $this->VALID_PROFILE_SALT, 216144);
+
+		// create and insert a Profile to own the test Report
+		$this->profile = new Profile(generateUuidV4(), null,"admin1", "test@phpunit.de", $this->VALID_PROFILE_HASH, $this->VALID_PROFILE_SALT);
+
+		$this->profile->insert($this->getPDO());
+
+		// calculate the date (just use the time the unit test was setup...)
+		$this->VALID_REPORTDATETIME = new \DateTime();
+
+		// format the sunrise date to use for testing
+		$this->VALID_SUNRISEDATETIME = new \DateTime();
+		$this->VALID_SUNRISEDATETIME->sub(new \DateInterval("P10D"));
+
+		// format the sunset date to use for testing
+		$this->VALID_SUNSETDATETIME = new \DateTime();
+		$this->VALID_SUNSETDATETIME->add(new \DateInterval("P10D"));
+
+
+	}
 }
