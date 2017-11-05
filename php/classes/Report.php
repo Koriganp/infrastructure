@@ -638,6 +638,7 @@ class Report implements \JsonSerializable {
 		$statement->execute();
 
 		// build an array of reports
+
 		$reports = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
