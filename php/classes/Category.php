@@ -157,10 +157,10 @@ class Category implements \JsonSerializable {
 	 **/
 	public function update(\PDO $pdo): void {
 		//create query template
-		$query = "UPDATE category SET categoryId = :categoryId, categoryName = :categoryName";
+		$query = "UPDATE category SET categoryName = :categoryName WHERE categoryId = :categoryId" ;
 		$statement = $pdo->prepare($query);
 		//bind the member variables to the place holders in the template
-		$parameters=["categoryId=>$this->categoryId", "categoryName=>$this->categoryName"];
+		$parameters=["categoryName"=>$this->categoryName];
 		$statement->execute($parameters);
 	}
 
