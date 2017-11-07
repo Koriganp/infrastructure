@@ -3,7 +3,7 @@
  * This is the Comment entity. The Comment entity handles comments on reports.
  *
  * @author Jack Arnold
- * @version 7.1
+ * @version 1.0.0
  **/
 
 namespace Edu\Cnm\Infrastructure;

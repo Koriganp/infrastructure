@@ -5,7 +5,7 @@
  * This is the category entity that stores the category for the reports.
  *
  * @author Korigan Payne <kpayne11@cnm.edu>
- * @version 7.1
+ * @version 1.0.0
  **/
 
 namespace Edu\Cnm\Infrastructure;
