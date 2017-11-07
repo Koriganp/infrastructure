@@ -259,17 +259,15 @@ class Comment implements \JsonSerializable {
      * @throws \TypeError if $pdo is not a PDO connection object
      **/
     public function delete(\PDO $pdo): void {
-        //enforce the commentId is not null (don't delete a comment that does not exist)
-        if($this->commentId === null) {
-            throw(new \PDOException("unable to delete a comment that does not exist"));
-        }
+
         //create query template
         $query = "DELETE FROM comment WHERE commentId = :commentId";
         $statement = $pdo->prepare($query);
         //bind the member variables to the place holders in the template
-        $parameters = ["commentId" => $this->commentId];
+        $parameters = ["commentId" => $this->commentId->getBytes()];
         $statement->execute($parameters);
     }
+
     /**
      * gets the Comment by the comment's id
      *
