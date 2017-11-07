@@ -228,25 +228,35 @@ class Report implements \JsonSerializable {
 	/**
 	 * accessor method for report latitude
 	 *
-	 * @return int value of report latitude
+	 * @return float value of report latitude
 	 **/
 	public function getReportLat() : float {
 		return($this->reportLat);
 	}
 
 	/**
-	 * mutator method  for report latitude
+	 * mutator method for report latitude
 	 *
 	 * @param $newReportLat
 	 **/
-	public function setReportLat($newReportLat) : void {
+	public function setReportLat($newReportLat): void {
+		// verify the float is secure
+		$newReportLat = filter_var($newReportLat, FILTER_VALIDATE_FLOAT);
+		if(empty($newReportLat) === true) {
+			throw(new \InvalidArgumentException("latitude is empty or insecure"));
+		}
+		// verify the float will fit in the database
+		if(($newReportLat) > 12) {
+			throw(new \RangeException("latitude is too large"));
+		}
+		// store the latitude
 		$this->reportLat = $newReportLat;
 	}
 
 	/**
 	 * accessor method for report longitude
 	 *
-	 * @return int value of report longitude
+	 * @return float value of report longitude
 	 **/
 	public function getReportLong() : float {
 		return($this->reportLong);
@@ -257,8 +267,18 @@ class Report implements \JsonSerializable {
 	 *
 	 * @param $newReportLong
 	 **/
-	public function setReportLong($newReportLong) : void {
-		$this->reportLat = $newReportLong;
+	public function setReportLong($newReportLong): void {
+		// verify the float is secure
+		$newReportLong = filter_var($newReportLong, FILTER_VALIDATE_FLOAT);
+		if(empty($newReportLong) === true) {
+			throw(new \InvalidArgumentException("latitude is empty or insecure"));
+		}
+		// verify the float will fit in the database
+		if(($newReportLong) > 12) {
+			throw(new \RangeException("latitude is too large"));
+		}
+		// store the latitude
+		$this->reportLongLat = $newReportLong;
 	}
 
 	/**
