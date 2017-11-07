@@ -95,7 +95,18 @@ class ReportTest extends InfrastructureTest {
 		// format the sunset date to use for testing
 		$this->VALID_SUNSETDATETIME = new \DateTime();
 		$this->VALID_SUNSETDATETIME->add(new \DateInterval("P10D"));
-
-
 	}
+}
+
+/**
+ * test inserting a valid tweet and verify that the actual mySQL data matches
+ **/
+public function testInsertValidReport() : void {
+	// count the number of rows and save it for later
+	$numRows = $this->getConnection()->getRowCount("report");
+
+	// create a new Report and insert to into mySQL
+	$reportId = generateUuidV4();
+	$report = new Report($reportId, $this->report->getProfileId);
+
 }

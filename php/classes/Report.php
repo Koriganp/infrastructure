@@ -669,6 +669,6 @@ class Report implements \JsonSerializable {
 
 		// format the date so that the front end can consume it
 		$fields["reportDateTime"] = round(floatval($this->reportDateTime->format("U.u")) * 1000);
-		return($fields);
+		return ($fields);
 	}
 }

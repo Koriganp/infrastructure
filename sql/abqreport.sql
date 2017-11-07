@@ -1,8 +1,8 @@
--- DROP TABLE IF EXISTS `comment`;
--- DROP TABLE IF EXISTS image;
--- DROP TABLE IF EXISTS report;
--- DROP TABLE IF EXISTS category;
--- DROP TABLE IF EXISTS `profile`;
+DROP TABLE IF EXISTS `comment`;
+DROP TABLE IF EXISTS image;
+DROP TABLE IF EXISTS report;
+DROP TABLE IF EXISTS category;
+DROP TABLE IF EXISTS `profile`;
 
 
 CREATE TABLE profile (
@@ -29,11 +29,11 @@ CREATE TABLE report (
 	reportContent VARCHAR(3000) NOT NULL ,
 	reportDateTime DATETIME(6) NOT NULL ,
 	reportIpAddress VARBINARY(16) NOT NULL ,
-	reportLat DECIMAL(12) NOT NULL ,
-	reportLong DECIMAL(12) NOT NULL ,
+	reportLat DECIMAL(9,6) NOT NULL ,
+	reportLong DECIMAL(9,6) NOT NULL ,
 	reportStatus VARCHAR(15) NOT NULL ,
-	reportUrgency VARCHAR (5) ,
-	reportUserAgent TINYINT UNSIGNED NOT NULL ,
+	reportUrgency TINYINT UNSIGNED NOT NULL ,
+	reportUserAgent VARCHAR(255) NOT NULL ,
 	INDEX (reportCategoryId) ,
 	FOREIGN KEY (reportCategoryId) REFERENCES category(categoryId) ,
 	PRIMARY KEY (reportId)
@@ -43,8 +43,8 @@ CREATE TABLE image (
 	imageId BINARY(16) NOT NULL ,
 	imageReportId BINARY(16) NOT NULL ,
 	imageCloudinary VARCHAR(64) NOT NULL ,
-	imageLat DECIMAL(12) NOT NULL ,
-	imageLong DECIMAL(12) NOT NULL ,
+	imageLat DECIMAL(9,6) NOT NULL ,
+	imageLong DECIMAL(9,6) NOT NULL ,
 	INDEX (imageReportId) ,
 	FOREIGN KEY (imageReportId) REFERENCES report(reportId) ,
 	PRIMARY KEY (imageId)
