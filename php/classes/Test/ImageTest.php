@@ -50,13 +50,13 @@ class ImageTest extends InfrastructureTest {
 	 * valid latitude to use to create an image
 	 * @var float $VALID_LAT;
 	 **/
-	protected $VALID_LAT;
+	protected $VALID_LAT = 41.40338;
 
 	/**
 	 * valid longitude to use to create an image
 	 * @var float $VALID_LAT;
 	 **/
-	protected $VALID_LONG;
+	protected $VALID_LONG = 2.17403;
 
 	/**
 	 * create dependant objects before running each test
