@@ -33,7 +33,7 @@ class Category implements \JsonSerializable {
 	/**
 	 * constructor for category
 	 *
-	 * @param string|Uuid $newCategoryId id of this category
+	 * @param string |Uuid $newCategoryId id of this category
 	 * @param string $newCategoryName name of this category
 	 * @throws \InvalidArgumentException if data types are not valid
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
@@ -65,7 +65,7 @@ class Category implements \JsonSerializable {
 	/**
 	 * mutator method for category id
 	 *
-	 * @param Uuid|string $newCategoryId new value of category id
+	 * @param Uuid |string $newCategoryId new value of category id
 	 * @throws \RangeException if $newCategoryId is not positive
 	 * @throws \TypeError if the category Id is not a uuid
 	 **/
@@ -168,7 +168,7 @@ class Category implements \JsonSerializable {
 	 * gets the Category by category id
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @param Uuid $categoryId profile id to search for
+	 * @param Uuid | string $categoryId profile id to search for
 	 * @return Category|null Category or null if not found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
