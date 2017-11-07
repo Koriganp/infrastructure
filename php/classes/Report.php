@@ -334,19 +334,18 @@ class Report implements \JsonSerializable {
 	 **/
 	public function setReportUrgency($newReportUrgency) : void {
 		// verify the report status is secure
-		$newReportUrgency = trim($newReportUrgency);
-		$newReportUrgency = filter_var($newReportUrgency, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		$newReportUrgency = filter_var($newReportUrgency, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 		if(empty($newReportUrgency) === true) {
-			throw(new \InvalidArgumentException("report status is empty or insecure"));
+			throw(new \InvalidArgumentException("report urgency is empty or insecure"));
 		}
 
-		// verify the report status will fit in the database
-		if(strlen($newReportUrgency) > 5) {
-			throw(new \RangeException("report status too long"));
+		// verify the report urgency will fit in the database
+		if($newReportUrgency === NAN) {
+			throw(new \RangeException("report status invalid"));
 		}
 
 		//store the report status
-		$this->reportStatus = $newReportUrgency;
+		$this->reportUrgency = $newReportUrgency;
 	}
 
 	/**
