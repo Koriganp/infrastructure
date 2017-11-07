@@ -68,9 +68,7 @@ class Report implements \JsonSerializable {
 	 **/
 	private $reportUserAgent;
 
-	public function __construct($newReportId, $newReportCategoryId, string $newReportContent, $newReportDateTime = null,
-										 $newReportIpAddress, $newReportLat, $newReportLong, $newReportStatus, $newReportUrgency,
-										 $newReportUserAgency) {
+	public function __construct($newReportId, $newReportCategoryId, string $newReportContent, $newReportDateTime = null, $newReportIpAddress, $newReportLat, $newReportLong, $newReportStatus, $newReportUrgency, $newReportUserAgent) {
 		try {
 			$this->setReportId($newReportId);
 			$this->setReportCategoryId($newReportCategoryId);
@@ -81,7 +79,7 @@ class Report implements \JsonSerializable {
 			$this->setReportLong($newReportLong);
 			$this->setReportStatus($newReportStatus);
 			$this->setReportUrgency($newReportUrgency);
-			$this->setReportUserAgent($newReportUserAgency);
+			$this->setReportUserAgent($newReportUserAgent);
 
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			$exceptionType = get_class($exception);
@@ -318,33 +316,32 @@ class Report implements \JsonSerializable {
 	/**
 	 * accessor method for report urgency
 	 *
-	 * @return string value of report urgency
+	 * @return int value of report urgency
 	 **/
-	public function getReportUrgency() : string {
+	public function getReportUrgency() : int {
 		return($this->reportUrgency);
 	}
 
 	/**
 	 * mutator method for report urgency
 	 *
-	 * @param string $newReportUrgency new value of report status
-	 * @throws \InvalidArgumentException if $newReportUrgency is not a string or insecure
-	 * @throws \RangeException if $newReportUrgency is > 5 characters
-	 * @throws \TypeError if $newReportUrgency is not a string
+	 * @param int $newReportUrgency new value of report urgency
+	 * @throws \InvalidArgumentException if $newReportUrgency is not an int or secure
+	 * @throws \TypeError if $newReportUrgency is not an int
 	 **/
-	public function setReportUrgency($newReportUrgency) : void {
-		// verify the report status is secure
-		$newReportUrgency = filter_var($newReportUrgency, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+	public function setReportUrgency(int $newReportUrgency) : void {
+		// verify the report urgency is secure
+		$newReportUrgency = is_int($newReportUrgency);
 		if(empty($newReportUrgency) === true) {
 			throw(new \InvalidArgumentException("report urgency is empty or insecure"));
 		}
 
 		// verify the report urgency will fit in the database
 		if($newReportUrgency === NAN) {
-			throw(new \RangeException("report status invalid"));
+			throw(new \RangeException("report urgency invalid"));
 		}
 
-		//store the report status
+		//store the report urgency
 		$this->reportUrgency = $newReportUrgency;
 	}
 
@@ -508,7 +505,7 @@ class Report implements \JsonSerializable {
 
 		// create query template
 		$query = "SELECT reportId, reportCategoryId, reportContent, reportDateTime, reportIpAddress, reportLat, reportLong,
-		reportStatus, reportUrgency FROM report WHERE reportCategoryId = :reportCategoryId";
+		reportStatus, reportUrgency, reportUserAgent FROM report WHERE reportCategoryId = :reportCategoryId";
 		$statement = $pdo->prepare($query);
 		// bind the report profile id to the place holder in the template
 		$parameters = ["reportCategoryId" => $reportCategoryId->getBytes()];
@@ -518,7 +515,7 @@ class Report implements \JsonSerializable {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$report = new Report($row["reportId"], $row["reportCategory"], $row["reportContent"], $row["reportDateTime"], $row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"]);
+				$report = new Report($row["reportId"], $row["reportCategory"], $row["reportContent"], $row["reportDateTime"], $row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"], $row["reportUserAgent"]);
 				$reports[$reports->key()] = $report;
 				$reports->next();
 			} catch(\Exception $exception) {
