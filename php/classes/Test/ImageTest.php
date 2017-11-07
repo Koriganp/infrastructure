@@ -38,7 +38,7 @@ class ImageTest extends InfrastructureTest {
 	 * valid IPAddress for mocked report
 	 * @var string $VALID_IPADDRESS
 	 */
-	protected $VALID_IPADDRESS;
+	protected $VALID_IPADDRESS = ;
 
 	/**
 	 * valid cloudinary to use to create an image
