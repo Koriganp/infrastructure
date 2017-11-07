@@ -46,7 +46,5 @@ class ImageTest extends InfrastructureTest {
 	public final function setUp() : void {
 		//run the default setUp() method first
 		parent::setUp();
-
-
 	}
 }
