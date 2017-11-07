@@ -338,8 +338,28 @@ class Report implements \JsonSerializable {
 		return($this->reportUserAgent);
 	}
 
-	public function setReportUserAgent($newReportUserAgent) : void {
-		$this->reportUserAgent = $newReportUserAgent;
+	/**
+	 * mutator method for report user agent
+	 *
+	 * @param string $newReportUserAgent new value of report content
+	 * @throws \InvalidArgumentException if $newReportUserAgent is not a string or insecure
+	 * @throws \RangeException if $newReportUserAgent is > 255
+	 * @throws  \TypeError if $newReportUserAgent is not a string
+	 **/
+	public function setReportUserAgent(string $newReportUserAgent) : void {
+		//verify the report user agent is secure
+		$newReportUserAgent = trim($newReportUserAgent);
+		$newReportUserAgent = filter_var($newReportUserAgent, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+
+		if(empty($newReportUserAgent) === true) {
+			throw(new \InvalidArgumentException("report user agent is empty or insecure"));
+		}
+
+		//verify the report content will fit in the database
+		if(strlen($newReportUserAgent) > 255) {
+			throw(new \RangeException("report user agent too large"));
+		}
+		$this->reportContent = $newReportUserAgent;
 	}
 
 	/**
