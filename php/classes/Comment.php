@@ -66,21 +66,21 @@ class Comment implements \JsonSerializable {
 				$this->setCommentProfileId($newCommentProfileId);
 				$this->setCommentReportId($newCommentReportId);
 				$this->setCommentContent($newCommentContent);
-				$this->setCommentDateTime($newCommentDate);
+				$this->setCommentDateTime($newCommentDateTime);
        } catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
            $exceptionType = get_class($exception);
            throw(new $exceptionType($exception->getMessage(), 0, $exception));
        }
 	}
 
-    /**
-     * accessor method for commentId
-     *
-     * @return Uuid of commentId
-     **/
-    public function getCommentId() : Uuid {
-        return $this->commentId;
-    }
+	/**
+	 * accessor method for commentId
+	 *
+	 * @return Uuid of commentId
+	 **/
+	public function getCommentId() : Uuid {
+		return $this->commentId;
+	}
 
 	/**
 	 * mutator method for comment id
@@ -89,54 +89,54 @@ class Comment implements \JsonSerializable {
 	 * @throws \RangeException if $newCommentId is not positive
 	 * @throws \TypeError if $newCommentId is not a uuid or string
 	 **/
-    public function setCommentId($newCommentId) : void {
-        try {
-            $uuid = self::validateUuid($newCommentId);
-        } catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-            $exceptionType = get_class($exception);
-            throw(new $exceptionType($exception->getMessage(), 0, $exception));
-        }
-        //convert and store the comment id
-        $this->commentId = $uuid;
-    }
+	public function setCommentId($newCommentId) : void {
+		try {
+			$uuid = self::validateUuid($newCommentId);
+		} catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+		//convert and store the comment id
+		$this->commentId = $uuid;
+	}
 
-    /**
-     * accessor method for commentProfileId
-     *
-     * @return Uuid of commentProfileId
-     **/
-    public function getCommentProfileId() : Uuid {
-        return $this->commentProfileId;
-    }
+	/**
+	 * accessor method for commentProfileId
+	 *
+	 * @return Uuid of commentProfileId
+	 **/
+	public function getCommentProfileId() : Uuid {
+		return $this->commentProfileId;
+	}
 
-    /**
-	  * mutator method for comment profile Id
-	  *
-     * @param string/Uuid $newCommentProfileId new value of commentProfileId
-     * @throws \InvalidArgumentException if data types are invalid
-     * @throws \RangeException if string values are too long
-     * @throws \TypeError if data types are invalid
-     * @throws \Exception for any other exception
-     **/
-    public function setCommentProfileId($newCommentProfileId) : void {
-        try {
-            $uuid = self::validateUuid($newCommentProfileId);
-        } catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-            $exceptionType = get_class($exception);
-            throw(new $exceptionType($exception->getMessage(), 0, $exception));
-        }
+	/**
+	 * mutator method for comment profile Id
+	 *
+	 * @param string/Uuid $newCommentProfileId new value of commentProfileId
+	 * @throws \InvalidArgumentException if data types are invalid
+	 * @throws \RangeException if string values are too long
+	 * @throws \TypeError if data types are invalid
+	 * @throws \Exception for any other exception
+	 **/
+	public function setCommentProfileId($newCommentProfileId) : void {
+		try {
+			$uuid = self::validateUuid($newCommentProfileId);
+		} catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
 		 // convert and store the profile id
-        $this->commentProfileId = $uuid;
-    }
+		$this->commentProfileId = $uuid;
+	}
 
-    /**
-     * accessor method for commentReportId
-     *
-     * @return Uuid of commentReportId
-     **/
-    public function getCommentReportId() : Uuid {
-        return $this->commentReportId;
-    }
+	/**
+	 * accessor method for commentReportId
+	 *
+	 * @return Uuid of commentReportId
+	 **/
+	public function getCommentReportId() : Uuid {
+		return $this->commentReportId;
+	}
 
     /**
 	  * mutator method for comment report id
