@@ -74,4 +74,24 @@ class ImageTest extends InfrastructureTest {
 		//create and insert a mocked report
 		$this->report = new Report(generateUuidV4(), $this->category->getCategoryId(), "there is a hole", $this->VALID_REPORTDATE, $this->VALID_IPADDRESS, $this->VALID_LAT, $this->VALID_LONG, "Received", "0", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36");
 	}
+
+	/**
+	 * test inserting a valid Image and verify that the actual mySQL data matches
+	 **/
+	public function testInsertValidImage() : void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("image");
+		// create a new image and insert to into mySQL
+		$imageId = generateUuidV4();
+		$image = new Image($imageId, $this->report->getReportId(), $this->VALID_CLOUDINARY, $this->VALID_LAT, $this->VALID_LONG);
+		$image->insert($this->getPDO());
+		// grab the data from mySQL and enforce the fields match our expectations
+		$pdoImage = Image::getImageByImageId($this->getPDO(), $image->getImageId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("image"));
+		$this->assertEquals($pdoImage->getImageId(), $imageId);
+		$this->assertEquals($pdoImage->getImageReportId(), $this->report->getReportId());
+		$this->assertEquals($pdoImage->getImageCloudinary(), $this->VALID_CLOUDINARY);
+		$this->assertEquals($pdoImage->getImageLat(), $this->VALID_LAT);
+		$this->assertEquals($pdoImage->getImageLong(), $this->VALID_LONG);
+	}
 }
