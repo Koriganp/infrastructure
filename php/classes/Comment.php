@@ -89,7 +89,7 @@ class Comment implements \JsonSerializable {
 	 * @throws \RangeException if $newCommentId is not positive
 	 * @throws \TypeError if $newCommentId is not a uuid or string
 	 **/
-    public function setCommentId($newCommentId) : Uuid {
+    public function setCommentId($newCommentId) : void {
         try {
             $uuid = self::validateUuid($newCommentId);
         } catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -118,7 +118,7 @@ class Comment implements \JsonSerializable {
      * @throws \TypeError if data types are invalid
      * @throws \Exception for any other exception
      **/
-    public function setCommentProfileId($newCommentProfileId) : Uuid {
+    public function setCommentProfileId($newCommentProfileId) : void {
         try {
             $uuid = self::validateUuid($newCommentProfileId);
         } catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
@@ -147,7 +147,7 @@ class Comment implements \JsonSerializable {
      * @throws \TypeError if data types are invalid
      * @throws \Exception for any other exception
      **/
-    public function setCommentReportId($newCommentReportId) : Uuid {
+    public function setCommentReportId($newCommentReportId) : void {
         try {
             $uuid = self::validateUuid($newCommentReportId);
         } catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
