@@ -178,13 +178,12 @@ class Image implements \JsonSerializable {
 	 **/
 	public function setImageLat($newImageLat): void {
 		// verify the float is secure
-		$newImageLat = trim($newImageLat);
 		$newImageLat = filter_var($newImageLat, FILTER_VALIDATE_FLOAT);
 		if(empty($newImageLat) === true) {
 			throw(new \InvalidArgumentException("latitude is empty or insecure"));
 		}
 		// verify the float will fit in the database
-		if(strlen($newImageLat) > 12) {
+		if(($newImageLat) > 12) {
 			throw(new \RangeException("latitude is too large"));
 		}
 		// store the latitude
@@ -210,7 +209,6 @@ class Image implements \JsonSerializable {
 	 **/
 	public function setImageLong($newImageLong): void {
 		// verify the float is secure
-		$newImageLong = trim($newImageLong);
 		$newImageLong = filter_var($newImageLong, FILTER_VALIDATE_FLOAT);
 		if(empty($newImageLong) === true) {
 			throw(new \InvalidArgumentException("longitude is empty or insecure"));
