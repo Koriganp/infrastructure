@@ -81,7 +81,7 @@ class Report implements \JsonSerializable {
 			$this->setReportLong($newReportLong);
 			$this->setReportStatus($newReportStatus);
 			$this->setReportUrgency($newReportUrgency);
-			$this->setReportUserAgency($newReportUserAgency);
+			$this->setReportUserAgent($newReportUserAgency);
 
 		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			$exceptionType = get_class($exception);
