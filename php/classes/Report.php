@@ -246,7 +246,7 @@ class Report implements \JsonSerializable {
 			throw(new \InvalidArgumentException("latitude is empty or insecure"));
 		}
 		// verify the float will fit in the database
-		if(($newReportLat) > 12) {
+		if(strlen($newReportLat) > 12) {
 			throw(new \RangeException("latitude is too large"));
 		}
 		// store the latitude
