@@ -50,9 +50,9 @@ class Comment implements \JsonSerializable {
 	/**
 	 * Constructor for the comment
 	 *
-	 * @param Uuid $newCommentId id of the comment
-	 * @param Uuid $newCommentProfileId id of the profile that posted the comment
-	 * @param Uuid $newCommentReportId id of the report the comment was posted on
+	 * @param Uuid | string $newCommentId id of the comment
+	 * @param Uuid | string $newCommentProfileId id of the profile that posted the comment
+	 * @param Uuid | string $newCommentReportId id of the report the comment was posted on
 	 * @param string $newCommentContent the text written in the comment
 	 * @param \DateTime|string|null $newCommentDateTime the
 	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
@@ -67,10 +67,10 @@ class Comment implements \JsonSerializable {
 				$this->setCommentReportId($newCommentReportId);
 				$this->setCommentContent($newCommentContent);
 				$this->setCommentDateTime($newCommentDateTime);
-       } catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-           $exceptionType = get_class($exception);
-           throw(new $exceptionType($exception->getMessage(), 0, $exception));
-       }
+		} catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
 	}
 
 	/**
@@ -85,7 +85,7 @@ class Comment implements \JsonSerializable {
 	/**
 	 * mutator method for comment id
 	 *
-	 * @param Uuid/string $newCommentId new value of comment id
+	 * @param Uuid | string $newCommentId new value of comment id
 	 * @throws \RangeException if $newCommentId is not positive
 	 * @throws \TypeError if $newCommentId is not a uuid or string
 	 **/
@@ -112,7 +112,7 @@ class Comment implements \JsonSerializable {
 	/**
 	 * mutator method for comment profile Id
 	 *
-	 * @param string/Uuid $newCommentProfileId new value of commentProfileId
+	 * @param Uuid | string $newCommentProfileId new value of commentProfileId
 	 * @throws \InvalidArgumentException if data types are invalid
 	 * @throws \RangeException if string values are too long
 	 * @throws \TypeError if data types are invalid
@@ -138,54 +138,54 @@ class Comment implements \JsonSerializable {
 		return $this->commentReportId;
 	}
 
-    /**
-	  * mutator method for comment report id
-	  *
-     * @param string $newCommentReportId new value of commentReportId
-     * @throws \InvalidArgumentException if data types are invalid
-     * @throws \RangeException if string values are too long
-     * @throws \TypeError if data types are invalid
-     * @throws \Exception for any other exception
-     **/
-    public function setCommentReportId($newCommentReportId) : void {
-        try {
-            $uuid = self::validateUuid($newCommentReportId);
-        } catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-            $exceptionType = get_class($exception);
-            throw(new $exceptionType($exception->getMessage(), 0, $exception));
-        }
-        $this->commentReportId = $uuid;
-    }
+	/**
+	 * mutator method for comment report id
+	 *
+	 * @param Uuid | string $newCommentReportId new value of commentReportId
+	 * @throws \InvalidArgumentException if data types are invalid
+	 * @throws \RangeException if string values are too long
+	 * @throws \TypeError if data types are invalid
+	 * @throws \Exception for any other exception
+	 **/
+	public function setCommentReportId($newCommentReportId) : void {
+		try {
+			$uuid = self::validateUuid($newCommentReportId);
+		} catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+		$this->commentReportId = $uuid;
+	}
 
-    /**
-     * accessor method for commentContent
-     *
-     * @return string returns the comment content
-     **/
-    public function getCommentContent() :string {
-        return($this->commentContent);
-    }
+	/**
+	 * accessor method for commentContent
+	 *
+	 * @return string returns the comment content
+	 **/
+	public function getCommentContent() :string {
+		return($this->commentContent);
+	}
 
-    /**
-	  * mutator method for comment content
-	  *
-     * @param string $newCommentContent new value of commentContent
-     * @throws \InvalidArgumentException if data types are invalid
-     * @throws \RangeException if string values are too long
-     * @throws \TypeError if $newCommentContent is not a string
-     * @throws \Exception for any other exception
-     **/
-    public function setCommentContent($newCommentContent) : void {
-        $newCommentContent = trim($newCommentContent);
-        $newCommentContent = filter_var($newCommentContent, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-        if(empty($newCommentContent) === true) {
-            throw(new \InvalidArgumentException("commentContent is empty or insecure"));
-        }
-        if(strlen($newCommentContent) > 3000) {
-            throw(new \RangeException("commentContent is too large"));
-        }
-        $this->commentContent = $newCommentContent;
-    }
+	/**
+	 * mutator method for comment content
+	 *
+	 * @param string $newCommentContent new value of commentContent
+	 * @throws \InvalidArgumentException if data types are invalid
+	 * @throws \RangeException if string values are too long
+	 * @throws \TypeError if $newCommentContent is not a string
+	 * @throws \Exception for any other exception
+	 **/
+	public function setCommentContent($newCommentContent) : void {
+		$newCommentContent = trim($newCommentContent);
+		$newCommentContent = filter_var($newCommentContent, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newCommentContent) === true) {
+			throw(new \InvalidArgumentException("commentContent is empty or insecure"));
+		}
+		if(strlen($newCommentContent) > 3000) {
+			throw(new \RangeException("commentContent is too large"));
+		}
+		$this->commentContent = $newCommentContent;
+	}
 
 	/**
 	 * accessor method for comment date
@@ -206,7 +206,7 @@ class Comment implements \JsonSerializable {
 	public function setCommentDateTime($newCommentDateTime = null) : void {
 		// base case: if the date is null, use the current date and time
 		if($newCommentDateTime === null) {
-			$this->CommentDateTime = new \DateTime();
+			$this->commentDateTime = new \DateTime();
 			return;
 		}
 		// store the like date using the ValidateDate trait
@@ -219,84 +219,84 @@ class Comment implements \JsonSerializable {
 		$this->commentDateTime = $newCommentDateTime;
 	}
 
-    /**
-     * Inserts this Comment into MySQL
-     *
-     * @param \PDO $pdo PDO connection object
-     * @throws \PDOException when mySQL related errors occur
-     * @throws \TypeError if $pdo is not a PDO connection object
-     **/
-    public function insert(\PDO $pdo) :void {
+	/**
+	 * Inserts this Comment into MySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function insert(\PDO $pdo) :void {
+ 		$query = "INSERT INTO comment(commentId, commentProfileId, commentReportId, commentContent, commentDateTime) VALUES(:commentId, :commentProfileId, :commentReportId, :commentContent, :commentDateTime)";
+		$statement = $pdo->prepare($query);
+		$formattedDate = $this->commentDateTime->format("Y-m-d H:i:s.u");
+		$parameters = ["commentId" => $this->commentId->getBytes(), "commentProfileId" => $this->commentProfileId->getBytes(), "commentReportId" => $this->commentReportId->getBytes(), "commentContent" => $this->commentContent, "commentDateTime" => $formattedDate];
+		$statement->execute($parameters);
+	}
 
-        $query = "INSERT INTO comment(commentId, commentProfileId, commentReportId, commentContent, commentDateTime) VALUES(:commentId, :commentProfileId, :commentReportId, :commentContent, :commentDateTime)";
-        $statement = $pdo->prepare($query);
-        $formattedDate = $this->commentDateTime->format("Y-m-d H:i:s.u");
-        $parameters = ["commentId" => $this->commentId->getBytes(), "commentProfileId" => $this->commentProfileId->getBytes(), "commentReportId" => $this->commentReportId->getBytes(), "commentContent" => $this->commentContent, "commentDateTime" => $formattedDate];
-        $statement->execute($parameters);
-    }
-
-    /**
-	  * Updates this Comment in MySQL
-     *
-     * @param \PDO $pdo PDO connection object
-     * @throws \PDOException when mySQL related errors occur
-     * @throws \TypeError if $pdo is not a PDO connection object
-     **/
-    public function update(\PDO $pdo) : void {
+ 	/**
+	 * Updates this Comment in MySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function update(\PDO $pdo) : void {
 		 $query = "UPDATE `comment` SET commentId = :commentId, commentProfileId = :commentProfileId, commentReportId = :commentReportId, commentContent = :commentContnt, commentDateTime = :commentDateTime";
 		 $statement = $pdo->prepare($query);
 
 		 $formattedDate = $this->commentDateTime->format("Y-m-d H:i:s.u");
 		 $parameters = ["commentId" => $this->commentId->getBytes(), "commentProfileId" => $this->commentProfileId->getBytes(), "commentReportId" => $this->commentReportId->getBytes(), "commentContent" => $this->commentContent, "commentDateTime" => $formattedDate];
 		 $statement->execute($parameters);
-    }
+	}
 
-    /**
-     * Deletes this Comment from MySQL
-     *
-     * @param \PDO $pdo PDO connection object
-     * @throws \PDOException when mySQL related errors occur
-     * @throws \TypeError if $pdo is not a PDO connection object
-     **/
-    public function delete(\PDO $pdo): void {
+	/**
+	 * Deletes this Comment from MySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function delete(\PDO $pdo): void {
 
-        //create query template
-        $query = "DELETE FROM comment WHERE commentId = :commentId";
-        $statement = $pdo->prepare($query);
-        //bind the member variables to the place holders in the template
-        $parameters = ["commentId" => $this->commentId->getBytes()];
-        $statement->execute($parameters);
-    }
+		//create query template
+		$query = "DELETE FROM comment WHERE commentId = :commentId";
+		$statement = $pdo->prepare($query);
+		//bind the member variables to the place holders in the template
+		$parameters = ["commentId" => $this->commentId->getBytes()];
+		$statement->execute($parameters);
+	}
 
-    /**
-     * gets the Comment by the comment's id
-     *
-     * @param \PDO $pdo PDO connection object
-     * @param Uuid $commentId comment id to search for
-     * @return Comment|null Comment or null if not found
-     * @throws \PDOException when mySQL related errors occur
-     * @throws \TypeError when variables are not the correct data type
-     **/
-    public static function getCommentByCommentId(\PDO $pdo, $commentId) : ?Comment {
-        try {
-            $commentId = self::validateUuid($commentId);
-        } catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
-            throw (new \PDOException($exception->getMessage(), 0, $exception));
-        }
-        $query = "SELECT commentId FROM comment WHERE commentId = :commentId";
-        $statement = $pdo->prepare($query);
-        $parameters = ["commentId" = $commentId];
-        $statement->execute($parameters);
-        try {
-            $comment = null;
-            $statement->setFetchMode(\PDO::FETCH_ASSOC);
-            $row = $statement->fetch();
-            if($row !== false) {
-                $comment = new Comment($row["commentId"], $row["commentProfileId"], $row["commentReportId"]);
-        } catch(\Exception $exception) {
-                throw(new\PDOException($exception->getMessage(), 0, $exception));
-            }
-		return ($category);
+ 	/**
+	 * gets the Comment by the comment's id
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid | string $commentId comment id to search for
+	 * @return Comment|null Comment or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getCommentByCommentId(\PDO $pdo, string $commentId) : ?Comment {
+		try {
+			$commentId = self::validateUuid($commentId);
+		} catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw (new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		$query = "SELECT commentId, commentProfileId, commentReportId, commentContent, commentDateTime FROM `comment` WHERE commentId = :commentId";
+		$statement = $pdo->prepare($query);
+		$parameters = ["commentId" => $commentId->getBytes()];
+		$statement->execute($parameters);
+		try {
+			$comment = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$comment = new Comment($row["commentId"], $row["commentProfileId"], $row["commentReportId"], $row["commentContent"], $row["commentDateTime"]);
+			}
+		} catch(\Exception $exception) {
+			throw(new\PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($comment);
     }
 
 
@@ -307,8 +307,7 @@ class Comment implements \JsonSerializable {
         $fields["commentProfileId"] = $this->commentProfileId->toString();
         $fields["commentReportId"] = $this->commentReportId->toString();
 			 //format the date so that the front end can consume it
-			 $fields["commentDate"] = round(floatval($this->commentDate->format("U.u")) * 1000);
+			 $fields["commentDate"] = round(floatval($this->commentDateTime->format("U.u")) * 1000);
 			 return($fields);
     }
-}
 }
