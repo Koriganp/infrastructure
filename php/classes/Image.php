@@ -224,6 +224,53 @@ class Image implements \JsonSerializable {
 	}
 
 	/**
+	 * inserts this Image into mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function insert(\PDO $pdo) : void {
+		// create query template
+		$query = "INSERT INTO image(imageId, imageReportId, imageCloudinary, imageLat, imageLong) VALUES(:imageId, :imageReportId, :imageCloudinary, :imageLat, :imageLong)";
+		$statement = $pdo->prepare($query);
+		// bind the member variables to the place holders in the template
+		$parameters = ["imageId" => $this->imageId->getBytes(), "imageReportId" => $this->imageReportId->getBytes(), "imageCloudinary" => $this->imageCloudinary, "imageLat" => $this->imageLat, "imageLong" => $this->imageLong];
+		$statement->execute($parameters);
+	}
+
+	/**
+	 * deletes this Image from mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function delete(\PDO $pdo) : void {
+		// create query template
+		$query = "DELETE FROM image WHERE imageId = :imageId";
+		$statement = $pdo->prepare($query);
+		// bind the member variables to the place holder in the template
+		$parameters = ["imageId" => $this->imageId->getBytes()];
+		$statement->execute($parameters);
+	}
+
+	/**
+	 * updates this Image in mySQL
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError if $pdo is not a PDO connection object
+	 **/
+	public function update(\PDO $pdo) : void {
+		// create query template
+		$query = "UPDATE image SET imageReportId = :imageReportId, imageCloudinary = :imageCloudinary, imageLat = :imageLat, imageLong = :imageLong WHERE imageId = :imageId";
+		$statement = $pdo->prepare($query);
+		$parameters = ["imageId" => $this->imageId->getBytes(), "imageReportId" => $this->imageReportId->getBytes(), "imageCloudinary" => $this->imageCloudinary, "imageLat" => $this->imageLat, "imageLong" => $this->imageLong];
+		$statement->execute($parameters);
+	}
+
+	/**
 	 * formats the state variables for JSON serialize
 	 * @return array resulting state variables to serialize
 	 **/
