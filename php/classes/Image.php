@@ -45,12 +45,71 @@ class Image implements \JsonSerializable {
 	private $imageLat;
 
 	/**
+	 * constructor for this Image
+	 *
+	 * @param string|Uuid $newImageId id of this Image or null if a new image
+	 * @param string|Uuid $newImageReportId id of the Report this image is associated with
+	 * @param string $newImageCloudinary string containing data from cloudinary
+	 * @param float |null $newImageLong longitude of image location
+	 * @param float |null $newImageLat latitude of image location
+	 * @throws \InvalidArgumentException if data types are not valid
+	 * @throws \RangeException if data values are out of bounds (e.g., strings too long, negative integers)
+	 * @throws \TypeError if data types violate type hints
+	 * @throws \Exception if some other exception occurs
+	 * @Documentation https://php.net/manual/en/language.oop5.decon.php
+	 **/
+	public function __construct($newImageId, $newImageReportId, string $newImageCloudinary, $newImageLong = null, $newImageLat = null) {
+		try {
+			$this->setImageId($newImageId);
+			$this->setImageReportId($newImageReportId);
+			$this->setImageCloudinary($newImageCloudinary);
+			$this->setImageLong($newImageLong);
+			$this->setImageLat($newImageLat);
+		}
+			//determine what exception type was thrown
+		catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+	}
+
+	/**
+	 * accessor method for image id
+	 *
+	 * @return Uuid value of image id
+	 **/
+	public function getImageId() : Uuid {
+		return($this->imageId);
+	}
+
+	/**
+	 * mutator method for image id
+	 *
+	 * @param Uuid | string $newImageId new value of image id
+	 * @throws \RangeException if $newImageId is not positive
+	 * @throws \TypeError if $newTweetId is not a uuid or string
+	 **/
+	public function setImageId($newImageId) : void {
+		try {
+			$uuid = self::validateUuid($newImageId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+		// convert and store the image id
+		$this->imageId = $uuid;
+	}
+
+
+
+	/**
 	 * formats the state variables for JSON serialize
 	 * @return array resulting state variables to serialize
 	 **/
 	public function jsonSerialize() {
 		$fields = get_object_vars($this);
 		$fields["imageId"] = $this->imageId->toString();
+		$fields["imageReportId"] = $this->imageReportId->toString();
 		return($fields);
 	}
 }
