@@ -271,6 +271,80 @@ class Image implements \JsonSerializable {
 	}
 
 	/**
+	 * gets the Image by imageId
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param Uuid | string $imageId image id to search for
+	 * @return Image|null Image found or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when a variable are not the correct data type
+	 **/
+	public static function getImageByImageId(\PDO $pdo, string $imageId) : ?Image {
+		// sanitize the imageId before searching
+		try {
+			$imageId = self::validateUuid($imageId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		// create query template
+		$query = "SELECT imageId, imageReportId, imageCloudinary, imageLat, imageLong FROM image WHERE imageId = :imageId";
+		$statement = $pdo->prepare($query);
+		// bind the image id to the place holder in the template
+		$parameters = ["imageId" => $imageId->getBytes()];
+		$statement->execute($parameters);
+		// grab the image from mySQL
+		try {
+			$image = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$image = new Image($row["imageId"], $row["imageReportId"], $row["imageCloudinary"], $row["imageLat"], $row["imageLong"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return($image);
+	}
+
+	/**
+	 * gets the Image by report id
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $imageReportId report id to search by
+	 * @return \SplFixedArray SplFixedArray of images found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getImageByImageReportId(\PDO $pdo, string  $imageReportId) : \SPLFixedArray {
+		try {
+			$imageReportId = self::validateUuid($imageReportId);
+		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		// create query template
+		$query = "SELECT imageId, imageReportId, imageCloudinary, imageLat, imageLong FROM image WHERE imageReportId = :imageReportId";
+		$statement = $pdo->prepare($query);
+		// bind the image report id to the place holder in the template
+		$parameters = ["imageReportId" => $imageReportId->getBytes()];
+		$statement->execute($parameters);
+		// build an array of images
+		$images = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch()) !== false) {
+			try {
+				$image = new Image($row["imageId"], $row["imageReportId"], $row["imageCloudinary"], $row["imageLat"], $row["imageLong"]);
+				$images[$images->key()] = $image;
+				$images->next();
+			} catch(\Exception $exception) {
+				// if the row couldn't be converted, rethrow it
+				throw(new \PDOException($exception->getMessage(), 0, $exception));
+			}
+		}
+		return($images);
+	}
+
+	/**
 	 * formats the state variables for JSON serialize
 	 * @return array resulting state variables to serialize
 	 **/
