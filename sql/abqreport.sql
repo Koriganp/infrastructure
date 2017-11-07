@@ -28,7 +28,7 @@ CREATE TABLE report (
 	reportCategoryId BINARY(16) NOT NULL ,
 	reportContent VARCHAR(3000) NOT NULL ,
 	reportDateTime DATETIME(6) NOT NULL ,
-	reportIpAddress VARBINARY(16) NOT NULL ,
+	reportIpAddress VARBINARY(32) NOT NULL ,
 	reportLat DECIMAL(9,6) NOT NULL ,
 	reportLong DECIMAL(9,6) NOT NULL ,
 	reportStatus VARCHAR(15) NOT NULL ,
