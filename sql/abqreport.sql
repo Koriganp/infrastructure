@@ -42,7 +42,7 @@ CREATE TABLE report (
 CREATE TABLE image (
 	imageId BINARY(16) NOT NULL ,
 	imageReportId BINARY(16) NOT NULL ,
-	imageCloudinary VARCHAR(64) NOT NULL ,
+	imageCloudinary VARCHAR(255) NOT NULL ,
 	imageLat DECIMAL(9,6) NOT NULL ,
 	imageLong DECIMAL(9,6) NOT NULL ,
 	INDEX (imageReportId) ,

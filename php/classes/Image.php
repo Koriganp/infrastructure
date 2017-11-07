@@ -152,7 +152,7 @@ class Image implements \JsonSerializable {
 			throw(new \InvalidArgumentException("image cloudinary content is empty or insecure"));
 		}
 		// verify the image cloudinary content will fit in the database
-		if(strlen($newImageCloudinary) > 64) {
+		if(strlen($newImageCloudinary) > 255) {
 			throw(new \RangeException("image cloudinary content too large"));
 		}
 		// store the image cloudinary content

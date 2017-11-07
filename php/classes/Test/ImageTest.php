@@ -50,7 +50,7 @@ class ImageTest extends InfrastructureTest {
 	 * valid cloudinary to use to create an image
 	 * @var string $VALID_CLOUDINARY;
 	 **/
-	protected $VALID_CLOUDINARY;
+	protected $VALID_CLOUDINARY = "https://res.cloudinary.com/demo/image/upload/w_400,h_400,c_crop,g_face,r_max/w_200/lady.jpg";
 
 	/**
 	 * valid latitude to use to create an image
@@ -103,4 +103,8 @@ class ImageTest extends InfrastructureTest {
 		$this->assertEquals($pdoImage->getImageLat(), $this->VALID_LAT);
 		$this->assertEquals($pdoImage->getImageLong(), $this->VALID_LONG);
 	}
+
+	/**
+	 * test updating an image
+	 */
 }
