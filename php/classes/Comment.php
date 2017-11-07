@@ -236,20 +236,19 @@ class Comment implements \JsonSerializable {
     }
 
     /**
-     * Updates this Comment in MySQL
+	  * Updates this Comment in MySQL
      *
      * @param \PDO $pdo PDO connection object
      * @throws \PDOException when mySQL related errors occur
      * @throws \TypeError if $pdo is not a PDO connection object
      **/
-    public function update(\PDO $pdo) {
-        if($this->commentId === null) {
-            throw(new("Unable to update nonexistent comment"));
-        }
-        $query = "UPDATE `comment` SET commentId = :commentId, commentProfileId = :commentProfileId, commentReportId = :commentReportId, commentContent = :commentContnt, commentDateTime = :commentDateTime";
-        $statement = $pdo->prepare($query);
-        $parameters = ["commentId" => $this->commentId->getBytes(), "commentProfileId" => $this->commentProfileId->getBytes(), "commentProfileId" => $this->commentReportId->getBytes(), "commentContent" => $this->commentContent, "commentDateTime" => $this->commentDateTime];
-        $statement->execute($parameters);
+    public function update(\PDO $pdo) : void {
+		 $query = "UPDATE `comment` SET commentId = :commentId, commentProfileId = :commentProfileId, commentReportId = :commentReportId, commentContent = :commentContnt, commentDateTime = :commentDateTime";
+		 $statement = $pdo->prepare($query);
+
+		 $formattedDate = $this->commentDateTime->format("Y-m-d H:i:s.u");
+		 $parameters = ["commentId" => $this->commentId->getBytes(), "commentProfileId" => $this->commentProfileId->getBytes(), "commentReportId" => $this->commentReportId->getBytes(), "commentContent" => $this->commentContent, "commentDateTime" => $formattedDate];
+		 $statement->execute($parameters);
     }
 
     /**
