@@ -41,6 +41,12 @@ class ImageTest extends InfrastructureTest {
 	protected $VALID_IPADDRESS = "1001101000110011";
 
 	/**
+	 * valid report status for report class
+	 * @var string $VALID_REPORTSTATUS
+	 */
+	protected $VALID_REPORTSTATUS = "Received";
+
+	/**
 	 * valid cloudinary to use to create an image
 	 * @var string $VALID_CLOUDINARY;
 	 **/
@@ -58,6 +64,7 @@ class ImageTest extends InfrastructureTest {
 	 **/
 	protected $VALID_LONG = 2.17403;
 
+
 	/**
 	 * create dependant objects before running each test
 	 **/
@@ -70,10 +77,11 @@ class ImageTest extends InfrastructureTest {
 		$this->category->insert($this->getPDO());
 
 		$this->VALID_REPORTDATE = new \DateTime();
-		$this->VALID_REPORTSTATUS = "Received";
 
 		//create and insert a mocked report
-		$this->report = new Report(generateUuidV4(), $this->category->getCategoryId(), "there is a hole", $this->VALID_REPORTDATE, $this->VALID_IPADDRESS, $this->VALID_LAT, $this->VALID_LONG, VALID_REPORTSTATUS, "0", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36");
+		$this->report = new Report(generateUuidV4(), $this->category->getCategoryId(), "there is a hole", $this->VALID_REPORTDATE, $this->VALID_IPADDRESS, $this->VALID_LAT, $this->VALID_LONG, $this->VALID_REPORTSTATUS, "0", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36");
+
+
 	}
 
 	/**
