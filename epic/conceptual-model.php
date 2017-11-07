@@ -26,7 +26,7 @@
 					<li>profileEmail</li>
 					<li>profileHash</li>
 					<li>profileSalt</li>
-					<li>profileUserName</li>
+					<li>profileUsername</li>
 				</ul>
 			</div>
 			<h2>Category</h2>

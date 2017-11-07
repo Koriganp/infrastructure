@@ -29,11 +29,6 @@ private $profileId;
  **/
 private $profileActivationToken;
 /**
- * this creates the profile User name
- * @var $username
- **/
-private $username;
-/**
  * this is the admin email address for profile
  * @var $profileEmail
  **/
@@ -49,6 +44,11 @@ private $profileHash;
  **/
 private $profileSalt;
 	/**
+	 * this creates the profile User name
+	 * @var $username
+	 **/
+	private $profileUsername;
+	/**
 	 * constructor for this profile
 	 *
 	 * @throws \InvalidArgumentException if data types are not invalid
@@ -56,14 +56,14 @@ private $profileSalt;
 	 * @throws \TypeError if data types violate type hints
 	 * @throw \Exception if some other exception occurs
  	 **/
-public function  __construct($newProfileId, $newProfileActivationToken, $newProfileUserName, $newProfileEmail, $newProfileHash, $newProfileSalt) {
+public function  __construct($newProfileId, $newProfileActivationToken, $newProfileEmail, $newProfileHash, $newProfileSalt, $newProfileUserName) {
 	try {
 		$this->setProfileId($newProfileId);
 		$this->setProfileActivationToken($newProfileActivationToken);
-		$this->setProfileUserName($newProfileUserName);
 		$this->setProfileEmail($newProfileEmail);
 		$this->setProfileHash($newProfileHash);
 		$this->setProfileSalt($newProfileSalt);
+		$this->setProfileUsername()($newProfileUserName);
 
 	} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 		$exceptionType = get_class($exception);
@@ -128,25 +128,6 @@ public function  __construct($newProfileId, $newProfileActivationToken, $newProf
 	 **/
 	public function getProfileActivationToken(): string {
 		return ($this->profileActivationToken);
-	}
-
-
-	/**
-	 * accessor method for username
-	 *
-	 * @return string value of username
-	 */
-	public function getUsername():string {
-		return $this->username;
-	}
-
-	/**
-	 * mutator method for username
-	 *
-	 * @return username
-	 **/
-	public function setUsername() {
-		return($this->Username);
 	}
 
 	/**
@@ -252,15 +233,23 @@ public function  __construct($newProfileId, $newProfileActivationToken, $newProf
 	public function getProfileSalt(): string {
 		return $this->profileSalt;
 	}
+	/**
+	 * accessor method for username
+	 *
+	 * @return string value of username
+	 */
+	public function getProfileUsername():string {
+		return $this->profileUsername;
+	}
 
 	/**
-	* formats the state variables for JSON serialization
-	*
-	* @return array resulting state variables to serialize
-	**/
-	public function jsonSerialize() {
-		return(get_object_vars($this));
+	 * mutator method for username
+	 *
+	 **/
+	public function setProfileUsername() {
+		return($this->profileUsername);
 	}
+
 	/**
 	 * inserts this profile into mySQl
 	 *
@@ -269,11 +258,11 @@ public function  __construct($newProfileId, $newProfileActivationToken, $newProf
 	 *
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
-	public function insert(PDO $pdo) : void {
+	public function insert(\PDO $pdo) : void {
 		//create query template
-		$query = "INSERT INTO profile(ProfileId, ProfileActivationToken, ProfileUserName, ProfileEmail, ProfileHash, ProfileSalt) VALUES(:profileId, :profileActivationToken, :profileUsername, :profileEmail, :profileHash, :profileSalt)";
+		$query = "INSERT INTO profile(ProfileId, ProfileActivationToken,  ProfileEmail, ProfileHash, ProfileSalt, ProfileUserName) VALUES(:profileId, :profileActivationToken,  :profileEmail, :profileHash, :profileSalt, :profileUsername)";
 		$statement = $pdo->prepare($query);
-		$parameters = ["profileId"=> $this->profileId-> getBytes(),"profileActivationToken"=> $this->getProfileActivationToken(), "profileUsername"=> $this->getProfileUsername(), "profileEmail"=> $this->getProfileEmail(), "profileHash"=> $this->getProfileHash(), "profileSalt"=> $this->getProfileSalt()];
+		$parameters = ["profileId"=> $this->profileId-> getBytes(),"profileActivationToken"=> $this->getProfileActivationToken(), "profileUsername"=> $this->getProfileUserName(), "profileEmail"=> $this->getProfileEmail(), "profileHash"=> $this->getProfileHash(), "profileSalt"=> $this->getProfileSalt()];
 		$statement->execute($parameters);
 	}
 	/**
@@ -305,6 +294,91 @@ public function  update(\PDO $pdo) : void {
 	$statement = $pdo->prepare($query);
 	$parameters = ["profileId" => $this->profileId->getBytes(), "profileEmail" => $this->profileEmail,"profileUsername" => $this->profileUsername];
 	$statement->execute($parameters);
+	}
+
+	/**
+	 * gets the Profile by email
+	 *
+	 * @param \PDO $pdo PDO connection object
+	 * @param string $profileEmail email to search for
+	 * @return Profile|null Profile or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public static function getProfileByProfileEmail(\PDO $pdo, string $profileEmail): ?Profile {
+		// sanitize the email before searching
+		$profileEmail = trim($profileEmail);
+		$profileEmail = filter_var($profileEmail, FILTER_VALIDATE_EMAIL);
+		if(empty($profileEmail) === true) {
+			throw(new \PDOException("not a valid email"));
+		}
+		// create query template
+		$query = "SELECT profileId, profileActivationToken, profileEmail, profileHash, profileSalt, profileUsername FROM profile WHERE profileEmail = :profileEmail";
+		$statement = $pdo->prepare($query);
+		// bind the profile id to the place holder in the template
+		$parameters = ["profileEmail" => $profileEmail];
+		$statement->execute($parameters);
+		// grab the Profile from mySQL
+		try {
+			$profile = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileHash"], $row["profileSalt"], $row["profileUsername"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($profile);
+	}
+	/**
+	 * get the profile by profile activation token
+	 *
+	 * @param string $profileActivationToken
+	 * @param \PDO object $pdo
+	 * @return Profile|null Profile or null if not found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 **/
+	public
+	static function getProfileByProfileActivationToken(\PDO $pdo, string $profileActivationToken) : ?Profile {
+		//make sure activation token is in the right format and that it is a string representation of a hexadecimal
+		$profileActivationToken = trim($profileActivationToken);
+		if(ctype_xdigit($profileActivationToken) === false) {
+			throw(new \InvalidArgumentException("profile activation token is empty or in the wrong format"));
+		}
+		//create the query template
+		$query = "SELECT  profileId, profileActivationToken, profileEmail, profileHash, profileSalt, profileUsername FROM profile WHERE profileActivationToken = :profileActivationToken";
+		$statement = $pdo->prepare($query);
+		// bind the profile activation token to the placeholder in the template
+		$parameters = ["profileActivationToken" => $profileActivationToken];
+		$statement->execute($parameters);
+		// grab the Profile from mySQL
+		try {
+			$profile = null;
+			$statement->setFetchMode(\PDO::FETCH_ASSOC);
+			$row = $statement->fetch();
+			if($row !== false) {
+				$profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileHash"], $row["profileSalt"], $row["profileUsername"]);
+			}
+		} catch(\Exception $exception) {
+			// if the row couldn't be converted, rethrow it
+			throw(new \PDOException($exception->getMessage(), 0, $exception));
+		}
+		return ($profile);
+	}
+	/**
+	 * formats the state variables for JSON serialization
+	 *
+	 * @return array resulting state variables to serialize
+	 **/
+	public function jsonSerialize() {
+		$fields = get_object_vars($this);
+		$fields["profileId"] = $this->profileId->toString();
+		unset($fields["profileHash"]);
+		unset($fields["profileSalt"]);
+		return ($fields);
 	}
 }
 
