@@ -105,7 +105,28 @@ class ReportTest extends InfrastructureTest {
 	$numRows = $this->getConnection()->getRowCount("report");
 
 	// create a new Report and insert to into mySQL
-	$reportId = generateUuidV4();
-	$report = new Report($reportId, $this->report->getProfileId(), $this->VALID_REPORTCONTENT);
+	$report = new Report(null, $this->profile->getProfileId(), $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME);
+	$report->insert($this->getPDO());
+
+	// grab the date from mySQL and enforce the fields match our expectations
+	$pdoReport = Report::getReportByReportId($this->getPDO(), $report->getReportId());
+	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("report"));
+	$this->assertEquals($pdoReport->getReportCategoryId(), $this->profile->getProfileId());
+	$this->assertEquals($pdoReport->getReportContent(), $this->VALID_REPORTCONTENT);
+	// format the date to seconds since the beginning of time to avoid round off error
+	$this->assertEquals($pdoReport->getReportDateTime()->getTimestamp(), $this->VALID_REPORTDATETIME->getTimestamp());
+	}
+
+	/**
+	 * test inserting a Report that already exists
+	 *
+	 * @expectedException \PDOException
+	 **/
+	public function testUpdateValidReport() : void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("report");
+
+		// create a new Report and insert to into mySQL
+		$report = Report(null, $this->profile->getProfileId(), $this->VALID_REPORTCONTENT);
 	}
 }

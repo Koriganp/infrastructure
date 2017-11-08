@@ -19,56 +19,56 @@ class Report implements \JsonSerializable {
 	use ValidateDate;
 	/**
 	 * id for this report; primary key
-	 * @var $reportId
+	 * @var Uuid $reportId
 	 **/
 	private $reportId;
 	/**
 	 * id  for this report category; foreign key
-	 * @var $reportCategoryId
+	 * @var Uuid $reportCategoryId
 	 **/
 	private $reportCategoryId;
 	/**
 	 * content of this report
-	 * @var $reportContent
+	 * @var string $reportContent
 	 **/
 	private $reportContent;
 	/**
 	 * date and time for this report
-	 * @var $reportDateTime
+	 * @var \DateTime $reportDateTime
 	 **/
 	private $reportDateTime;
 	/**
 	 * ip address to report
-	 * @var $reportIpAddress
+	 * @var string $reportIpAddress
 	 **/
 	private $reportIpAddress;
 	/**
 	 * latitide for report
-	 * @var $reportLat;
+	 * @var float $reportLat;
 	 **/
 	private $reportLat;
 	/**
 	 * longitude for report
-	 * @var $reportLong
+	 * @var float $reportLong
 	 **/
 	private $reportLong;
 	/**
 	 * status for report
-	 * @var $reportStatus
+	 * @var string $reportStatus
 	 **/
 	private $reportStatus;
 	/**
 	 * urgency for this report
-	 * @var $reportUrgency
+	 * @var int $reportUrgency
 	 **/
 	private $reportUrgency;
 	/**
 	 * user agent for report
-	 * @var $reportUserAgent
+	 * @var string $reportUserAgent
 	 **/
 	private $reportUserAgent;
 
-	public function __construct($newReportId, $newReportCategoryId, string $newReportContent, $newReportDateTime = null, $newReportIpAddress, $newReportLat, $newReportLong, $newReportStatus, $newReportUrgency, $newReportUserAgent) {
+	public function __construct($newReportId, $newReportCategoryId, string $newReportContent, $newReportDateTime, string $newReportIpAddress, float $newReportLat, float $newReportLong, string $newReportStatus, int $newReportUrgency, string $newReportUserAgent) {
 		try {
 			$this->setReportId($newReportId);
 			$this->setReportCategoryId($newReportCategoryId);
@@ -99,7 +99,7 @@ class Report implements \JsonSerializable {
 	/**
 	 * mutator method for report id
 	 *
-	 * @param Uuid/string $newReportId new value of report id
+	 * @param Uuid|string $newReportId new value of report id
 	 * @throws \RangeException if $newReportId is not positive
 	 * @throws \TypeError if $newReportId is not a uuid or string
 	 **/
@@ -125,7 +125,7 @@ class Report implements \JsonSerializable {
 	/**
 	 * mutator method for report category id
 	 *
-	 * @param Uuid/string $newReportCategoryId new value of report category id
+	 * @param Uuid|string $newReportCategoryId new value of report category id
 	 * @throws \RangeException if $newReportId is not positive
 	 * @throws \TypeError if $newReportCategoryId is not an integer
 	 **/
@@ -235,18 +235,14 @@ class Report implements \JsonSerializable {
 	/**
 	 * mutator method for report latitude
 	 *
-	 * @param $newReportLat
+	 * @param float $newReportLat
 	 **/
-	public function setReportLat($newReportLat): void {
+	public function setReportLat(float $newReportLat): void {
 		// verify the float is secure
-		$newReportLat = filter_var($newReportLat, FILTER_VALIDATE_FLOAT);
-		if(empty($newReportLat) === true) {
-			throw(new \InvalidArgumentException("latitude is empty or insecure"));
+		if(($newReportLat < -90) || ($newReportLat > 90)) {
+			throw(new \RangeException("latitude is out of bounds"));
 		}
-		// verify the float will fit in the database
-		if(strlen($newReportLat) > 12) {
-			throw(new \RangeException("latitude is too large"));
-		}
+
 		// store the latitude
 		$this->reportLat = $newReportLat;
 	}
@@ -257,26 +253,22 @@ class Report implements \JsonSerializable {
 	 * @return float value of report longitude
 	 **/
 	public function getReportLong() : float {
+		// -180 - 180
 		return($this->reportLong);
 	}
 
 	/**
 	 * mutator method  for report longitude
 	 *
-	 * @param $newReportLong
+	 * @param float $newReportLong
 	 **/
-	public function setReportLong($newReportLong): void {
+	public function setReportLong(float $newReportLong): void {
 		// verify the float is secure
-		$newReportLong = filter_var($newReportLong, FILTER_VALIDATE_FLOAT);
-		if(empty($newReportLong) === true) {
-			throw(new \InvalidArgumentException("latitude is empty or insecure"));
-		}
-		// verify the float will fit in the database
-		if(($newReportLong) > 12) {
-			throw(new \RangeException("latitude is too large"));
+		if(($newReportLong < -180) || ($newReportLong > 180)) {
+			throw(new \RangeException("latitude is out of bounds"));
 		}
 		// store the latitude
-		$this->reportLongLat = $newReportLong;
+		$this->reportLong = $newReportLong;
 	}
 
 	/**
@@ -296,7 +288,7 @@ class Report implements \JsonSerializable {
 	 * @throws \RangeException if $newReportStatus is > 15 characters
 	 * @throws \TypeError if $newReportStatus is not a string
 	 **/
-	public function setReportStatus($newReportStatus) : void {
+	public function setReportStatus(string $newReportStatus) : void {
 		// verify the report status is secure
 		$newReportStatus = trim($newReportStatus);
 		$newReportStatus = filter_var($newReportStatus, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
@@ -331,14 +323,8 @@ class Report implements \JsonSerializable {
 	 **/
 	public function setReportUrgency(int $newReportUrgency) : void {
 		// verify the report urgency is secure
-		$newReportUrgency = is_int($newReportUrgency);
-		if(empty($newReportUrgency) === true) {
-			throw(new \InvalidArgumentException("report urgency is empty or insecure"));
-		}
-
-		// verify the report urgency will fit in the database
-		if($newReportUrgency === NAN) {
-			throw(new \RangeException("report urgency invalid"));
+		if($newReportUrgency > 5 || $newReportUrgency <= 0) {
+			throw(new \RangeException("report urgency is out of range"));
 		}
 
 		//store the report urgency
@@ -386,21 +372,23 @@ class Report implements \JsonSerializable {
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
 	public function insert(\PDO $pdo) : void {
+		// enforce the ReportId is null (i.e.)
+
 		// create query template
 		$query = "INSERT INTO report(reportId, reportCategoryId, reportContent, reportDateTime, reportIpAddress, 
-					reportLat, reportLong, reportStatus, reportUrgency, reportUserAgent) VALUES (:reportId, :reportCategoryId, 
-					:reportContent, :reportDateTime, :reportIpAddress, :reportLat, :reportLong, :reportStatus, :reportUrgency,
-					:reportUserAgent)";
+		reportLat, reportLong, reportStatus, reportUrgency, reportUserAgent) VALUES (:reportId, :reportCategoryId, 
+		:reportContent, :reportDateTime, :reportIpAddress, :reportLat, :reportLong, :reportStatus, :reportUrgency,
+		:reportUserAgent)";
 
-					$statement = $pdo->prepare($query);
+		$statement = $pdo->prepare($query);
 
-					// bind the member variables to the place holders in the template
-					$formattedDateTime = $this->reportDateTime->format("m-d-Y H:i:s.u");
-					$parameters = ["reportId" => $this->reportId->getBytes(), "reportCategoryId" => $this->reportCategoryId->getBytes(),
-					"reportContent" => $this->reportContent, "reportDateTime" => $formattedDateTime, "reportIpAddress" => $this->reportIpAddress,
-					"reportLat" => $this->reportLat, "reportLong" => $this->reportLong, "reportStatus" => $this->reportStatus,
-					"reportUrgency" => $this->reportUrgency, "reportUserAgent" => $this->reportUserAgent];
-					$statement->execute($parameters);
+		// bind the member variables to the place holders in the template
+		$formattedDateTime = $this->reportDateTime->format("Y-m-d H:i:s.u");
+		$parameters = ["reportId" => $this->reportId->getBytes(), "reportCategoryId" => $this->reportCategoryId->getBytes(),
+		"reportContent" => $this->reportContent, "reportDateTime" => $formattedDateTime, "reportIpAddress" => $this->reportIpAddress,
+		"reportLat" => $this->reportLat, "reportLong" => $this->reportLong, "reportStatus" => $this->reportStatus,
+		"reportUrgency" => $this->reportUrgency, "reportUserAgent" => $this->reportUserAgent];
+		$statement->execute($parameters);
 	}
 
 	/**
@@ -436,7 +424,7 @@ class Report implements \JsonSerializable {
 
 		$statement = $pdo->prepare($query);
 
-		$formattedDateTime = $this->reportDateTime->format("m-d-Y H:i:s.u");
+		$formattedDateTime = $this->reportDateTime->format("Y-m-d H:i:s.u");
 		$parameters = ["reportId" => $this->reportId->getBytes(), "reportCategoryId" => $this->reportCategoryId->getBytes(),
 		"reportContent" => $this->reportContent, "reportDateTime" => $formattedDateTime, "reportStatus" => $this->reportStatus,
 		"reportUrgency" => $this->reportUrgency];
@@ -462,7 +450,7 @@ class Report implements \JsonSerializable {
 
 		// create equal template
 		$query = "SELECT reportId, reportCategoryId, reportContent, reportDateTime, reportIpAddress, reportLat, reportLong,
-		reportStatus, reportUrgency FROM report WHERE reportId = :reportId";
+		reportStatus, reportUrgency, reportUserAgent FROM report WHERE reportId = :reportId";
 
 		$statement = $pdo->prepare($query);
 
@@ -477,7 +465,7 @@ class Report implements \JsonSerializable {
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$report = new Report($row["reportId"], $row["reportCategoryId"], $row["reportContent"], $row["reportDateTime"], 				$row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"]);
+				$report = new Report($row["reportId"], $row["reportCategoryId"], $row["reportContent"], $row["reportDateTime"], $row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"], $row["reportUserAgent"]);
 			}
 		} catch(\Exception $exception) {
 			// if the row couldn't be converted, rethrow it
@@ -535,41 +523,41 @@ class Report implements \JsonSerializable {
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	public static function getReportByReportContent(\PDO $pdo, string $reportContent) : \SplFixedArray {
-		// sanitize the description before searching
-		$reportContent = trim($reportContent);
-		$reportContent = filter_var($reportContent, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($reportContent) === true) {
-			throw(new \PDOException("tweet content is invalid"));
-		}
-
-		// escape any mySQL wild cards
-		$reportContent = str_replace("_", "\\_", str_replace("%", "\\%", $reportContent));
-
-		// create query template
-		$query = "SELECT reportId, reportCategoryId, reportContent, reportDateTime, reportIpAddress, reportLat, reportLong, reportStatus, reportUrgency, reportUserAgent FROM report WHERE reportContent LIKE :reportContent";
-		$statement = $pdo->prepare($query);
-
-		// bind the report content to the place holder in the template
-		$reportContent = "%$reportContent%";
-		$parameters = ["reportContent" => $reportContent];
-		$statement->execute($parameters);
-
-		// build an array of reports
-		$reports = new \SplFixedArray($statement->rowCount());
-		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		while(($row = $statement->fetch()) !== false) {
-			try {
-				$report = new Report($row["reportId"], $row["reportCategoryId"], $row["reportContent"], $row["reportDateTime"], $row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"],$row["reportUserAgent"]);
-				$reports[$reports->key()] = $report;
-				$reports->next();
-			} catch(\Exception $exception) {
-				// if the row couldn't be converted, rethrow it
-				throw(new \PDOException($exception->getMessage(), 0, $exception));
-			}
-		}
-		return($reports);
-	}
+//	public static function getReportByReportContent(\PDO $pdo, string $reportContent) : \SplFixedArray {
+//		// sanitize the description before searching
+//		$reportContent = trim($reportContent);
+//		$reportContent = filter_var($reportContent, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+//		if(empty($reportContent) === true) {
+//			throw(new \PDOException("tweet content is invalid"));
+//		}
+//
+//		// escape any mySQL wild cards
+//		$reportContent = str_replace("_", "\\_", str_replace("%", "\\%", $reportContent));
+//
+//		// create query template
+//		$query = "SELECT reportId, reportCategoryId, reportContent, reportDateTime, reportIpAddress, reportLat, reportLong, reportStatus, reportUrgency, reportUserAgent FROM report WHERE reportContent LIKE :reportContent";
+//		$statement = $pdo->prepare($query);
+//
+//		// bind the report content to the place holder in the template
+//		$reportContent = "%$reportContent%";
+//		$parameters = ["reportContent" => $reportContent];
+//		$statement->execute($parameters);
+//
+//		// build an array of reports
+//		$reports = new \SplFixedArray($statement->rowCount());
+//		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+//		while(($row = $statement->fetch()) !== false) {
+//			try {
+//				$report = new Report($row["reportId"], $row["reportCategoryId"], $row["reportContent"], $row["reportDateTime"], $row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"],$row["reportUserAgent"]);
+//				$reports[$reports->key()] = $report;
+//				$reports->next();
+//			} catch(\Exception $exception) {
+//				// if the row couldn't be converted, rethrow it
+//				throw(new \PDOException($exception->getMessage(), 0, $exception));
+//			}
+//		}
+//		return($reports);
+//	}
 
 	/**
 	 * get the Report by report status
@@ -585,7 +573,7 @@ class Report implements \JsonSerializable {
 		$reportStatus = trim($reportStatus);
 		$reportStatus = filter_var($reportStatus, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		if(empty($reportStatus) === true) {
-			throw(new \PDOException("tweet content is invalid"));
+			throw(new \PDOException("report content is invalid"));
 		}
 
 		// escape any mySQL wild cards
@@ -620,29 +608,19 @@ class Report implements \JsonSerializable {
 	 * get the Report by report urgency
 	 *
 	 * @param \PDO $pdo PDO connection object
-	 * @param string $reportUrgency report status to search for
+	 * @param int $reportUrgency report status to search for
 	 * @return \SplFixedArray SplFixedArray of Reports found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
 	 **/
-	public static function getReportByReportUrgency(\PDO $pdo, string $reportUrgency) : \SplFixedArray {
-		// sanitize the description before searching
-		$reportUrgency = trim($reportUrgency);
-		$reportUrgency = filter_var($reportUrgency, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		if(empty($reportUrgency) === true) {
-			throw(new \PDOException("tweet content is invalid"));
-		}
-
-		// escape any mySQL wild cards
-		$reportUrgency = str_replace("_", "\\_", str_replace("%", "\\%", $reportUrgency));
-
+	public static function getReportByReportUrgency(\PDO $pdo, int $reportUrgency) : \SplFixedArray {
 		// create query template
 		$query = "SELECT reportId, reportCategoryId, reportContent, reportDateTime, reportIpAddress, reportLat, reportLong, reportStatus, reportUrgency, reportUserAgent FROM report WHERE reportUrgency LIKE :reportUrgency";
 		$statement = $pdo->prepare($query);
 
-		// bind the tweet content to the place holder in the template
+		// bind the report content to the place holder in the template
 		$reportUrgency = "%$reportUrgency%";
-		$parameters = ["reportStatus" => $reportUrgency];
+		$parameters = ["reportUrgency" => $reportUrgency];
 		$statement->execute($parameters);
 
 		// build an array of reports
