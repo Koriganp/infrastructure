@@ -150,4 +150,13 @@ class ImageTest extends InfrastructureTest {
 		$this->assertNull($pdoImage);
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("image"));
 	}
+
+	/**
+	 * test grabbing an Image that does not exist
+	 **/
+	public function testGetInvalidImageByImageId() : void {
+		// create an image id and look for it in the database
+		$image = Image::getImageByImageId($this->getPDO(), generateUuidV4());
+		$this->assertNull($image);
+	}
 }
