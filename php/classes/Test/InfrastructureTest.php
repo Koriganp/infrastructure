@@ -21,6 +21,9 @@ require_once(dirname(__DIR__, 3) . "/vendor/autoload.php");
 abstract class InfrastructureTest extends TestCase {
 	use TestCaseTrait;
 
+
+	const INVALID_KEY = 4294967296;
+
 	/**
 	 * PHPUnit database connection interface
 	 * @var Connection $connection

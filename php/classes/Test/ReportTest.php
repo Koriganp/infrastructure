@@ -122,11 +122,9 @@ class ReportTest extends InfrastructureTest {
 	 *
 	 * @expectedException \PDOException
 	 **/
-	public function testUpdateValidReport() : void {
-		// count the number of rows and save it for later
-		$numRows = $this->getConnection()->getRowCount("report");
-
-		// create a new Report and insert to into mySQL
-		$report = Report(null, $this->profile->getProfileId(), $this->VALID_REPORTCONTENT);
+	public function testInsertInvalidReport() : void {
+		// create a Report with a non null tweet id and watch it fail
+		$report = new Report(InfrastructureTest::INVALID_KEY, $this->profile->getProfileId(), $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME);
+		$report->insert($this->getPDO());
 	}
 }
