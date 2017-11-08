@@ -178,7 +178,7 @@ class ImageTest extends InfrastructureTest {
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Infrastructure\\Image", $results);
 		// grab the result from the array and validate it
 		$pdoImage = $results[0];
-		$this->assertEquals($pdoImage->getLikeReportId(), $this->report->getReportId());
+		$this->assertEquals($pdoImage->getImageReportId(), $this->report->getReportId());
 	}
 
 }
