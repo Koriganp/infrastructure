@@ -372,10 +372,6 @@ class Report implements \JsonSerializable {
 	 * @throws \TypeError if $pdo is not a PDO connection object
 	 **/
 	public function insert(\PDO $pdo) : void {
-		// enforce the ReportId is null (i.e., don't insert a report that already exists)
-		if($this->reportId !== null) {
-			throw(new \PDOException("not a new report"));
-		}
 		// create query template
 		$query = "INSERT INTO report(reportId, reportCategoryId, reportContent, reportDateTime, reportIpAddress, 
 		reportLat, reportLong, reportStatus, reportUrgency, reportUserAgent) VALUES (:reportId, :reportCategoryId, 
