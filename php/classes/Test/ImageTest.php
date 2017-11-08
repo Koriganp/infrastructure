@@ -53,6 +53,12 @@ class ImageTest extends InfrastructureTest {
 	protected $VALID_CLOUDINARY = "https://res.cloudinary.com/demo/image/upload/w_400,h_400,c_crop,g_face,r_max/w_200/lady.jpg";
 
 	/**
+	 * valid cloudinary to use to create an image
+	 * @var string $VALID_CLOUDINARY;
+	 **/
+	protected $VALID_CLOUDINARY2 = "https://res.cloudinary.com/demo/image/upload/sample.jpg";
+
+	/**
 	 * valid latitude to use to create an image
 	 * @var float $VALID_LAT;
 	 **/
@@ -80,8 +86,7 @@ class ImageTest extends InfrastructureTest {
 
 		//create and insert a mocked report
 		$this->report = new Report(generateUuidV4(), $this->category->getCategoryId(), "there is a hole", $this->VALID_REPORTDATE, $this->VALID_IPADDRESS, $this->VALID_LAT, $this->VALID_LONG, $this->VALID_REPORTSTATUS, "0", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36");
-
-
+		$this->report->insert($this->getPDO());
 	}
 
 	/**
@@ -105,6 +110,44 @@ class ImageTest extends InfrastructureTest {
 	}
 
 	/**
-	 * test updating an image
+	 * test inserting an image, then updating it
 	 */
+	public function testUpdateValidImage() : void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("image");
+		// create a new Image and insert to into mySQL
+		$imageId = generateUuidV4();
+		$image = new Image($imageId, $this->report->getReportId(), $this->VALID_CLOUDINARY, $this->VALID_LAT, $this->VALID_LONG);
+		$image->insert($this->getPDO());
+		// edit the Image and update it in mySQL
+		$image->setImageCloudinary($this->VALID_CLOUDINARY2);
+		$image->update($this->getPDO());
+		// grab the data from mySQL and enforce the fields match our expectations
+		$pdoImage = Image::getImageByImageId($this->getPDO(), $image->getImageId());
+		$this->assertEquals($pdoImage->getImageId(), $imageId);
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("image"));
+		$this->assertEquals($pdoImage->getImageReportId(), $this->report->getReportId());
+		$this->assertEquals($pdoImage->getImageCloudinary(), $this->VALID_CLOUDINARY2);
+		$this->assertEquals($pdoImage->getImageLat(), $this->VALID_LAT);
+		$this->assertEquals($pdoImage->getImageLong(), $this->VALID_LONG);
+	}
+
+	/**
+	 * test creating an Image and then deleting it
+	 **/
+	public function testDeleteValidImage() : void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("image");
+		// create a new Image and insert to into mySQL
+		$imageId = generateUuidV4();
+		$image = new Image($imageId, $this->report->getReportId(), $this->VALID_CLOUDINARY, $this->VALID_LAT, $this->VALID_LONG);
+		$image->insert($this->getPDO());
+		// delete the Image from mySQL
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("image"));
+		$image->delete($this->getPDO());
+		// grab the data from mySQL and enforce the Image does not exist
+		$pdoImage = Image::getImageByImageId($this->getPDO(), $image->getImageId());
+		$this->assertNull($pdoImage);
+		$this->assertEquals($numRows, $this->getConnection()->getRowCount("image"));
+	}
 }
