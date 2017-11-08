@@ -3,6 +3,7 @@
 		<testsuite name="Infrastructure">
 			<file>CategoryTest.php</file>
 			<file>ImageTest.php</file>
+			<file>ProfileTest.php</file>
 			<file>ReportTest.php</file>
 		</testsuite>
 	</testsuites>
