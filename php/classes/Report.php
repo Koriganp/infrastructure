@@ -361,7 +361,7 @@ class Report implements \JsonSerializable {
 		if(strlen($newReportUserAgent) > 255) {
 			throw(new \RangeException("report user agent too large"));
 		}
-		$this->reportContent = $newReportUserAgent;
+		$this->reportUserAgent = $newReportUserAgent;
 	}
 
 	/**
