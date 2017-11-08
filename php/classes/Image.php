@@ -183,7 +183,7 @@ class Image implements \JsonSerializable {
 			throw(new \InvalidArgumentException("latitude is empty or insecure"));
 		}
 		// verify the float will fit in the database
-		if(($newImageLat) > 12) {
+		if(($newImageLat > 90) || ($newImageLat < -90)) {
 			throw(new \RangeException("latitude is too large"));
 		}
 		// store the latitude
@@ -214,7 +214,7 @@ class Image implements \JsonSerializable {
 			throw(new \InvalidArgumentException("longitude is empty or insecure"));
 		}
 		// verify the float will fit in the database
-		if(strlen($newImageLong) > 12) {
+		if(($newImageLong > 180) || ($newImageLong < -180)) {
 			throw(new \RangeException("longitude is too large"));
 		}
 		// store the longitude
