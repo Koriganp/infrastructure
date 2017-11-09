@@ -208,4 +208,5 @@ class ReportTest extends InfrastructureTest {
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("report"));
 	}
 
+
 }
