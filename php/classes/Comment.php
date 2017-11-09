@@ -334,6 +334,41 @@ class Comment implements \JsonSerializable {
         return($comments);
     }
 
+    /**
+     * gets comment by report id
+     *
+     * @param \PDO $pdo PDO connection object
+     * @param string | uuid $commentReportId
+     * @return \SplFixedArray SplFixedArray of comments found
+     * @throws \PDOException when mySQL related errors occur
+     * @throws \TypeError when variables are not the correct data type
+     **/
+    public static function getCommentByCommentReportId(\PDO $pdo, string $commentReportId) : \SplFixedArray {
+        try {
+            $commentReportId = self::validateUuid($commentReportId);
+        } catch (\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+            throw(new \PDOException($exception->getMessage(), 0, $exception));
+        }
+        $query = "SELECT commentId, commentProfileId, commentReportId, commentContent, commentDateTime FROM `comment` WHERE commentReportId = :commentReportId";
+        $statement = $pdo->prepare($query);
+        $parameters = ["commentReportId" => $commentReportId->getBytes()];
+        $statement->execute($parameters);
+
+        $comments = new \SplFixedArray($statement->rowCount());
+        $statement->setFetchMode(\PDO::FETCH_ASSOC);
+
+        while (($row = $statement->fetch()) !== false) {
+            try {
+                $comment = new Comment($row["commentId"], $row["commentProfileId"], $row["commentReportId"], $row["commentContent"], $row["commentDateTime"]);
+                $comments[$comments->key()] = $comment;
+                $comments->next();
+            } catch(\Exception $exception) {
+                throw(new \PDOException($exception->getMessage(), 0, $exception));
+            }
+        }
+        return($comments);
+    }
+
     public function jsonSerialize() {
         $fields = get_object_vars($this);
 
