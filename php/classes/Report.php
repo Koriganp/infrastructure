@@ -638,6 +638,54 @@ class Report implements \JsonSerializable {
 	}
 
 	/**
+	 * gets an array of reports based on its date
+	 * (this is an optional get by method and has only been added for when specific edge cases arise in capstone projects)
+	 *
+	 * @param \PDO $pdo connection object
+	 * @param \DateTime $sunriseReportDate beginning date to search for
+	 * @param \DateTime $sunsetReportDate ending date to search for
+	 * @return \SplFixedArray of reports found
+	 * @throws \PDOException when mySQL related errors occur
+	 * @throws \TypeError when variables are not the correct data type
+	 * @throws \InvalidArgumentException if either sun dates are in the wrong format
+	 */
+	public static function getReportByReportDateTime (\PDO $pdo, \DateTime $sunriseReportDateTime, \DateTime $sunsetReportDateTime ) : \SplFixedArray {
+		//enforce both date are present
+		if((empty ($sunriseReportDateTime) === true) || (empty($sunsetReportDateTime) === true)) {
+			throw (new \InvalidArgumentException("dates are empty of insecure"));
+		}
+		//ensure both dates are in the correct format and are secure
+		try {
+			$sunriseReportDateTime = self::validateDateTime($sunriseReportDateTime);
+			$sunsetReportDateTime = self::validateDateTime($sunsetReportDateTime);
+		} catch(\InvalidArgumentException | \RangeException $exception) {
+			$exceptionType = get_class($exception);
+			throw(new $exceptionType($exception->getMessage(), 0, $exception));
+		}
+		//create query template
+		$query = "SELECT reportId, reportCategoryId, reportContent, reportDateTime, reportIpAddress, reportLat, reportLong, reportStatus, reportUrgency, reportUserAgent from report WHERE reportDateTime >= :sunriseReportDate AND reportDateTime <= :sunsetReportDate";
+		$statement = $pdo->prepare($query);
+		//format the dates so that mySQL can use them
+		$formattedSunriseDate = $sunriseReportDateTime->format("Y-m-d H:i:s.u");
+		$formattedSunsetDate = $sunsetReportDateTime->format("Y-m-d H:i:s.u");
+		$parameters = ["sunriseTweetDate" => $formattedSunriseDate, "sunsetTweetDate" => $formattedSunsetDate];
+		$statement->execute($parameters);
+		//build an array of tweets
+		$reports = new \SplFixedArray($statement->rowCount());
+		$statement->setFetchMode(\PDO::FETCH_ASSOC);
+		while(($row = $statement->fetch())  !== false) {
+			try {
+				$report = new Report($row["reportId"], $row["reportCategoryId"], $row["reportContent"], $row["reportDateTime"],$row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"], $row["reportUserAgent"]);
+				$reports[$reports->key()] = $report;
+				$reports->next();
+			} catch(\Exception $exception) {
+				throw (new \PDOException($exception->getMessage(),0, $exception));
+			}
+		}
+		return($reports);
+	}
+
+	/**
 	 * gets all Reports
 	 *
 	 * @param \PDO $pdo PDO connection object

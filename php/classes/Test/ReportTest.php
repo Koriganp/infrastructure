@@ -17,7 +17,7 @@ require_once(dirname(__DIR__) . "/autoload.php");
 /**
  * Full PHPUnit test for the Report Class
  *
- * This is a complete PHPUnit test of the Tweet class.
+ * This is a complete PHPUnit test of the Report class.
  * It is complete because *ALL* mySQL/PDO enabled methods
  * are tested for both valid and invalid inputs
  *
@@ -146,7 +146,7 @@ class ReportTest extends InfrastructureTest {
 	}
 
 	/**
-	 * test inserting a valid tweet and verify that the actual mySQL data matches
+	 * test inserting a valid report and verify that the actual mySQL data matches
 	 **/
 	public function testInsertValidReport() : void {
 	// count the number of rows and save it for later
@@ -171,7 +171,7 @@ class ReportTest extends InfrastructureTest {
 	 * @expectedException \PDOException
 	 **/
 	public function testInsertInvalidReport() : void {
-		// create a Report with a non null tweet id and watch it fail
+		// create a Report with a non null report id and watch it fail
 		$report = new Report(InfrastructureTest::INVALID_KEY, InfrastructureTest::INVALID_KEY, $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
 		$report->insert($this->getPDO());
 	}
@@ -242,7 +242,7 @@ class ReportTest extends InfrastructureTest {
 		$results = Report::getReportByReportCategoryId($this->getPDO(), $report->getReportCategoryId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("report"));
 		$this->assertCount(1, $results);
-		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\DataDesign\\Report", $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Infrastructure\\Report", $results);
 
 		// grab the result from the array and validate it
 		$pdoReport = $results[0];
@@ -250,5 +250,89 @@ class ReportTest extends InfrastructureTest {
 		$this->assertEquals($pdoReport->getReportContent(), $this->VALID_REPORTCONTENT);
 		// format the date too seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoReport->getReportDateTime()->getTimeStamp(), $this->VALID_REPORTDATETIME->getTimestamp());
+	}
+
+//	/**
+//	 * test grabbing a Report by report content
+//	 **/
+//	public function testGetValidReportByReportContent() : void {
+//		// count the number of rows and save it for later
+//		$numRows = $this->getConnection()->getRowCount("report");
+//
+//		// create a new Report and insert to into mySQL
+//		$report = new Report(null, null, $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
+//		$report->insert($this->getPDO());
+//
+//		// grab the data from mySQL and enforce the fields match our expectations
+//		$results = Report::getReportByReportContent($this->getPDO(), $report->getReportContent());
+//		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("report"));
+//		$this->assertCount(1, $results);
+//
+//		// enforce no other objects are bleeding into the test
+//		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Infrastructure\\Report", $results);
+//
+//		// grab the result from the array and validate it
+//		$pdoReport = $results[0];
+//		$this->assertEquals($pdoReport->getReportCategoryId(), $this->category->getCategoryId());
+//		$this->assertEquals($pdoReport->getReportContent(), $this->VALID_REPORTCONTENT);
+//		//format the date too seconds since the beginning of time to avoid round off error
+//		$this->assertEquals($pdoReport->getReportDateTime()->getTimestamp(), $this->VALID_REPORTDATETIME->getTimestamp());
+//
+//	}
+
+
+//	/**
+//	 * test grabbing a Report by content that does not exist
+//	 **/
+//	public function testGetInvalidReportByReportContent() : void {
+//		// grab a report by content that does not exist
+//		$report = Report::getReportByReportContent($this->getPDO(), "Why is there so many problems!!!");
+//		$this->assertCount(0, $report);
+//	}
+
+	public function testGetValidReportBySunDate() : void {
+		//count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("report");
+
+		// create a new Report and insert it into the database
+		$report = new Report(null, null, $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
+		$report->insert($this->getPDO());
+
+		// grab the report from the database and see if it matches expectations
+		$results = Report::getReportByReportDateTime($this->getPDO(), $this->VALID_SUNRISEDATETIME, $this->VALID_SUNSETDATETIME);
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("report"));
+		$this->assertCount(1,$results);
+
+		//enforce that no other objects are bleeding into the test
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Infrastructure\\Report", $results);
+
+		//use the first result to make sure that the inserted report meets expectations
+		$pdoReport = $results[0];
+		$this->assertEquals($pdoReport->getReportId(), $report->getReportId());
+		$this->assertEquals($pdoReport->getReportCategoryId(), $report->getReportCategoryId());
+		$this->assertEquals($pdoReport->getReportContent(), $report->getReportContent());
+		$this->assertEquals($pdoReport->getReportDate()->getTimestamp(), $this->VALID_REPORTDATETIME->getTimestamp());
+	}
+
+	/**
+	 * test grabbing all Reports
+	 **/
+	public function testGetAllValidReports() : void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("report");
+		// create a new Report and insert to into mySQL
+		$report = new Report(null, null, $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
+		$report->insert($this->getPDO());
+		// grab the data from mySQL and enforce the fields match our expectations
+		$results = Report::getAllReports($this->getPDO());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("report"));
+		$this->assertCount(1, $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Infrastructure\\Report", $results);
+		// grab the result from the array and validate it
+		$pdoReport = $results[0];
+		$this->assertEquals($pdoReport->getReportCategoryId, $this->category->getCategoryId());
+		$this->assertEquals($pdoReport->getReportContent(), $this->VALID_REPORTCONTENT);
+		//format the date too seconds since the beginning of time to avoid round off error
+		$this->assertEquals($pdoReport->getReportDateTime()->getTimestamp(), $this->VALID_REPORTDATETIME->getTimestamp());
 	}
 }
