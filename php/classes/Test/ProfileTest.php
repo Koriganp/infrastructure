@@ -112,17 +112,17 @@ class ProfileTest extends InfrastructureTest {
 		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
 		$this->assertEquals($pdoProfile->getProfileSalt(), $this->VALID_SALT);
 	}
-//	/**
-//	 * test updating a Profile that does not exist
-//	 *
-//	 * @expectedException \PDOException
-//	 **/
-//	public function testUpdateInvalidProfile() : void {
-//		//create a Profile and try to update it without actually inserting it
-//		$profileId = generateUuidV4();
-//		$profile = new Profile($profileId, $this->VALID_ACTIVATION, $this->VALID_USERNAME, $this->VALID_EMAIL, $this->VALID_HASH, $this->VALID_SALT);
-//		$profile->update($this->getPDO());
-//	}
+	/**
+	 * test updating a Profile that does not exist
+	 *
+	 * @expectedException \PDOException
+	 **/
+	public function testUpdateInvalidProfile() : void {
+		//create a Profile and try to update it without actually inserting it
+		$profileId = generateUuidV4();
+		$profile = new Profile($profileId, $this->VALID_ACTIVATION, $this->VALID_USERNAME, $this->VALID_EMAIL, $this->VALID_HASH, $this->VALID_SALT);
+		$profile->update($this->getPDO());
+	}
 	/**
 	 * test creating a Profile and then deleting it
 	 **/
