@@ -176,7 +176,36 @@ class ReportTest extends InfrastructureTest {
 		$report->insert($this->getPDO());
 	}
 
+	/**
+	 * test updating a Report that does not exist
+	 *
+	 * @expectedException \PDOException
+	 **/
 	public function testUpdateValidReport() : void {
-
+		// create a new Report with a non null report id and watch it fail
+		$report = new Report(null, null, $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
+		$report->$this->update($this->getPDO());
 	}
+
+	/**
+	 * test creating a Report and then deleting it
+	 **/
+	public function testDeleteValidReport() : void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("report");
+
+		// create a new Report and insert into mySQL
+		$report = new Report(null, null, $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
+		$report->insert($this->getPDO());
+
+		// delete the Report from mySQL
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("report"));
+		$report->delete($this->getPDO());
+
+		// grab the date from mySQL and enforce the report does not exist
+		$pdoReport = Report::getReportByReportId($this->getPDO(), $report->getReportId());
+		$this->assertNull($pdoReport);
+		$this->assertEquals($numRows, $this->getConnection()->getRowCount("report"));
+	}
+
 }
