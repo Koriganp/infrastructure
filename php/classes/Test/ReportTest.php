@@ -31,6 +31,12 @@ class ReportTest extends InfrastructureTest {
 	protected $profile = null;
 
 	/**
+	 * Category that the Report is associated with; this is for foreign key relations
+	 * @var Category $category
+	 */
+	protected $category = null;
+
+	/**
 	 * valid profile hash to create the profile object to own the test
 	 * @var $VALID_HASH
 	 **/
@@ -112,6 +118,12 @@ class ReportTest extends InfrastructureTest {
 	public final function setUp() : void {
 		// run the default setUp() method first
 		parent::setUp();
+
+		//create and insert a mocked category for the mocked report
+		$categoryId = generateUuidV4();
+		$this->category = new Category($categoryId, "Streets and Roads");
+		$this->category->insert($this->getPDO());
+
 		$password = "abc123";
 		$this->VALID_PROFILE_SALT = bin2hex(random_bytes(32));
 		$this->VALID_PROFILE_HASH = hash_pbkdf2("sha512", $password, $this->VALID_PROFILE_SALT, 216144);
@@ -160,7 +172,11 @@ class ReportTest extends InfrastructureTest {
 	 **/
 	public function testInsertInvalidReport() : void {
 		// create a Report with a non null tweet id and watch it fail
-		$report = new Report(InfrastructureTest::INVALID_KEY, $this->VALID_REPORTCONTENT, );
+		$report = new Report(InfrastructureTest::INVALID_KEY, InfrastructureTest::INVALID_KEY, $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
 		$report->insert($this->getPDO());
+	}
+
+	public function testUpdateValidReport() : void {
+
 	}
 }
