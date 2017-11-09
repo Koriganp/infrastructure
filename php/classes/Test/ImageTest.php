@@ -78,8 +78,10 @@ class ImageTest extends InfrastructureTest {
 		//run the default setUp() method first
 		parent::setUp();
 
+		$categoryId = generateUuidV4();
+
 		//create and insert a mocked category for the mocked report
-		$this->category = new Category(generateUuidV4(), "Streets and Roads");
+		$this->category = new Category($categoryId, "Streets and Roads");
 		$this->category->insert($this->getPDO());
 
 		$this->VALID_REPORTDATE = new \DateTime();
