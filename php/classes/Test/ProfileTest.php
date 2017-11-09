@@ -87,17 +87,6 @@ class ProfileTest extends InfrastructureTest {
 	}
 
 	/**
-	 * test inserting a Profile that already exist
-	 **/
-	public function testInsertInvalidProfile(): void {
-		//create a profile with a non null profileId and watch it fail
-		//create a uuid
-		$profileId = generateUuidV4();
-		//create a new Category and insert into mySQL
-		$profile = new Profile($profileId, $this->VALID_ACTIVATION,$this->VALID_USERNAME, $this->VALID_EMAIL, $this->VALID_HASH, $this->VALID_SALT);
-		$profile->insert($this->getPDO());
-	}
-	/**
 	 * test inserting a Profile, editing it, and then updating it
 	 **/
 	public function testUpdateValidProfile() {
