@@ -302,7 +302,9 @@ public function update(\PDO $pdo) : void {
 	// crate query template
 	$query = "UPDATE profile SET profileActivationToken = :profileActivationToken, profileUsername = :profileUsername, profileEmail = :profileEmail, profileHash = :profileHash, profileSalt = :profileSalt WHERE profileId = :profileId";
 	$statement = $pdo->prepare($query);
-	$parameters = ["profileActivationToken" => $this->profileActivationToken,"profileUsername" => $this->profileUsername, "profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash, "profileSalt" => $this->profileSalt];
+
+	//bind the member variables to the place holders in template
+	$parameters = ["profileId" => $this->profileId,"profileActivationToken" => $this->profileActivationToken,"profileUsername" => $this->profileUsername, "profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash, "profileSalt" => $this->profileSalt];
 	$statement->execute($parameters);
 	}
 	/**
