@@ -6,13 +6,13 @@
  **/
 namespace Edu\Cnm\Infrastructure\Test;
 
-use Edu\Cnm\Infrastructure\{Profile, Report};
+use Edu\Cnm\Infrastructure\{Profile, Report, Category};
 
 // grab the class under scrutiny
 require_once(dirname(__DIR__) . "/autoload.php");
 
-// grab the uuid generator
-require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
+//// grab the uuid generator
+//require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
 
 /**
  * Full PHPUnit test for the Report Class
@@ -52,13 +52,43 @@ class ReportTest extends InfrastructureTest {
 	 * content of the updated Report
 	 * @var string $VALID_UPDATEDREPORTCONTENT
 	 **/
-	protected $VALID_UPDATEDREPORTCONTENT = "There's trash all over the park! ADMIN-UPDATE: This issue should be resolved by X Department.";
+	protected $VALID_APPENDREPORTCONTENT = "There's trash all over the park! ADMIN-UPDATE: This issue should be resolved by X Department.";
 
 	/**
 	 * timestamp of the Report; this starts as null and is assigned later
 	 * @var \DateTime $VALID_REPORTDATETIME
 	 **/
 	protected $VALID_REPORTDATETIME = null;
+
+	/**
+	 * valid ip address attached to report made
+	 * @var string $VALID_IPADDRESS
+	 **/
+	protected $VALID_IPADDRESS = "1001::dead:beef:cafe";
+
+	/**
+	 * float value of latitude (Range: -90 - 90)
+	 * @var float $VALID_REPORTLAT
+	 **/
+	protected $VALID_REPORTLAT = 89.98754;
+
+	/**
+	 * float value of longitude (Range: -180 - 180)
+	 * @var float $VALID_REPORTLONG
+	 **/
+	protected $VALID_REPORTLONG = 175.87778;
+
+	/**
+	 * status of report made
+	 * @var string $VALID_STATUS
+	 **/
+	protected $VALID_STATUS = "REPORTED";
+
+	/**
+	 * urgency of report made
+	 * @var int $VALID_URGENCY
+	 */
+	protected $VALID_URGENCY = 1;
 
 	/**
 	 * Valid timestamp to use as a sunriseReportDateTime
@@ -69,6 +99,12 @@ class ReportTest extends InfrastructureTest {
 	 * Valid timestamp to use as sunsetReportDateTime
 	 **/
 	protected $VALID_SUNSETDATETIME = null;
+
+	/**
+	 * valid user agent
+	 * @var string $VALID_USERAGENT
+	 */
+	protected $VALID_USERAGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36";
 
 	/**
 	 * create dependent objects before running each test
@@ -105,7 +141,7 @@ class ReportTest extends InfrastructureTest {
 	$numRows = $this->getConnection()->getRowCount("report");
 
 	// create a new Report and insert to into mySQL
-	$report = new Report(null, $this->profile->getProfileId(), $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME);
+	$report = new Report(null, null, $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLONG, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
 	$report->insert($this->getPDO());
 
 	// grab the date from mySQL and enforce the fields match our expectations
@@ -124,7 +160,7 @@ class ReportTest extends InfrastructureTest {
 	 **/
 	public function testInsertInvalidReport() : void {
 		// create a Report with a non null tweet id and watch it fail
-		$report = new Report(InfrastructureTest::INVALID_KEY, $this->profile->getProfileId(), $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME);
+		$report = new Report(InfrastructureTest::INVALID_KEY, $this->VALID_REPORTCONTENT, );
 		$report->insert($this->getPDO());
 	}
 }
