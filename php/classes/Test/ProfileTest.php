@@ -69,7 +69,8 @@ class ProfileTest extends InfrastructureTest {
 		$numRows = $this->getConnection()->getRowCount("profile");
 
 		//create a new profile and insert into mySQL
-		$profile = new profile(null, $this->VALID_ACTIVATION, $this->VALID_EMAIL, $this->VALID_HASH, $this->VALID_SALT, $this->VALID_USERNAME);
+		$profileId = generateUuidV4();
+		$profile = new profile($profileId, $this->VALID_ACTIVATION, $this->VALID_EMAIL, $this->VALID_HASH, $this->VALID_SALT, $this->VALID_USERNAME);
 
 		//var_dump($profile)d
 		$profile->insert($this->getPDO());
