@@ -7,7 +7,7 @@
  */
 
 namespace Edu\Cnm\Infrastructure\Test;
-use Edu\Cnm\Infrastructure\Profile;
+use Edu\Cnm\Infrastructure\{Profile};
 // grab the class under scrutiny
 require_once(dirname(__DIR__) . "/autoload.php");
 require_once(dirname(__DIR__, 2) . "/lib/uuid.php");
@@ -32,7 +32,7 @@ class ProfileTest extends InfrastructureTest {
 	 * valid Username
 	 * @var string $VALID_USERNAME
 	 **/
-	protected $VALID_USERNAME = "@phpunit";
+	protected $VALID_USERNAME = "phpunit";
 	/**
 	 * valid email to use
 	 * @var string $VALID_EMAIL
@@ -150,10 +150,22 @@ class ProfileTest extends InfrastructureTest {
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
 		$profile->delete($this->getPDO());
 
-		// grab the data from mySQL and enforce the Profile does not exist
-		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
-		$this->assertNull($pdoProfile);
-		$this->assertEquals($numRows, $this->getConnection()->getRowCount("profile"));
+		$results = Profile::getProfileByProfileActivationToken($this->getPDO(), $this->VALID_ACTIVATION);
+		Profile::getProfileByProfileUsername($this->getPDO(), $this->VALID_USERNAME);
+		Profile::getProfileByProfileEmail($this->getPDO(), $this->VALID_EMAIL);
+		Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+		//enforce no other objects are bleeding into profile
+		$this->assertContainsOnlyInstancesOf("Edu\\CNM\\Infrastructure\\Profile", $results[0]);
+		//enforce the results meet expectations
+		$pdoProfile = $results[0];
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL);
+//		// grab the data from mySQL and enforce the Profile does not exist
+//		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
+//		$this->assertNull($pdoProfile);
+//		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
+//
 	}
 	/**
 	 * test deleting a profile that does not exist
