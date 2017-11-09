@@ -208,5 +208,13 @@ class ReportTest extends InfrastructureTest {
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("report"));
 	}
 
-
+	/**
+	 * test deleting a Report that does not exist
+	 * @expectedException \PDOException
+	 **/
+	public function testDeleteInvalidReport() : void {
+		// create a Report and try to delete it without actually inserting it
+		$report = new Report(null, null, $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
+		$report->delete($this->getPDO());
+	}
 }
