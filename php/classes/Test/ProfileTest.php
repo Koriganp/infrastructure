@@ -157,7 +157,7 @@ class ProfileTest extends InfrastructureTest {
 
 		$pdoProfile = $results[0];
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
-		$this->assertEquals($pdoProfile->getProfileId(), $profileId);
+		$this->assertEquals($pdoProfile->getProfileByProfileId(), $profileId);
 	}
 	/**
 	 * test deleting a profile that does not exist
