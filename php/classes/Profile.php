@@ -13,6 +13,7 @@ namespace Edu\Cnm\Infrastructure;
 require_once ("autoload.php");
 require_once (dirname(__DIR__, 2) . "/vendor/autoload.php");
 
+use InvalidArgumentException;
 use PhpParser\Node\Expr\Empty_;
 use Ramsey\Uuid\Uuid;
 class Profile implements \JsonSerializable {
@@ -57,7 +58,7 @@ private $profileUsername;
 	 * @param string $newProfileHash string containing password hash
 	 * @param string $newProfileSalt string containing passowrd salt
 	 * @param  $newProfileUsername
-	 * @throws \InvalidArgumentException if data types are not invalid
+	 * @throws InvalidArgumentException if data types are not invalid
 	 * @throws  \RangeException if data values are out of bounds
 	 * @throws \TypeError if data types violate type hints
 	 * @throw \Exception if some other exception occurs
@@ -71,7 +72,7 @@ public function  __construct($newProfileId, $newProfileActivationToken, $newProf
 		$this->setProfileSalt($newProfileSalt);
 		$this->setProfileUsername($newProfileUsername);
 
-	} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+	} catch( \RangeException | \Exception | \TypeError $exception) {
 		$exceptionType = get_class($exception);
 		throw(new $exceptionType($exception->getMessage(), 0, $exception));
 	}
@@ -95,7 +96,7 @@ public function  __construct($newProfileId, $newProfileActivationToken, $newProf
 	public function setProfileId($newProfileId) : void {
 		try {
 			$uuid = self::validateUuid($newProfileId);
-		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+		} catch(InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			$exceptionType = get_class($exception);
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
@@ -114,7 +115,7 @@ public function  __construct($newProfileId, $newProfileActivationToken, $newProf
 	 *mutator method for account activation token
 	 *
 	 * @param string $newProfileActivationToken
-	 * @throws \InvalidArgumentException if the token is not a string or insecure
+	 * @throws InvalidArgumentException if the token is not a string or insecure
 	 * @throws \RangeException if token is not exactly 32 characters
 	 * @throws \TypeError if the activation token is not a string
 	 **/
@@ -145,7 +146,7 @@ public function  __construct($newProfileId, $newProfileActivationToken, $newProf
 	 * mutator for profileEmail
 	 *
 	 * @param string $newProfileEmail new value of email
-	 * @throws \InvalidArgumentException if $newEmail is not a valid email or insecure
+	 * @throws InvalidArgumentException if $newEmail is not a valid email or insecure
 	 * @throws \RangeException if $newEmail is > 128 characters
 	 * @throws \TypeError if $newEmail is not a string
 	 **/
@@ -154,7 +155,7 @@ public function  __construct($newProfileId, $newProfileActivationToken, $newProf
 		$newProfileEmail = trim($newProfileEmail);
 		$newProfileEmail = filter_var($newProfileEmail, FILTER_VALIDATE_EMAIL);
 		if(empty($newProfileEmail) === true) {
-			throw(new \InvalidArgumentException("profile email is empty or insecure"));
+			throw(new InvalidArgumentException("profile email is empty or insecure"));
 		}
 		// verify the email will fit in the database
 		if(strlen($newProfileEmail) > 128) {
@@ -175,7 +176,7 @@ public function  __construct($newProfileId, $newProfileActivationToken, $newProf
 	 *mutator method for profileHash
 	 *
 	 * param string $newProfileHash
-	 * @throws \InvalidArgumentException if the hash is not secure
+	 * @throws InvalidArgumentException if the hash is not secure
 	 * @throws \RangeException if the hash is not 128 characters
 	 * @throws \TypeError if profile hash is not a string
 	 **/
@@ -184,11 +185,11 @@ public function  __construct($newProfileId, $newProfileActivationToken, $newProf
 		$newProfileHash = trim($newProfileHash);
 		$newProfileHash = strtolower($newProfileHash);
 		if(empty($newProfileHash) === true) {
-			throw(new \InvalidArgumentException("profile password hash empty or insecure"));
+			throw(new InvalidArgumentException("profile password hash empty or insecure"));
 		}
 		//enforce that the hash is a string representation of a hexadecimal
 		if(!ctype_xdigit($newProfileHash)) {
-			throw(new \InvalidArgumentException("profile password hash is empty or insecure"));
+			throw(new InvalidArgumentException("profile password hash is empty or insecure"));
 		}
 		//enforce that the hash is exactly 128 characters.
 		if(strlen($newProfileHash) !== 128) {
@@ -211,7 +212,7 @@ public function  __construct($newProfileId, $newProfileActivationToken, $newProf
 	 * mutator method for profile salt
 	 *
 	 * @param string $newProfileSalt
-	 * @throws \InvalidArgumentException if the salt is not secure
+	 * @throws InvalidArgumentException if the salt is not secure
 	 * @throws \RangeException if the salt is not 64 characters
 	 * @throws \TypeError if the profile salt is not a string
 	 **/
@@ -221,7 +222,7 @@ public function  __construct($newProfileId, $newProfileActivationToken, $newProf
 		$newProfileSalt = strtolower($newProfileSalt);
 		//enforce that the salt is a string representation of a hexadecimal
 		if(!ctype_xdigit($newProfileSalt)) {
-			throw(new \InvalidArgumentException("profile password hash is empty or insecure"));
+			throw(new InvalidArgumentException("profile password hash is empty or insecure"));
 		}
 		//enforce that the salt is exactly 64 characters.
 		if(strlen($newProfileSalt) !== 64) {
@@ -248,7 +249,7 @@ public function  __construct($newProfileId, $newProfileActivationToken, $newProf
 		$newProfileUsername = trim($newProfileUsername);
 		$newProfileUsername = filter_var($newProfileUsername, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 		 if(empty($newProfileUsername) === true) {
-		 	throw(new \InvalidArgumentException("Username is empty of insecure"));
+		 	throw(new InvalidArgumentException("Username is empty of insecure"));
 		 }
 		 //verify the profile content will fit in database
 		if(strlen($newProfileUsername) > 32) {
@@ -316,7 +317,7 @@ public function update(\PDO $pdo) : void {
 		// sanitize the profile id before searching
 		try {
 			$profileId = self::validateUuid($profileId);
-		} catch(\InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
+		} catch(InvalidArgumentException | \RangeException | \Exception | \TypeError $exception) {
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		// create query template
@@ -428,7 +429,7 @@ public function update(\PDO $pdo) : void {
 		//make sure activation token is in the right format and that it is a string representation of a hexadecimal
 		$profileActivationToken = trim($profileActivationToken);
 		if(ctype_xdigit($profileActivationToken) === false) {
-			throw(new \InvalidArgumentException("profile activation token is empty or in the wrong format"));
+			throw(new InvalidArgumentException("profile activation token is empty or in the wrong format"));
 		}
 		//create the query template
 		$query = "SELECT  profileId, profileActivationToken, profileEmail, profileHash, profileSalt, profileUsername FROM profile WHERE profileActivationToken = :profileActivationToken";

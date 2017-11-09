@@ -71,7 +71,7 @@ class ProfileTest extends InfrastructureTest {
 		//create a new profile and insert into mySQL
 		$profileId = generateUuidV4();
 		$profile = new profile($profileId, $this->VALID_ACTIVATION, $this->VALID_USERNAME, $this->VALID_EMAIL, $this->VALID_HASH, $this->VALID_SALT);
-		//var_dump($profile)d
+		//var_dump($profile)
 		$profile->insert($this->getPDO());
 
 		//grab the data from mySQL and enforce the fields match our expectations
