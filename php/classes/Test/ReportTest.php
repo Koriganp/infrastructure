@@ -152,8 +152,10 @@ class ReportTest extends InfrastructureTest {
 	// count the number of rows and save it for later
 	$numRows = $this->getConnection()->getRowCount("report");
 
+	$reportId = generateUuidV4();
+	$reportCategoryId = generateUuidV4();
 	// create a new Report and insert to into mySQL
-	$report = new Report(null, null, $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLONG, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
+	$report = new Report($reportId, $reportCategoryId, $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLONG, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
 	$report->insert($this->getPDO());
 
 	// grab the date from mySQL and enforce the fields match our expectations
