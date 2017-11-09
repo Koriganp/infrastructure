@@ -106,6 +106,12 @@ class CommentTest extends InfrastructureTest {
     protected $VALID_CONTENT = "a string";
 
     /**
+     * valid content to fill
+     * @var string $VALID_CONTENT2
+     **/
+    protected $VALID_CONTENT2 = "another string";
+
+    /**
      * create dependant objects before running each test
      **/
     public final function setUp() : void {
@@ -147,6 +153,25 @@ class CommentTest extends InfrastructureTest {
         $this->assertEquals($pdoComment->getCommentProfileId(), $this->profile->getProfileId());
         $this->assertEquals($pdoComment->getCommentReportId(), $this->report->getReportId());
         $this->assertEquals($pdoComment->getCommentContent(), $this->VALID_CONTENT);
+        $this->assertEquals($pdoComment->getCommentDateTime(), $this->VALID_DATE);
+    }
+
+    /**
+     * test inserting a valid comment, then updating it
+     **/
+    public function testUpdateValidComment() : void {
+        $numRows = $this->getConnection()->getRowCount("comment");
+        $commentId = generateUuidV4();
+        $this->VALID_DATE = new \DateTime();
+        $comment = new Comment($commentId, $this->profile->getProfileId(), $this->report->getReportId(), $this->VALID_CONTENT, $this->VALID_DATE);
+        $comment->insert($this->getPDO());
+        $comment->setCommentContent($this->VALID_CONTENT2);
+        $pdoComment = Comment::getCommentByCommentId($this->getPDO(), $comment->getCommentId());
+        $this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("comment"));
+        $this->assertEquals($pdoComment->getCommentId(), $commentId);
+        $this->assertEquals($pdoComment->getCommentProfileId(), $this->profile->getProfileId());
+        $this->assertEquals($pdoComment->getCommentReportId(), $this->report->getReportId());
+        $this->assertEquals($pdoComment->getCommentContent(), $this->VALID_CONTENT2);
         $this->assertEquals($pdoComment->getCommentDateTime(), $this->VALID_DATE);
     }
 }
