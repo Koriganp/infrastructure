@@ -164,18 +164,7 @@ class ProfileTest extends InfrastructureTest {
 		// grab the data from mySQL and enforce the Profile does not exist
 		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
 		$this->assertNull($pdoProfile);
-		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
-
-	}
-	/**
-	 * test deleting a profile that does not exist
-	 * @expectedException \PDOException
-	 **/
-	public function testDeleteInvalidProfile() : void {
-		//create a Profile and try to delete it without actually inserting it
-		$profileId = generateUuidV4();
-		$profile = new Profile($profileId, $this->VALID_ACTIVATION, $this->VALID_USERNAME, $this->VALID_EMAIL, $this->VALID_HASH, $this->VALID_SALT);
-		$profile->delete($this->getPDO());
+		$this->assertEquals($numRows, $this->getConnection()->getRowCount("profile"));
 	}
 	/**
 	 * test inserting a Profile and re-grabbing it from mySQL
