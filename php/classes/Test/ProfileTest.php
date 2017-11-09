@@ -137,7 +137,7 @@ class ProfileTest extends InfrastructureTest {
 	/**
 	 * test creating a Profile and then deleting it
 	 **/
-	public function testDeleteValidProfile() : void {profileUsername
+	public function testDeleteValidProfile() : void {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("profile");
 
@@ -153,7 +153,6 @@ class ProfileTest extends InfrastructureTest {
 		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
 		$profile->delete($this->getPDO());
 		$this->assertNull($pdoProfile);
-		$this->assertEquals($numRows, $this->getConnection()->getRowCount("profile"));
 	}
 	/**
 	 * test deleting a profile that does not exist
