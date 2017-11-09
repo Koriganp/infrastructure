@@ -155,7 +155,7 @@ public function  __construct($newProfileId, $newProfileActivationToken, $newProf
 		$newProfileEmail = trim($newProfileEmail);
 		$newProfileEmail = filter_var($newProfileEmail, FILTER_VALIDATE_EMAIL);
 		if(empty($newProfileEmail) === true) {
-			throw(new InvalidArgumentException("profile email is empty or insecure"));
+			throw(new \PDOException("profile email is empty or insecure"));
 		}
 		// verify the email will fit in the database
 		if(strlen($newProfileEmail) > 128) {
