@@ -300,9 +300,9 @@ public function  __construct($newProfileId, $newProfileActivationToken, $newProf
 public function update(\PDO $pdo) : void {
 
 	// crate query template
-	$query = "UPDATE profile SET profileId = :profileId, profileActivationToken = :profileActivationToken, profileUsername = :profileUsername, profileEmail = :profileEmail, profileHash = :profileHash, profileSalt = :profileSalt WHERE profileId = :profileId";
+	$query = "UPDATE profile SET profileActivationToken = :profileActivationToken, profileUsername = :profileUsername, profileEmail = :profileEmail, profileHash = :profileHash, profileSalt = :profileSalt WHERE profileId = :profileId";
 	$statement = $pdo->prepare($query);
-	$parameters = ["profileId" => $this->profileId->getBytes(), "profileActivationToken" => $this->profileActivationToken,"profileUsername" => $this->profileUsername, "profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash, "profileSalt" => $this->profileSalt];
+	$parameters = ["profileActivationToken" => $this->profileActivationToken,"profileUsername" => $this->profileUsername, "profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash, "profileSalt" => $this->profileSalt];
 	$statement->execute($parameters);
 	}
 	/**
