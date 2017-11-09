@@ -37,7 +37,7 @@ class ProfileTest extends InfrastructureTest {
 	 * valid email to use
 	 * @var string $VALID_EMAIL
 	 **/
-	protected $VALID_EMAIL = "PHPUnit";
+	protected $VALID_EMAIL = "PHPUnit@joe.com";
 	/**
 	 * valid hash to use
 	 * @var $VALID_HASH
@@ -68,8 +68,9 @@ class ProfileTest extends InfrastructureTest {
 		//count the number or rows and add save it for later
 		$numRows = $this->getConnection()->getRowCount("profile");
 
-		//create a new profile and insert into mySQL
+
 		$profileId = generateUuidV4();
+		//create a new profile and insert into mySQL
 		$profile = new profile($profileId, $this->VALID_ACTIVATION, $this->VALID_USERNAME, $this->VALID_EMAIL, $this->VALID_HASH, $this->VALID_SALT);
 		//var_dump($profile)
 		$profile->insert($this->getPDO());
@@ -90,7 +91,10 @@ class ProfileTest extends InfrastructureTest {
 	 **/
 	public function testInsertInvalidProfile(): void {
 		//create a profile with a non null profileId and watch it fail
-		$profile = new Profile(InfrastructureTest::INVALID_KEY, $this->VALID_ACTIVATION,$this->VALID_USERNAME, $this->VALID_EMAIL, $this->VALID_HASH, $this->VALID_SALT);
+		//create a uuid
+		$profileId = generateUuidV4();
+		//create a new Category and insert into mySQL
+		$profile = new Profile($profileId, $this->VALID_ACTIVATION,$this->VALID_USERNAME, $this->VALID_EMAIL, $this->VALID_HASH, $this->VALID_SALT);
 		$profile->insert($this->getPDO());
 	}
 	/**
@@ -100,8 +104,9 @@ class ProfileTest extends InfrastructureTest {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("profile");
 
-		// create a new Profile and insert to into mySQL
+		//generate a Uuid
 		$profileId = generateUuidV4();
+		// create a new Profile and insert to into mySQL
 		$profile = new Profile ($profileId, $this->VALID_ACTIVATION, $this->VALID_USERNAME, $this->VALID_EMAIL, $this->VALID_HASH, $this->VALID_SALT);
 		$profile->insert($this->getPDO());
 
@@ -132,7 +137,7 @@ class ProfileTest extends InfrastructureTest {
 	/**
 	 * test creating a Profile and then deleting it
 	 **/
-	public function testDeleteValidProfile() : void {
+	public function testDeleteValidProfile() : void {profileUsername
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("profile");
 
@@ -146,6 +151,7 @@ class ProfileTest extends InfrastructureTest {
 
 		//grab the data from mySQL and enforce the Profile does not exist
 		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
+		$profile->delete($this->getPDO());
 		$this->assertNull($pdoProfile);
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("profile"));
 	}
@@ -184,8 +190,9 @@ class ProfileTest extends InfrastructureTest {
 	 * test grabbing a Profile that does not exist
 	 **/
 	public function testGetInvalidProfileByProfileId() : void {
+		$profileId = generateUuidV4();
 		//grab a profile id that exceeds the maximum allowable profile id
-		$profile = profile::getProfileByProfileId($this->getPDO(), InfrastructureTest::INVALID_KEY);
+		$profile = profile::getProfileByProfileId($this->getPDO(), $profileId);
 		$this->assertNull($profile);
 	}
 	public function testGetValidProfileByProfileUsername() {
@@ -233,7 +240,8 @@ class ProfileTest extends InfrastructureTest {
 		//grab the data from mySQL and enforce the fields match our expectations
 		$pdoProfile = Profile::getProfileByProfileEmail($this->getPDO(), $profile->getProfileEmail());
 		$this->assertEquals($numRows + 1,$this->getConnection()->getRowCount("profile"));
-		$this->assertCount($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION);
+		$this->assertEquals($pdoProfile->getProfileId(),$profileId);
+		$this->assertEquals($pdoProfile->getProfileActivationToken(), $this->VALID_ACTIVATION);
 		$this->assertEquals($pdoProfile->getProfileUsername(), $this->VALID_USERNAME);
 		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL);
 		$this->assertEquals($pdoProfile->getProfileHash(), $this->VALID_HASH);
@@ -261,7 +269,7 @@ class ProfileTest extends InfrastructureTest {
 		$this->assertEquals($pdoProfile->getProfileSalt(), $this->VALID_SALT);
 	}
 	/**
-	 * test grabbing a Profile by an email that does not exist
+	 * test grabbing a Profile by an Token that does not exist
 	 **/
 	public function testInvalidProfileActivation() : void {
 		//grab an email that does not exist

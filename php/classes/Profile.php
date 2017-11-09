@@ -30,6 +30,11 @@ private $profileId;
  * @var $profileActivationToken
  **/
 private $profileActivationToken;
+	/**
+	 * this creates the profile User name
+	 * @var $username
+	 **/
+	private $profileUsername;
 /**
  * this is the admin email address for profile
  * @var $profileEmail
@@ -46,11 +51,6 @@ private $profileHash;
  **/
 private $profileSalt;
 	/**
-	 * this creates the profile User name
-	 * @var $username
-	 **/
-private $profileUsername;
-	/**
 	 * constructor for this profile
 	 * @param string|Uuid $newProfileId id of this Profile or null if a new Profile
 	 * @param string $newProfileActivationToken activation token to safe guard against malicious accounts
@@ -63,14 +63,14 @@ private $profileUsername;
 	 * @throws \TypeError if data types violate type hints
 	 * @throw \Exception if some other exception occurs
  	 **/
-public function  __construct($newProfileId, $newProfileActivationToken, $newProfileEmail, $newProfileHash, $newProfileSalt, $newProfileUsername) {
+public function  __construct($newProfileId, $newProfileActivationToken, $newProfileUsername, $newProfileEmail, $newProfileHash, $newProfileSalt) {
 	try {
 		$this->setProfileId($newProfileId);
 		$this->setProfileActivationToken($newProfileActivationToken);
+		$this->setProfileUsername($newProfileUsername);
 		$this->setProfileEmail($newProfileEmail);
 		$this->setProfileHash($newProfileHash);
 		$this->setProfileSalt($newProfileSalt);
-		$this->setProfileUsername($newProfileUsername);
 
 	} catch( \RangeException | \Exception | \TypeError $exception) {
 		$exceptionType = get_class($exception);
@@ -133,6 +133,33 @@ public function  __construct($newProfileId, $newProfileActivationToken, $newProf
 			throw(new\RangeException("user activation token has to be 32"));
 		}
 		$this->profileActivationToken = $newProfileActivationToken;
+	}
+	/**
+	 * accessor method for username
+	 *
+	 * @return string value of username
+	 */
+	public function getProfileUsername():string {
+		return $this->profileUsername;
+	}
+
+	/**
+	 * mutator method for username
+	 *
+	 * @param
+	 **/
+	public function setProfileUsername($newProfileUsername): void {
+		$newProfileUsername = trim($newProfileUsername);
+		$newProfileUsername = filter_var($newProfileUsername, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+		if(empty($newProfileUsername) === true) {
+			throw(new InvalidArgumentException("Username is empty of insecure"));
+		}
+		//verify the profile content will fit in database
+		if(strlen($newProfileUsername) > 32) {
+			throw(new \RangeException(("Username is too large")));
+		}
+		//store the username
+		$this->profileUsername= $newProfileUsername;
 	}
 	/**
 	 * accessor method for profileEmail
@@ -231,33 +258,7 @@ public function  __construct($newProfileId, $newProfileActivationToken, $newProf
 		//store the hash
 		$this->profileSalt = $newProfileSalt;
 	}
-	/**
-	 * accessor method for username
-	 *
-	 * @return string value of username
-	 */
-	public function getProfileUsername():string {
-		return $this->profileUsername;
-	}
 
-	/**
-	 * mutator method for username
-	 *
-	 * @param
-	 **/
-	public function setProfileUsername($newProfileUsername): void {
-		$newProfileUsername = trim($newProfileUsername);
-		$newProfileUsername = filter_var($newProfileUsername, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-		 if(empty($newProfileUsername) === true) {
-		 	throw(new InvalidArgumentException("Username is empty of insecure"));
-		 }
-		 //verify the profile content will fit in database
-		if(strlen($newProfileUsername) > 32) {
-		 	throw(new \RangeException(("Username is too large")));
-		}
-		//store the username
-		$this->profileUsername= $newProfileUsername;
-	}
 
 	/**
 	 * inserts this profile into mySQl
@@ -269,7 +270,7 @@ public function  __construct($newProfileId, $newProfileActivationToken, $newProf
 	 **/
 	public function insert(\PDO $pdo) : void {
 		//create query template
-		$query = "INSERT INTO profile(ProfileId, ProfileActivationToken,  ProfileEmail, ProfileHash, ProfileSalt, ProfileUserName) VALUES(:profileId, :profileActivationToken,  :profileEmail, :profileHash, :profileSalt, :profileUsername)";
+		$query = "INSERT INTO profile(ProfileId, ProfileActivationToken, ProfileUserName, ProfileEmail, ProfileHash, ProfileSalt) VALUES(:profileId, :profileActivationToken, :profileUsername, :profileEmail, :profileHash, :profileSalt)";
 		$statement = $pdo->prepare($query);
 		$parameters = ["profileId"=> $this->profileId-> getBytes(),"profileActivationToken"=> $this->profileActivationToken, "profileUsername"=> $this->profileUsername, "profileEmail"=> $this->profileEmail, "profileHash"=> $this->profileHash, "profileSalt"=> $this->profileSalt];
 		$statement->execute($parameters);
@@ -299,9 +300,9 @@ public function  __construct($newProfileId, $newProfileActivationToken, $newProf
 public function update(\PDO $pdo) : void {
 
 	// crate query template
-	$query = "UPDATE profile SET profileId = :profileId, profileActivationToken = :profileActivationToken, profileEmail = :profileEmail, profileHash = :profileHash, profileSalt = :profileSalt, profileUsername = :profileUsername WHERE profileId = :profileId";
+	$query = "UPDATE profile SET profileId = :profileId, profileActivationToken = :profileActivationToken, profileUsername = :profileUsername, profileEmail = :profileEmail, profileHash = :profileHash, profileSalt = :profileSalt WHERE profileId = :profileId";
 	$statement = $pdo->prepare($query);
-	$parameters = ["profileId" => $this->profileId->getBytes(), "profileActivationToken" => $this->profileActivationToken, "profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash, "profileSalt" => $this->profileSalt, "profileUsername" => $this->profileUsername];
+	$parameters = ["profileId" => $this->profileId->getBytes(), "profileActivationToken" => $this->profileActivationToken,"profileUsername" => $this->profileUsername, "profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash, "profileSalt" => $this->profileSalt];
 	$statement->execute($parameters);
 	}
 	/**
@@ -321,7 +322,7 @@ public function update(\PDO $pdo) : void {
 			throw(new \PDOException($exception->getMessage(), 0, $exception));
 		}
 		// create query template
-		$query = "SELECT profileId, profileActivationToken, profileEmail, profileHash, profileSalt, profileUsername FROM profile WHERE profileId = :profileId";
+		$query = "SELECT profileId, profileActivationToken,  profileUsername, profileEmail, profileHash, profileSalt FROM profile WHERE profileId = :profileId";
 		$statement = $pdo->prepare($query);
 		// bind the profile id to the place holder in the template
 		$parameters = ["profileId" => $profileId->getBytes()];
@@ -332,7 +333,7 @@ public function update(\PDO $pdo) : void {
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileHash"], $row["profileSalt"], $row["profileUsername"]);
+				$profile = new Profile($row["profileId"],  $row["profileActivationToken"], $row["profileUsername"],$row["profileEmail"], $row["profileHash"], $row["profileSalt"]);
 			}
 		} catch(\Exception $exception) {
 			// if the row couldn't be converted, rethrow it
@@ -358,7 +359,7 @@ public function update(\PDO $pdo) : void {
 			throw(new \PDOException("not a valid email"));
 		}
 		// create query template
-		$query = "SELECT profileId, profileActivationToken, profileEmail, profileHash, profileSalt, profileUsername FROM profile WHERE profileEmail = :profileEmail";
+		$query = "SELECT profileId, profileActivationToken, profileUsername, profileEmail, profileHash, profileSalt FROM profile WHERE profileEmail = :profileEmail";
 		$statement = $pdo->prepare($query);
 		// bind the profile id to the place holder in the template
 		$parameters = ["profileEmail" => $profileEmail];
@@ -369,7 +370,7 @@ public function update(\PDO $pdo) : void {
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileHash"], $row["profileSalt"], $row["profileUsername"]);
+				$profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileUsername"],$row["profileEmail"], $row["profileHash"], $row["profileSalt"]);
 			}
 		} catch(\Exception $exception) {
 			// if the row couldn't be converted, rethrow it
@@ -395,7 +396,7 @@ public function update(\PDO $pdo) : void {
 			throw(new \PDOException("not a valid Username"));
 		}
 		// create query template
-		$query = "SELECT  profileId, profileActivationToken, profileEmail, profileHash, profileSalt, profileUsername FROM profile WHERE profileUsername = :profileUsername";
+		$query = "SELECT  profileId, profileActivationToken,profileUsername, profileEmail, profileHash, profileSalt  FROM profile WHERE profileUsername = :profileUsername";
 		$statement = $pdo->prepare($query);
 		// bind the profile Username to the place holder in the template
 		$parameters = ["profileUsername" => $profileUsername];
@@ -404,7 +405,7 @@ public function update(\PDO $pdo) : void {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while (($row = $statement->fetch()) !== false) {
 			try {
-				$profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileHash"], $row["profileSalt"], $row["profileUsername"]);
+				$profile = new Profile($row["profileId"], $row["profileActivationToken"],  $row["profileUsername"], $row["profileEmail"], $row["profileHash"], $row["profileSalt"]);
 				$profiles[$profiles->key()] = $profile;
 				$profiles->next();
 			} catch(\Exception $exception) {
@@ -432,7 +433,7 @@ public function update(\PDO $pdo) : void {
 			throw(new InvalidArgumentException("profile activation token is empty or in the wrong format"));
 		}
 		//create the query template
-		$query = "SELECT  profileId, profileActivationToken, profileEmail, profileHash, profileSalt, profileUsername FROM profile WHERE profileActivationToken = :profileActivationToken";
+		$query = "SELECT  profileId, profileActivationToken, profileUsername, profileEmail, profileHash, profileSalt FROM profile WHERE profileActivationToken = :profileActivationToken";
 		$statement = $pdo->prepare($query);
 		// bind the profile activation token to the placeholder in the template
 		$parameters = ["profileActivationToken" => $profileActivationToken];
@@ -443,7 +444,7 @@ public function update(\PDO $pdo) : void {
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$profile = new Profile($row["profileId"], $row["profileActivationToken"], $row["profileEmail"], $row["profileHash"], $row["profileSalt"], $row["profileUsername"]);
+				$profile = new Profile($row["profileId"], $row["profileActivationToken"],$row["profileUsername"], $row["profileEmail"], $row["profileHash"], $row["profileSalt"]);
 			}
 		} catch(\Exception $exception) {
 			// if the row couldn't be converted, rethrow it
