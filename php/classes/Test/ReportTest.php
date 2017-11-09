@@ -217,4 +217,38 @@ class ReportTest extends InfrastructureTest {
 		$report = new Report(null, null, $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
 		$report->delete($this->getPDO());
 	}
+
+	/**
+	 * test grabbing a Report that does not exist
+	 **/
+	public function testGetInvalidReportByCategoryId() {
+		// grab a category id that exceeds the maximum allowable profile id
+		$report = Report::getReportByReportId($this->getPDO(), InfrastructureTest::INVALID_KEY);
+		$this->assertNull($report);
+	}
+
+	/**
+	 * test inserting a Report and regrabbing it from mySQL
+	 **/
+	public function testGetValidReportByReportCategoryId() {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("report");
+
+		// create a new Report and insert into mySQL
+		$report = new Report(null, null, $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
+		$report->insert($this->getPDO());
+
+		// grab the data from mySQL and enforce the fields match our expectations
+		$results = Report::getReportByReportCategoryId($this->getPDO(), $report->getReportCategoryId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("report"));
+		$this->assertCount(1, $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\DataDesign\\Report", $results);
+
+		// grab the result from the array and validate it
+		$pdoReport = $results[0];
+		$this->assertEquals($pdoReport->getReportCategoryId(), $this->category->getCategoryId());
+		$this->assertEquals($pdoReport->getReportContent(), $this->VALID_REPORTCONTENT);
+		// format the date too seconds since the beginning of time to avoid round off error
+		$this->assertEquals($pdoReport->getReportDateTime()->getTimeStamp(), $this->VALID_REPORTDATETIME->getTimestamp());
+	}
 }
