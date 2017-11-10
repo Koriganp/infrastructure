@@ -621,11 +621,11 @@ class Report implements \JsonSerializable {
 	 **/
 	public static function getReportByReportUrgency(\PDO $pdo, int $reportUrgency) : \SplFixedArray {
 		// create query template
-		$query = "SELECT reportId, reportCategoryId, reportContent, reportDateTime, reportIpAddress, reportLat, reportLong, reportStatus, reportUrgency, reportUserAgent FROM report WHERE reportUrgency LIKE :reportUrgency";
+		$query = "SELECT reportId, reportCategoryId, reportContent, reportDateTime, reportIpAddress, reportLat, reportLong, reportStatus, reportUrgency, reportUserAgent FROM report WHERE reportUrgency = :reportUrgency";
 		$statement = $pdo->prepare($query);
 
 		// bind the report content to the place holder in the template
-		$reportUrgency = "%$reportUrgency%";
+//		$reportUrgency = "%$reportUrgency%";
 		$parameters = ["reportUrgency" => $reportUrgency];
 		$statement->execute($parameters);
 
@@ -635,6 +635,7 @@ class Report implements \JsonSerializable {
 		while(($row = $statement->fetch()) !== false) {
 			try {
 				$report = new Report($row["reportId"], $row["reportCategoryId"], $row["reportContent"], $row["reportDateTime"], $row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"],$row["reportUserAgent"]);
+				var_dump($report);
 				$reports[$reports->key()] = $report;
 				$reports->next();
 			} catch(\Exception $exception) {

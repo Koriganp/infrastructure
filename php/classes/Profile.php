@@ -24,7 +24,6 @@ class Profile implements \JsonSerializable {
  * @var Uuid $ProfileId
  *
  **/
-
 private $profileId;
 /**
  * this creates the activation token
