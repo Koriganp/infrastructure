@@ -166,6 +166,8 @@ class ReportTest extends InfrastructureTest {
 	// format the date to seconds since the beginning of time to avoid round off error
 	$this->assertEquals($pdoReport->getReportDateTime()->getTimestamp(), $this->VALID_REPORTDATETIME->getTimestamp());
 	$this->assertEquals($pdoReport->getReportUserAgent(), $this->VALID_USERAGENT);
+	$this->assertEquals($pdoReport->getReportStatus(), $this->VALID_STATUS);
+	$this->assertEquals($pdoReport->getReportUrgency(), $this->VALID_URGENCY);
 	}
 
 	/**
@@ -189,6 +191,8 @@ class ReportTest extends InfrastructureTest {
 		// format the date to seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoReport->getReportDateTime()->getTimestamp(), $this->VALID_REPORTDATETIME->getTimestamp());
 		$this->assertEquals($pdoReport->getReportUserAgent(), $this->VALID_USERAGENT);
+		$this->assertEquals($pdoReport->getReportStatus(), $this->VALID_STATUS);
+		$this->assertEquals($pdoReport->getReportUrgency(), $this->VALID_URGENCY);
 	}
 
 
@@ -280,6 +284,8 @@ class ReportTest extends InfrastructureTest {
 		// format the date too seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoReport->getReportDateTime()->getTimeStamp(), $this->VALID_REPORTDATETIME->getTimestamp());
 		$this->assertEquals($pdoReport->getReportUserAgent(), $this->VALID_USERAGENT);
+		$this->assertEquals($pdoReport->getReportStatus(), $this->VALID_STATUS);
+		$this->assertEquals($pdoReport->getReportUrgency(), $this->VALID_URGENCY);
 	}
 
 	/**
@@ -360,6 +366,8 @@ class ReportTest extends InfrastructureTest {
 		$this->assertEquals($pdoReport->getReportUserAgent(), $this->VALID_USERAGENT);
 		$this->assertEquals($pdoReport->getReportLat(), $this->VALID_REPORTLAT);
 		$this->assertEquals($pdoReport->getReportLong(), $this->VALID_REPORTLONG);
+		$this->assertEquals($pdoReport->getReportStatus(), $this->VALID_STATUS);
+		$this->assertEquals($pdoReport->getReportUrgency(), $this->VALID_URGENCY);
 	}
 
 /**
@@ -382,6 +390,7 @@ class ReportTest extends InfrastructureTest {
 		// grab the result from the array and validate it
 		$pdoReport = $results[0];
 		$this->assertEquals($pdoReport->getReportCategoryId(), $this->category->getCategoryId());
+		// include urgency and status asserts
 		$this->assertEquals($pdoReport->getReportContent(), $this->VALID_REPORTCONTENT);
 		$this->assertEquals($pdoReport->getReportIpAddress(), $this->VALID_IPADDRESS);
 		//format the date too seconds since the beginning of time to avoid round off error
@@ -389,6 +398,8 @@ class ReportTest extends InfrastructureTest {
 		$this->assertEquals($pdoReport->getReportUserAgent(), $this->VALID_USERAGENT);
 		$this->assertEquals($pdoReport->getReportLat(), $this->VALID_REPORTLAT);
 		$this->assertEquals($pdoReport->getReportLong(), $this->VALID_REPORTLONG);
+		$this->assertEquals($pdoReport->getReportStatus(), $this->VALID_STATUS);
+		$this->assertEquals($pdoReport->getReportUrgency(), $this->VALID_URGENCY);
 	}
 
 	/**
@@ -418,6 +429,8 @@ class ReportTest extends InfrastructureTest {
 		$this->assertEquals($pdoReport->getReportUserAgent(), $this->VALID_USERAGENT);
 		$this->assertEquals($pdoReport->getReportLat(), $this->VALID_REPORTLAT);
 		$this->assertEquals($pdoReport->getReportLong(), $this->VALID_REPORTLONG);
+		$this->assertEquals($pdoReport->getReportStatus(), $this->VALID_STATUS);
+		$this->assertEquals($pdoReport->getReportUrgency(), $this->VALID_URGENCY);
 	}
 
 	/**
@@ -447,5 +460,7 @@ class ReportTest extends InfrastructureTest {
 		$this->assertEquals($pdoReport->getReportUserAgent(), $this->VALID_USERAGENT);
 		$this->assertEquals($pdoReport->getReportLat(), $this->VALID_REPORTLAT);
 		$this->assertEquals($pdoReport->getReportLong(), $this->VALID_REPORTLONG);
+		$this->assertEquals($pdoReport->getReportStatus(), $this->VALID_STATUS);
+		$this->assertEquals($pdoReport->getReportUrgency(), $this->VALID_URGENCY);
 	}
 }
