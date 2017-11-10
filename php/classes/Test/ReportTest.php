@@ -173,9 +173,9 @@ class ReportTest extends InfrastructureTest {
 	 * @expectedException \PDOException
 	 **/
 	public function testInsertInvalidReport() : void {
-		$reportId = generateUuidV4();
+		//$reportId = generateUuidV4();
 		// create a Report with a non null report id and watch it fail
-		$report = new Report($reportId, $this->category->getCategoryId(), $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
+		$report = new Report(InfrastructureTest::INVALID_KEY, $this->category->getCategoryId(), $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
 		$report->insert($this->getPDO());
 	}
 
@@ -222,7 +222,7 @@ class ReportTest extends InfrastructureTest {
 		$reportId = generateUuidV4();
 		$reportCategoryId = generateUuidV4();
 		// create a Report and try to delete it without actually inserting it
-		$report = new Report($reportId, $reportCategoryId, $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
+		$report = new Report(null, $this->category->getCategoryId(), $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
 		$report->delete($this->getPDO());
 	}
 
