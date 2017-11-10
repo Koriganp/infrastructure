@@ -307,6 +307,7 @@ public function update(\PDO $pdo) : void {
 	$parameters = ["profileId" => $this->profileId,"profileActivationToken" => $this->profileActivationToken,"profileUsername" => $this->profileUsername, "profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash, "profileSalt" => $this->profileSalt];
 	$statement->execute($parameters);
 	}
+
 	/**
 	 * gets the Profile by profile id
 	 *
