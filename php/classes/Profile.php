@@ -14,7 +14,7 @@ require_once ("autoload.php");
 require_once (dirname(__DIR__, 2) . "/vendor/autoload.php");
 
 use InvalidArgumentException;
-use PhpParser\Node\Expr\Empty_;
+//use PhpParser\Node\Expr\Empty_;
 use Ramsey\Uuid\Uuid;
 class Profile implements \JsonSerializable {
 	use ValidateUuid;
@@ -307,7 +307,6 @@ public function update(\PDO $pdo) : void {
 	$parameters = ["profileId" => $this->profileId,"profileActivationToken" => $this->profileActivationToken,"profileUsername" => $this->profileUsername, "profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash, "profileSalt" => $this->profileSalt];
 	$statement->execute($parameters);
 	}
-
 	/**
 	 * gets the Profile by profile id
 	 *
