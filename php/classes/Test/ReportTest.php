@@ -406,7 +406,7 @@ class ReportTest extends InfrastructureTest {
 		// grab the data from mySQL and enforce the fields match our expectations
 		$results = Report::getReportByReportStatus($this->getPDO(), $this->VALID_URGENCY);
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("report"));
-		$this->assertCount(5, $results);
+		$this->assertCount(0, $results);
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Infrastructure\\Report", $results);
 		// grab the result from the array and validate it
 		$pdoReport = $results[0];
