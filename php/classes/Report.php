@@ -508,7 +508,7 @@ class Report implements \JsonSerializable {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$report = new Report($row["reportId"], $row["reportCategory"], $row["reportContent"], $row["reportDateTime"], $row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"], $row["reportUserAgent"]);
+				$report = new Report($row["reportId"], $row["reportCategoryId"], $row["reportContent"], $row["reportDateTime"], $row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"], $row["reportUserAgent"]);
 				$reports[$reports->key()] = $report;
 				$reports->next();
 			} catch(\Exception $exception) {
