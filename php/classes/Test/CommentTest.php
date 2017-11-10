@@ -166,6 +166,7 @@ class CommentTest extends InfrastructureTest {
         $comment = new Comment($commentId, $this->profile->getProfileId(), $this->report->getReportId(), $this->VALID_CONTENT, $this->VALID_DATE);
         $comment->insert($this->getPDO());
         $comment->setCommentContent($this->VALID_CONTENT2);
+        $comment->update($this->getPDO());
         $pdoComment = Comment::getCommentByCommentId($this->getPDO(), $comment->getCommentId());
         $this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("comment"));
         $this->assertEquals($pdoComment->getCommentId(), $commentId);
@@ -174,4 +175,21 @@ class CommentTest extends InfrastructureTest {
         $this->assertEquals($pdoComment->getCommentContent(), $this->VALID_CONTENT2);
         $this->assertEquals($pdoComment->getCommentDateTime(), $this->VALID_DATE);
     }
+
+    /**
+     * test deleting a valid comment
+     **/
+    public function testDeleteValidComment() : void {
+        $numRows = $this->getConnection()->getRowCount("comment");
+        $commentId = generateUuidV4();
+        $this->VALID_DATE = new \DateTime();
+        $comment = new Comment($commentId, $this->profile->getProfileId(), $this->report->getReportId(), $this->VALID_CONTENT, $this->VALID_DATE);
+        $comment->insert($this->getPDO());
+        $this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("comment"));
+        $comment->delete($this->getPDO());
+        $pdoComment = Comment::getCommentByCommentId($this->getPDO(), $comment->getCommentId());
+        $this->assertNull($pdoComment);
+        $this->assertEquals($numRows, $this->getConnection()->getRowCount("comment"));
+    }
 }
+
