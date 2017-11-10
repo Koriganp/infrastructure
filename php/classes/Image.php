@@ -33,7 +33,7 @@ class Image implements \JsonSerializable {
 	 * @var string $imageCloudinary
 	 **/
 	private $imageCloudinary;
-		/**
+	/**
 	 * this is the longitude of the image
 	 * @var integer $imageLong
 	 **/
