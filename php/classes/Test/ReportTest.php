@@ -91,12 +91,6 @@ class ReportTest extends InfrastructureTest {
 	protected $VALID_STATUS = "REPORTED";
 
 	/**
-	 * urgency of report made
-	 * @var int $VALID_URGENCY
-	 */
-	protected $VALID_URGENCY = 1;
-
-	/**
 	 * Valid timestamp to use as a sunriseReportDateTime
 	 **/
 	protected $VALID_SUNRISEDATETIME = null;
@@ -105,6 +99,12 @@ class ReportTest extends InfrastructureTest {
 	 * Valid timestamp to use as sunsetReportDateTime
 	 **/
 	protected $VALID_SUNSETDATETIME = null;
+
+	/**
+	 * urgency of report made
+	 * @var int $VALID_URGENCY
+	 */
+	protected $VALID_URGENCY = 1;
 
 	/**
 	 * valid user agent
@@ -165,6 +165,7 @@ class ReportTest extends InfrastructureTest {
 		$this->assertEquals($pdoReport->getReportIpAddress(), $this->VALID_IPADDRESS);
 	// format the date to seconds since the beginning of time to avoid round off error
 	$this->assertEquals($pdoReport->getReportDateTime()->getTimestamp(), $this->VALID_REPORTDATETIME->getTimestamp());
+	$this->assertEquals($pdoReport->getReportUserAgent(), $this->VALID_USERAGENT);
 	}
 
 	/**
@@ -173,9 +174,9 @@ class ReportTest extends InfrastructureTest {
 	 * @expectedException \PDOException
 	 **/
 	public function testInsertInvalidReport() : void {
-		//$reportId = generateUuidV4();
+		$reportId = generateUuidV4();
 		// create a Report with a non null report id and watch it fail
-		$report = new Report(InfrastructureTest::INVALID_KEY, $this->category->getCategoryId(), $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
+		$report = new Report($reportId, $this->category->getCategoryId(), $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
 		$report->insert($this->getPDO());
 	}
 
@@ -212,6 +213,7 @@ class ReportTest extends InfrastructureTest {
 		$pdoReport = Report::getReportByReportId($this->getPDO(), $report->getReportId());
 		$this->assertNull($pdoReport);
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("report"));
+		$this->assertEquals($pdoReport->getReportUserAgent(), $this->VALID_USERAGENT);
 	}
 
 	/**
@@ -220,9 +222,9 @@ class ReportTest extends InfrastructureTest {
 	 **/
 	public function testDeleteInvalidReport() : void {
 		$reportId = generateUuidV4();
-		$reportCategoryId = generateUuidV4();
+		//$reportCategoryId = generateUuidV4();
 		// create a Report and try to delete it without actually inserting it
-		$report = new Report(null, $this->category->getCategoryId(), $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
+		$report = new Report($reportId, $this->category->getCategoryId(), $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
 		$report->delete($this->getPDO());
 	}
 
@@ -252,6 +254,7 @@ class ReportTest extends InfrastructureTest {
 		$this->assertEquals($pdoReport->getReportIpAddress(), $this->VALID_IPADDRESS);
 		// format the date too seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoReport->getReportDateTime()->getTimeStamp(), $this->VALID_REPORTDATETIME->getTimestamp());
+		$this->assertEquals($pdoReport->getReportUerAgent(), $this->VALID_USERAGENT);
 	}
 
 	/**
@@ -329,6 +332,7 @@ class ReportTest extends InfrastructureTest {
 		$this->assertEquals($pdoReport->getReportContent(), $report->getReportContent());
 		$this->assertEquals($pdoReport->getReportIpAddress(), $this->VALID_IPADDRESS);
 		$this->assertEquals($pdoReport->getReportDate()->getTimestamp(), $this->VALID_REPORTDATETIME->getTimestamp());
+		$this->assertEquals($pdoReport->getReportUerAgent(), $this->VALID_USERAGENT);
 	}
 
 	/**
@@ -350,10 +354,11 @@ class ReportTest extends InfrastructureTest {
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Infrastructure\\Report", $results);
 		// grab the result from the array and validate it
 		$pdoReport = $results[0];
-		$this->assertEquals($pdoReport->getReportContent(), $this->VALID_REPORTCONTENT);
 		$this->assertEquals($pdoReport->getReportCategoryId(), $this->category->getCategoryId());
+		$this->assertEquals($pdoReport->getReportContent(), $this->VALID_REPORTCONTENT);
 		$this->assertEquals($pdoReport->getReportIpAddress(), $this->VALID_IPADDRESS);
 		//format the date too seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoReport->getReportDateTime()->getTimestamp(), $this->VALID_REPORTDATETIME->getTimestamp());
+		$this->assertEquals($pdoReport->getReportUerAgent(), $this->VALID_USERAGENT);
 	}
 }

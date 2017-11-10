@@ -365,7 +365,7 @@ class Report implements \JsonSerializable {
 			throw(new \InvalidArgumentException("report user agent is empty or insecure"));
 		}
 
-		//verify the report content will fit in the database
+		//verify the report user agent will fit in the database
 		if(strlen($newReportUserAgent) > 255) {
 			throw(new \RangeException("report user agent too large"));
 		}
