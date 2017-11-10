@@ -213,7 +213,7 @@ class ReportTest extends InfrastructureTest {
 		$pdoReport = Report::getReportByReportId($this->getPDO(), $report->getReportId());
 		$this->assertNull($pdoReport);
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("report"));
-		$this->assertEquals($pdoReport->getReportUserAgent(), $this->VALID_USERAGENT);
+		//$this->assertEquals($pdoReport->getReportUserAgent(), $this->VALID_USERAGENT);
 	}
 
 	/**
@@ -254,7 +254,7 @@ class ReportTest extends InfrastructureTest {
 		$this->assertEquals($pdoReport->getReportIpAddress(), $this->VALID_IPADDRESS);
 		// format the date too seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoReport->getReportDateTime()->getTimeStamp(), $this->VALID_REPORTDATETIME->getTimestamp());
-		$this->assertEquals($pdoReport->getReportUerAgent(), $this->VALID_USERAGENT);
+		$this->assertEquals($pdoReport->getReportUserAgent(), $this->VALID_USERAGENT);
 	}
 
 	/**
@@ -331,8 +331,8 @@ class ReportTest extends InfrastructureTest {
 		$this->assertEquals($pdoReport->getReportCategoryId(), $report->getReportCategoryId());
 		$this->assertEquals($pdoReport->getReportContent(), $report->getReportContent());
 		$this->assertEquals($pdoReport->getReportIpAddress(), $this->VALID_IPADDRESS);
-		$this->assertEquals($pdoReport->getReportDate()->getTimestamp(), $this->VALID_REPORTDATETIME->getTimestamp());
-		$this->assertEquals($pdoReport->getReportUerAgent(), $this->VALID_USERAGENT);
+		$this->assertEquals($pdoReport->getReportDateTime()->getTimestamp(), $this->VALID_REPORTDATETIME->getTimestamp());
+		$this->assertEquals($pdoReport->getReportUserAgent(), $this->VALID_USERAGENT);
 	}
 
 	/**
@@ -359,6 +359,6 @@ class ReportTest extends InfrastructureTest {
 		$this->assertEquals($pdoReport->getReportIpAddress(), $this->VALID_IPADDRESS);
 		//format the date too seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoReport->getReportDateTime()->getTimestamp(), $this->VALID_REPORTDATETIME->getTimestamp());
-		$this->assertEquals($pdoReport->getReportUerAgent(), $this->VALID_USERAGENT);
+		$this->assertEquals($pdoReport->getReportUserAgent(), $this->VALID_USERAGENT);
 	}
 }

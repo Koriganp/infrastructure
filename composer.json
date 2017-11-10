@@ -2,6 +2,7 @@
   "require": {
     "apigen/apigen": "dev-master",
     "cloudinary/cloudinary_php": "dev-master",
+
     "phpdocumentor/reflection-docblock": "@stable",
     "phpunit/dbunit": "@stable",
     "phpunit/phpunit": "@stable",

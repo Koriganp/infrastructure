@@ -342,9 +342,9 @@ class Report implements \JsonSerializable {
 	/**
 	 * accessor method for report user agent
 	 *
-	 * @return int value of report user agent
+	 * @return string value of report user agent
 	 **/
-	public function getReportUserAgent() : int {
+	public function getReportUserAgent() : string {
 		return($this->reportUserAgent);
 	}
 
