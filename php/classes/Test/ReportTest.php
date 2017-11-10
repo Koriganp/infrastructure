@@ -184,8 +184,10 @@ class ReportTest extends InfrastructureTest {
 	 * @expectedException \PDOException
 	 **/
 	public function testUpdateValidReport() : void {
+		$reportId = generateUuidV4();
+		$reportCategoryId = generateUuidV4();
 		// create a new Report with a non null report id and watch it fail
-		$report = new Report(null, null, $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
+		$report = new Report($reportId, $reportCategoryId, $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
 		$report->$this->update($this->getPDO());
 	}
 
@@ -196,8 +198,10 @@ class ReportTest extends InfrastructureTest {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("report");
 
+		$reportId = generateUuidV4();
+		$reportCategoryId = generateUuidV4();
 		// create a new Report and insert into mySQL
-		$report = new Report(null, null, $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
+		$report = new Report($reportId, $reportCategoryId, $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
 		$report->insert($this->getPDO());
 
 		// delete the Report from mySQL
@@ -236,8 +240,10 @@ class ReportTest extends InfrastructureTest {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("report");
 
+		$reportId = generateUuidV4();
+		$reportCategoryId = generateUuidV4();
 		// create a new Report and insert into mySQL
-		$report = new Report(null, null, $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
+		$report = new Report($reportId, $reportCategoryId, $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
 		$report->insert($this->getPDO());
 
 		// grab the data from mySQL and enforce the fields match our expectations
@@ -296,8 +302,10 @@ class ReportTest extends InfrastructureTest {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("report");
 
+		$reportId = generateUuidV4();
+		$reportCategoryId = generateUuidV4();
 		// create a new Report and insert it into the database
-		$report = new Report(null, null, $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
+		$report = new Report($reportId, $reportCategoryId, $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
 		$report->insert($this->getPDO());
 
 		// grab the report from the database and see if it matches expectations
@@ -322,8 +330,11 @@ class ReportTest extends InfrastructureTest {
 	public function testGetAllValidReports() : void {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("report");
+
+		$reportId = generateUuidV4();
+		$reportCategoryId = generateUuidV4();
 		// create a new Report and insert to into mySQL
-		$report = new Report(null, null, $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
+		$report = new Report($reportId, $reportCategoryId, $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
 		$report->insert($this->getPDO());
 		// grab the data from mySQL and enforce the fields match our expectations
 		$results = Report::getAllReports($this->getPDO());
