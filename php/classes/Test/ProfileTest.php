@@ -138,19 +138,6 @@ class ProfileTest extends InfrastructureTest {
 		//delete the profile from mySQL
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
 		$profile->delete($this->getPDO());
-
-//		$results = Profile::getProfileByProfileActivationToken($this->getPDO(), $this->VALID_ACTIVATION);
-//		Profile::getProfileByProfileUsername($this->getPDO(), $this->VALID_USERNAME);
-//		Profile::getProfileByProfileEmail($this->getPDO(), $this->VALID_EMAIL);
-//		Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
-//		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
-//		//enforce no other objects are bleeding into profile
-//		$this->assertContainsOnlyInstancesOf("Edu\\CNM\\Infrastructure\\Profile", $results[0]);
-//		//enforce the results meet expectations
-//		$pdoProfile = $results[0];
-//		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("profile"));
-//		$this->assertEquals($pdoProfile->getProfileEmail(), $this->VALID_EMAIL);
-		// grab the data from mySQL and enforce the Profile does not exist
 		$pdoProfile = Profile::getProfileByProfileId($this->getPDO(), $profile->getProfileId());
 		$this->assertNull($pdoProfile);
 		$this->assertEquals($numRows, $this->getConnection()->getRowCount("profile"));
