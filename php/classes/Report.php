@@ -649,8 +649,8 @@ class Report implements \JsonSerializable {
 	 * (this is an optional get by method and has only been added for when specific edge cases arise in capstone projects)
 	 *
 	 * @param \PDO $pdo connection object
-	 * @param \DateTime $sunriseReportDate beginning date to search for
-	 * @param \DateTime $sunsetReportDate ending date to search for
+	 * @param \DateTime $sunriseReportDateTime beginning date to search for
+	 * @param \DateTime $sunsetReportDateTime ending date to search for
 	 * @return \SplFixedArray of reports found
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when variables are not the correct data type
@@ -670,12 +670,12 @@ class Report implements \JsonSerializable {
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
 		//create query template
-		$query = "SELECT reportId, reportCategoryId, reportContent, reportDateTime, reportIpAddress, reportLat, reportLong, reportStatus, reportUrgency, reportUserAgent from report WHERE reportDateTime >= :sunriseReportDate AND reportDateTime <= :sunsetReportDate";
+		$query = "SELECT reportId, reportCategoryId, reportContent, reportDateTime, reportIpAddress, reportLat, reportLong, reportStatus, reportUrgency, reportUserAgent from report WHERE reportDateTime >= :sunriseReportDateTime AND reportDateTime <= :sunsetReportDateTime";
 		$statement = $pdo->prepare($query);
 		//format the dates so that mySQL can use them
 		$formattedSunriseDate = $sunriseReportDateTime->format("Y-m-d H:i:s.u");
 		$formattedSunsetDate = $sunsetReportDateTime->format("Y-m-d H:i:s.u");
-		$parameters = ["sunriseTweetDate" => $formattedSunriseDate, "sunsetTweetDate" => $formattedSunsetDate];
+		$parameters = ["sunriseReportDateTime" => $formattedSunriseDate, "sunsetReportDateTime" => $formattedSunsetDate];
 		$statement->execute($parameters);
 		//build an array of tweets
 		$reports = new \SplFixedArray($statement->rowCount());

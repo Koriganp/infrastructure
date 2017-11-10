@@ -348,8 +348,8 @@ class ReportTest extends InfrastructureTest {
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Infrastructure\\Report", $results);
 		// grab the result from the array and validate it
 		$pdoReport = $results[0];
-		$this->assertEquals($pdoReport->getReportCategoryId, $this->category->getCategoryId());
 		$this->assertEquals($pdoReport->getReportContent(), $this->VALID_REPORTCONTENT);
+		$this->assertEquals($pdoReport->getReportCategoryId(), $this->category->getCategoryId());
 		$this->assertEquals($pdoReport->getReportIpAddress(), $this->VALID_IPADDRESS);
 		//format the date too seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoReport->getReportDateTime()->getTimestamp(), $this->VALID_REPORTDATETIME->getTimestamp());
