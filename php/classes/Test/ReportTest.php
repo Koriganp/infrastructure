@@ -58,7 +58,7 @@ class ReportTest extends InfrastructureTest {
 	 * content of the updated Report
 	 * @var string $VALID_UPDATEDREPORTCONTENT
 	 **/
-	protected $VALID_APPENDREPORTCONTENT = "There's trash all over the park! ADMIN-UPDATE: This issue should be resolved by X Department.";
+//	protected $VALID_APPENDREPORTCONTENT = "There's trash all over the park! ADMIN-UPDATE: This issue should be resolved by X Department.";
 
 	/**
 	 * timestamp of the Report; this starts as null and is assigned later
@@ -76,13 +76,13 @@ class ReportTest extends InfrastructureTest {
 	 * float value of latitude (Range: -90 - 90)
 	 * @var float $VALID_REPORTLAT
 	 **/
-	protected $VALID_REPORTLAT = 89.98754;
+	protected $VALID_REPORTLAT = 41.40338;
 
 	/**
 	 * float value of longitude (Range: -180 - 180)
 	 * @var float $VALID_REPORTLONG
 	 **/
-	protected $VALID_REPORTLONG = 175.87778;
+	protected $VALID_REPORTLONG = 2.17403;
 
 	/**
 	 * status of report made
@@ -163,6 +163,7 @@ class ReportTest extends InfrastructureTest {
 	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("report"));
 	$this->assertEquals($pdoReport->getReportCategoryId(), $this->profile->getProfileId());
 	$this->assertEquals($pdoReport->getReportContent(), $this->VALID_REPORTCONTENT);
+		$this->assertEquals($pdoReport->getReportIpAddress(), $this->VALID_IPADDRESS);
 	// format the date to seconds since the beginning of time to avoid round off error
 	$this->assertEquals($pdoReport->getReportDateTime()->getTimestamp(), $this->VALID_REPORTDATETIME->getTimestamp());
 	}
@@ -178,18 +179,18 @@ class ReportTest extends InfrastructureTest {
 		$report->insert($this->getPDO());
 	}
 
-	/**
-	 * test updating a Report that does not exist
-	 *
-	 * @expectedException \PDOException
-	 **/
-	public function testUpdateValidReport() : void {
-		$reportId = generateUuidV4();
-		$reportCategoryId = generateUuidV4();
-		// create a new Report with a non null report id and watch it fail
-		$report = new Report($reportId, $reportCategoryId, $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
-		$report->$this->update($this->getPDO());
-	}
+//	/**
+//	 * test updating a Report that does not exist
+//	 *
+//	 * @expectedException \PDOException
+//	 **/
+//	public function testUpdateValidReport() : void {
+//		$reportId = generateUuidV4();
+//		$reportCategoryId = generateUuidV4();
+//		// create a new Report with a non null report id and watch it fail
+//		$report = new Report($reportId, $reportCategoryId, $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
+//		$report->$this->update($this->getPDO());
+//	}
 
 	/**
 	 * test creating a Report and then deleting it
@@ -225,15 +226,6 @@ class ReportTest extends InfrastructureTest {
 	}
 
 	/**
-	 * test grabbing a Report that does not exist
-	 **/
-	public function testGetInvalidReportByCategoryId() {
-		// grab a category id that exceeds the maximum allowable profile id
-		$report = Report::getReportByReportId($this->getPDO(), InfrastructureTest::INVALID_KEY);
-		$this->assertNull($report);
-	}
-
-	/**
 	 * test inserting a Report and regrabbing it from mySQL
 	 **/
 	public function testGetValidReportByReportCategoryId() {
@@ -256,8 +248,18 @@ class ReportTest extends InfrastructureTest {
 		$pdoReport = $results[0];
 		$this->assertEquals($pdoReport->getReportCategoryId(), $this->category->getCategoryId());
 		$this->assertEquals($pdoReport->getReportContent(), $this->VALID_REPORTCONTENT);
+		$this->assertEquals($pdoReport->getReportIpAddress(), $this->VALID_IPADDRESS);
 		// format the date too seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoReport->getReportDateTime()->getTimeStamp(), $this->VALID_REPORTDATETIME->getTimestamp());
+	}
+
+	/**
+	 * test grabbing a Report that does not exist
+	 **/
+	public function testGetInvalidReportByCategoryId() {
+		// grab a category id that exceeds the maximum allowable profile id
+		$report = Report::getReportByReportId($this->getPDO(), InfrastructureTest::INVALID_KEY);
+		$this->assertNull($report);
 	}
 
 //	/**
@@ -321,6 +323,7 @@ class ReportTest extends InfrastructureTest {
 		$this->assertEquals($pdoReport->getReportId(), $report->getReportId());
 		$this->assertEquals($pdoReport->getReportCategoryId(), $report->getReportCategoryId());
 		$this->assertEquals($pdoReport->getReportContent(), $report->getReportContent());
+		$this->assertEquals($pdoReport->getReportIpAddress(), $this->VALID_IPADDRESS);
 		$this->assertEquals($pdoReport->getReportDate()->getTimestamp(), $this->VALID_REPORTDATETIME->getTimestamp());
 	}
 
@@ -345,6 +348,7 @@ class ReportTest extends InfrastructureTest {
 		$pdoReport = $results[0];
 		$this->assertEquals($pdoReport->getReportCategoryId, $this->category->getCategoryId());
 		$this->assertEquals($pdoReport->getReportContent(), $this->VALID_REPORTCONTENT);
+		$this->assertEquals($pdoReport->getReportIpAddress(), $this->VALID_IPADDRESS);
 		//format the date too seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoReport->getReportDateTime()->getTimestamp(), $this->VALID_REPORTDATETIME->getTimestamp());
 	}

@@ -220,7 +220,14 @@ class Report implements \JsonSerializable {
 	 * @param $newReportIpAddress
 	 **/
 	public function setReportIpAddress($newReportIpAddress) : void {
-		$this->reportIpAddress = $newReportIpAddress;
+		// detect the IP's format and assign it in binary mode
+		if(@inet_pton($newReportIpAddress) !== false) {
+			$this->reportIpAddress = inet_pton($newReportIpAddress);
+		} else if(@inet_ntop($newReportIpAddress) !== false) {
+			$this->reportIpAddress = $newReportIpAddress;
+		} else {
+			throw(new \InvalidArgumentException("invalid IP address"));
+		}
 	}
 
 	/**
