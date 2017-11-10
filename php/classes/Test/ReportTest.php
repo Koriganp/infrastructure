@@ -403,7 +403,6 @@ class ReportTest extends InfrastructureTest {
 		// create a new Report and insert to into mySQL
 		$report = new Report($reportId, $this->category->getCategoryId(), $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
 		$report->insert($this->getPDO());
-		var_dump($report);
 		// grab the data from mySQL and enforce the fields match our expectations
 		$results = Report::getReportByReportUrgency($this->getPDO(), $this->VALID_URGENCY);
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("report"));
