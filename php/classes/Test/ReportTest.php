@@ -160,7 +160,7 @@ class ReportTest extends InfrastructureTest {
 	// grab the date from mySQL and enforce the fields match our expectations
 	$pdoReport = Report::getReportByReportId($this->getPDO(), $report->getReportId());
 	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("report"));
-	$this->assertEquals($pdoReport->getReportCategoryId(), $this->profile->getProfileId());
+	$this->assertEquals($pdoReport->getReportCategoryId(), $this->category->getCategoryId());
 	$this->assertEquals($pdoReport->getReportContent(), $this->VALID_REPORTCONTENT);
 		$this->assertEquals($pdoReport->getReportIpAddress(), $this->VALID_IPADDRESS);
 	// format the date to seconds since the beginning of time to avoid round off error
