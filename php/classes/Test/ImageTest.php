@@ -19,7 +19,7 @@ class ImageTest extends InfrastructureTest {
 	/**
 	 * Category that the Report is associated with; this is for foreign key relations
 	 * @var Category $category
-	 */
+	 **/
 	protected $category = null;
 
 	/**
@@ -31,19 +31,19 @@ class ImageTest extends InfrastructureTest {
 	/**
 	 * timestamp of the mocked report; starts at null and is assigned later
 	 * @var \DateTime $VALID_REPORTDATE
-	 */
+	 **/
 	protected $VALID_REPORTDATE = null;
 
 	/**
 	 * valid IPAddress for mocked report
 	 * @var string $VALID_IPADDRESS
-	 */
+	 **/
 	protected $VALID_IPADDRESS = "1001101000110011";
 
 	/**
 	 * valid report status for report class
 	 * @var string $VALID_REPORTSTATUS
-	 */
+	 **/
 	protected $VALID_REPORTSTATUS = "Received";
 
 	/**
@@ -112,7 +112,7 @@ class ImageTest extends InfrastructureTest {
 
 	/**
 	 * test inserting an image, then updating it
-	 */
+	 **/
 	public function testUpdateValidImage() : void {
 		// count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("image");
