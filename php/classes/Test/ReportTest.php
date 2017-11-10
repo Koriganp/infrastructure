@@ -292,7 +292,6 @@ class ReportTest extends InfrastructureTest {
 //
 //	}
 
-
 //	/**
 //	 * test grabbing a Report by content that does not exist
 //	 **/
@@ -302,6 +301,9 @@ class ReportTest extends InfrastructureTest {
 //		$this->assertCount(0, $report);
 //	}
 
+	/**
+	 * test grabbing a valid Report by sunset and sunrise date
+	 **/
 	public function testGetValidReportBySunDate() : void {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("report");

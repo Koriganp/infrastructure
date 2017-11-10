@@ -212,7 +212,7 @@ class Report implements \JsonSerializable {
 	 * @return int value of report ip address
 	 **/
 	public function getReportIpAddress() : string {
-		return($this->reportIpAddress);
+		return(inet_ntop($this->reportIpAddress));
 	}
 
 	/**
