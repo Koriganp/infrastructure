@@ -58,7 +58,7 @@ class ReportTest extends InfrastructureTest {
 	 * content of the updated Report
 	 * @var string $VALID_UPDATEDREPORTCONTENT
 	 **/
-//	protected $VALID_APPENDREPORTCONTENT = "There's trash all over the park! ADMIN-UPDATE: This issue should be resolved by X Department.";
+	protected $VALID_APPENDREPORTCONTENT = "There's trash all over the park! ADMIN-UPDATE: This issue should be resolved by X Department.";
 
 	/**
 	 * timestamp of the Report; this starts as null and is assigned later
@@ -167,6 +167,30 @@ class ReportTest extends InfrastructureTest {
 	$this->assertEquals($pdoReport->getReportDateTime()->getTimestamp(), $this->VALID_REPORTDATETIME->getTimestamp());
 	$this->assertEquals($pdoReport->getReportUserAgent(), $this->VALID_USERAGENT);
 	}
+
+	/**
+	 * test inserting a valid appended report and verify that the actual mySQL data matches
+	 **/
+	public function testInsertAppendReport() : void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("report");
+
+		$reportId = generateUuidV4();
+		// create a new Report and insert to into mySQL
+		$report = new Report($reportId, $this->category->getCategoryId(), $this->VALID_APPENDREPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLONG, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
+		$report->insert($this->getPDO());
+
+		// grab the date from mySQL and enforce the fields match our expectations
+		$pdoReport = Report::getReportByReportId($this->getPDO(), $report->getReportId());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("report"));
+		$this->assertEquals($pdoReport->getReportCategoryId(), $this->category->getCategoryId());
+		$this->assertEquals($pdoReport->getReportContent(), $this->VALID_APPENDREPORTCONTENT);
+		$this->assertEquals($pdoReport->getReportIpAddress(), $this->VALID_IPADDRESS);
+		// format the date to seconds since the beginning of time to avoid round off error
+		$this->assertEquals($pdoReport->getReportDateTime()->getTimestamp(), $this->VALID_REPORTDATETIME->getTimestamp());
+		$this->assertEquals($pdoReport->getReportUserAgent(), $this->VALID_USERAGENT);
+	}
+
 
 //	/**
 //	 * test inserting a Report that already exists
@@ -334,6 +358,66 @@ class ReportTest extends InfrastructureTest {
 		$this->assertEquals($pdoReport->getReportIpAddress(), $this->VALID_IPADDRESS);
 		$this->assertEquals($pdoReport->getReportDateTime()->getTimestamp(), $this->VALID_REPORTDATETIME->getTimestamp());
 		$this->assertEquals($pdoReport->getReportUserAgent(), $this->VALID_USERAGENT);
+		$this->assertEquals($pdoReport->getReportLat(), $this->VALID_REPORTLAT);
+		$this->assertEquals($pdoReport->getReportLong(), $this->VALID_REPORTLONG);
+	}
+
+/**
+* test grabbing Reports by status
+**/
+	public function testGetAllValidReportsByStatus() : void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("report");
+
+		$reportId = generateUuidV4();
+		// $reportCategoryId = generateUuidV4();
+		// create a new Report and insert to into mySQL
+		$report = new Report($reportId, $this->category->getCategoryId(), $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
+		$report->insert($this->getPDO());
+		// grab the data from mySQL and enforce the fields match our expectations
+		$results = Report::getReportByReportStatus($this->getPDO(), $this->VALID_STATUS);
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("report"));
+		$this->assertCount(1, $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Infrastructure\\Report", $results);
+		// grab the result from the array and validate it
+		$pdoReport = $results[0];
+		$this->assertEquals($pdoReport->getReportCategoryId(), $this->category->getCategoryId());
+		$this->assertEquals($pdoReport->getReportContent(), $this->VALID_REPORTCONTENT);
+		$this->assertEquals($pdoReport->getReportIpAddress(), $this->VALID_IPADDRESS);
+		//format the date too seconds since the beginning of time to avoid round off error
+		$this->assertEquals($pdoReport->getReportDateTime()->getTimestamp(), $this->VALID_REPORTDATETIME->getTimestamp());
+		$this->assertEquals($pdoReport->getReportUserAgent(), $this->VALID_USERAGENT);
+		$this->assertEquals($pdoReport->getReportLat(), $this->VALID_REPORTLAT);
+		$this->assertEquals($pdoReport->getReportLong(), $this->VALID_REPORTLONG);
+	}
+
+	/**
+	 * test grabbing Reports by status
+	 **/
+	public function testGetAllValidReportsByUrgency() : void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("report");
+
+		$reportId = generateUuidV4();
+		// $reportCategoryId = generateUuidV4();
+		// create a new Report and insert to into mySQL
+		$report = new Report($reportId, $this->category->getCategoryId(), $this->VALID_REPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLAT, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
+		$report->insert($this->getPDO());
+		// grab the data from mySQL and enforce the fields match our expectations
+		$results = Report::getReportByReportStatus($this->getPDO(), $this->VALID_URGENCY);
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("report"));
+		$this->assertCount(1, $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Infrastructure\\Report", $results);
+		// grab the result from the array and validate it
+		$pdoReport = $results[0];
+		$this->assertEquals($pdoReport->getReportCategoryId(), $this->category->getCategoryId());
+		$this->assertEquals($pdoReport->getReportContent(), $this->VALID_REPORTCONTENT);
+		$this->assertEquals($pdoReport->getReportIpAddress(), $this->VALID_IPADDRESS);
+		//format the date too seconds since the beginning of time to avoid round off error
+		$this->assertEquals($pdoReport->getReportDateTime()->getTimestamp(), $this->VALID_REPORTDATETIME->getTimestamp());
+		$this->assertEquals($pdoReport->getReportUserAgent(), $this->VALID_USERAGENT);
+		$this->assertEquals($pdoReport->getReportLat(), $this->VALID_REPORTLAT);
+		$this->assertEquals($pdoReport->getReportLong(), $this->VALID_REPORTLONG);
 	}
 
 	/**
@@ -361,5 +445,7 @@ class ReportTest extends InfrastructureTest {
 		//format the date too seconds since the beginning of time to avoid round off error
 		$this->assertEquals($pdoReport->getReportDateTime()->getTimestamp(), $this->VALID_REPORTDATETIME->getTimestamp());
 		$this->assertEquals($pdoReport->getReportUserAgent(), $this->VALID_USERAGENT);
+		$this->assertEquals($pdoReport->getReportLat(), $this->VALID_REPORTLAT);
+		$this->assertEquals($pdoReport->getReportLong(), $this->VALID_REPORTLONG);
 	}
 }
