@@ -191,5 +191,22 @@ class CommentTest extends InfrastructureTest {
         $this->assertNull($pdoComment);
         $this->assertEquals($numRows, $this->getConnection()->getRowCount("comment"));
     }
+
+    /**
+     * test getting comment by comment id
+     **/
+    public function testGetValidCommentByCommentId() : void {
+        $numRows = $this->getConnection()->getRowCount("comment");
+        $commentId = generateUuidV4();
+        $this->VALID_DATE = new \DateTime();
+        $comment = new Comment($commentId, $this->profile->getProfileId(), $this->report->getReportId(), $this->VALID_CONTENT, $this->VALID_DATE);
+        $comment->insert($this->getPDO());
+        $results = Comment::getCommentByCommentId($this->getPDO(), $comment->getCommentId());
+        $this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("comment"));
+        $this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Infrastructure\\Comment", $results);
+        $pdoComment = $results[0];
+        $this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("comment"));
+        $this->assertEquals($pdoComment->getCommentContent(), $this->VALID_CONTENT);
+    }
 }
 
