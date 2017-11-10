@@ -635,7 +635,6 @@ class Report implements \JsonSerializable {
 		while(($row = $statement->fetch()) !== false) {
 			try {
 				$report = new Report($row["reportId"], $row["reportCategoryId"], $row["reportContent"], $row["reportDateTime"], $row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"],$row["reportUserAgent"]);
-				var_dump($report);
 				$reports[$reports->key()] = $report;
 				$reports->next();
 			} catch(\Exception $exception) {
