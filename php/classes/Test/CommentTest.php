@@ -203,10 +203,17 @@ class CommentTest extends InfrastructureTest {
         $comment->insert($this->getPDO());
         $results = Comment::getCommentByCommentId($this->getPDO(), $comment->getCommentId());
         $this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("comment"));
-        $this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Infrastructure\\Comment", $results);
-        $pdoComment = $results[0];
         $this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("comment"));
-        $this->assertEquals($pdoComment->getCommentContent(), $this->VALID_CONTENT);
+        $this->assertEquals($results->getCommentId(), $comment->getCommentId());
     }
+
+    /**
+     * test getting comment that doesn't exist by comment id
+     **/
+    public function testGetInvalidCommentByCommentId() : void {
+        $comment = Comment::getCommentByCommentId($this->getPDO(), generateUuidV4());
+        $this->assertNull($comment);
+    }
+
 }
 
