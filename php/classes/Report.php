@@ -46,6 +46,7 @@ class Report implements \JsonSerializable {
 	 * latitide for report
 	 * @var float $reportLat;
 	 **/
+
 	private $reportLat;
 	/**
 	 * longitude for report
