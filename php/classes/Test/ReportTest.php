@@ -160,6 +160,7 @@ class ReportTest extends InfrastructureTest {
 	// grab the date from mySQL and enforce the fields match our expectations
 	$pdoReport = Report::getReportByReportId($this->getPDO(), $report->getReportId());
 	$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("report"));
+	$this->assertEquals($pdoReport->getReportId(), $reportId);
 	$this->assertEquals($pdoReport->getReportCategoryId(), $this->category->getCategoryId());
 	$this->assertEquals($pdoReport->getReportContent(), $this->VALID_REPORTCONTENT);
 	$this->assertEquals($pdoReport->getReportIpAddress(), $this->VALID_IPADDRESS);
@@ -185,6 +186,7 @@ class ReportTest extends InfrastructureTest {
 		// grab the date from mySQL and enforce the fields match our expectations
 		$pdoReport = Report::getReportByReportId($this->getPDO(), $report->getReportId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("report"));
+		$this->assertEquals($pdoReport->getReportId(), $reportId);
 		$this->assertEquals($pdoReport->getReportCategoryId(), $this->category->getCategoryId());
 		$this->assertEquals($pdoReport->getReportContent(), $this->VALID_APPENDREPORTCONTENT);
 		$this->assertEquals($pdoReport->getReportIpAddress(), $this->VALID_IPADDRESS);
@@ -278,6 +280,7 @@ class ReportTest extends InfrastructureTest {
 
 		// grab the result from the array and validate it
 		$pdoReport = $results[0];
+		$this->assertEquals($pdoReport->getReportId(), $reportId);
 		$this->assertEquals($pdoReport->getReportCategoryId(), $this->category->getCategoryId());
 		$this->assertEquals($pdoReport->getReportContent(), $this->VALID_REPORTCONTENT);
 		$this->assertEquals($pdoReport->getReportIpAddress(), $this->VALID_IPADDRESS);
@@ -338,7 +341,7 @@ class ReportTest extends InfrastructureTest {
 	/**
 	 * test grabbing a valid Report by sunset and sunrise date
 	 **/
-	public function testGetValidReportBySunDate() : void {
+	public function testGetValidReportByDateTime() : void {
 		//count the number of rows and save it for later
 		$numRows = $this->getConnection()->getRowCount("report");
 
@@ -389,8 +392,8 @@ class ReportTest extends InfrastructureTest {
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Infrastructure\\Report", $results);
 		// grab the result from the array and validate it
 		$pdoReport = $results[0];
+		$this->assertEquals($pdoReport->getReportId(), $report->getReportId());
 		$this->assertEquals($pdoReport->getReportCategoryId(), $this->category->getCategoryId());
-		// include urgency and status asserts
 		$this->assertEquals($pdoReport->getReportContent(), $this->VALID_REPORTCONTENT);
 		$this->assertEquals($pdoReport->getReportIpAddress(), $this->VALID_IPADDRESS);
 		//format the date too seconds since the beginning of time to avoid round off error
@@ -421,6 +424,7 @@ class ReportTest extends InfrastructureTest {
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Infrastructure\\Report", $results);
 		// grab the result from the array and validate it
 		$pdoReport = $results[0];
+		$this->assertEquals($pdoReport->getReportId(), $report->getReportId());
 		$this->assertEquals($pdoReport->getReportCategoryId(), $this->category->getCategoryId());
 		$this->assertEquals($pdoReport->getReportContent(), $this->VALID_REPORTCONTENT);
 		$this->assertEquals($pdoReport->getReportIpAddress(), $this->VALID_IPADDRESS);
@@ -452,6 +456,7 @@ class ReportTest extends InfrastructureTest {
 		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Infrastructure\\Report", $results);
 		// grab the result from the array and validate it
 		$pdoReport = $results[0];
+		$this->assertEquals($pdoReport->getReportId(), $report->getReportId());
 		$this->assertEquals($pdoReport->getReportCategoryId(), $this->category->getCategoryId());
 		$this->assertEquals($pdoReport->getReportContent(), $this->VALID_REPORTCONTENT);
 		$this->assertEquals($pdoReport->getReportIpAddress(), $this->VALID_IPADDRESS);
