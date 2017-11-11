@@ -183,6 +183,10 @@ class ReportTest extends InfrastructureTest {
 		$report = new Report($reportId, $this->category->getCategoryId(), $this->VALID_APPENDREPORTCONTENT, $this->VALID_REPORTDATETIME, $this->VALID_IPADDRESS, $this->VALID_REPORTLONG, $this->VALID_REPORTLONG, $this->VALID_STATUS, $this->VALID_URGENCY, $this->VALID_USERAGENT);
 		$report->insert($this->getPDO());
 
+		// edit the report and update it in mySQL
+		$report->setReportContent($this->VALID_APPENDREPORTCONTENT);
+		$report->update($this->getPDO());
+
 		// grab the date from mySQL and enforce the fields match our expectations
 		$pdoReport = Report::getReportByReportId($this->getPDO(), $report->getReportId());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("report"));
