@@ -24,6 +24,7 @@ require_once(dirname(__DIR__) . "/autoload.php");
  * @see Report
  **/
 class ReportTest extends InfrastructureTest {
+
 	/**
 	 * Profile that views the Report; this is for foreign key relations
 	 * @var Profile profile
