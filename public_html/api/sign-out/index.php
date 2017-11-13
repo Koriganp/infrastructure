@@ -5,7 +5,6 @@
  * @author Kevin D. Atkins
  */
 
-
 //verify the xsrf challenge
 if(session_status() !== PHP_SESSION_ACTIVE){
 	session_start();
