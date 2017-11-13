@@ -13,7 +13,7 @@ use Edu\Cnm\Infrastructure\{
 /**
  * API for the Image class
  *
- * @author KOrigan Payne <koriganp@gmail.com>
+ * @author Korigan Payne <koriganp@gmail.com>
  **/
 
 //verify the session, start if not active
@@ -39,8 +39,12 @@ try {
 	$imageLat = filter_input(INPUT_GET, "imageLat", FILTER_VALIDATE_FLOAT);
 	$imageLong = filter_input(INPUT_GET, "imageLong", FILTER_VALIDATE_FLOAT);
 
+	$config = readConfig("/etc/apache2/capstone-mysql/infrastructure.ini");
+	$cloudinary = json_decode($config["cloudinary"]);
+	\Cloudinary::config(["cloud_name" => $cloudinary->cloudName, "api_key" => $cloudinary->apiKey, "api_secret" => $cloudinary->apiSecret]);
+
 	//make sure the id is valid for methods that require it
-	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
+	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true)) {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
 	}
 	// handle GET request - if id is present, that image is returned, otherwise all images are returned
@@ -55,20 +59,13 @@ try {
 			}
 		} else if(empty($imageReportId) === false) {
 			// grab all the images for that report based on what report it is
-			$image = IMage::getImageByImageReportId($pdo, $_SESSION["report"]->getReportId())->toArray();
+			$image = Image::getImageByImageReportId($pdo, $_SESSION["report"]->getReportId())->toArray();
 			if($image !== null) {
 				$reply->data = $image;
 			}
-		} else {
-			$images = Image::getAllImages($pdo)->toArray();
-			if ($images === null) {
-				echo "no images in report";
-			}
-			if($images !== null) {
-				$reply->data = $images;
-			}
 		}
 	} else if($method === "PUT" || $method === "POST") {
+		//verify the xsrf token
 		verifyXsrf();
 
 		// Retrieves the JSON package that the front end sent, and stores it in $requestContent. Here we are using file_get_contents("php://input") to get the request from the front end. file_get_contents() is a PHP function that reads a file into a string. The argument for the function, here, is "php://input". This is a read only stream that allows raw data to be read from the front end request which is, in this case, a JSON package.
@@ -76,6 +73,13 @@ try {
 
 		// This Line Then decodes the JSON package and stores that result in $requestObject
 		$requestObject = json_decode($requestContent);
+
+		//create a temporary report to attach image to
+		$tempReport = $_FILES["image"]["tmp_name"];
+
+		//upload the image to cloudinary
+		$cloudinaryResult = \Cloudinary\Uploader::upload($tempReport, array("width" => 500, "crop" => "scale"));
+
 
 		//make sure image cloudinary is available (required field)
 		if(empty($requestObject->imageCloudinary) === true) {
