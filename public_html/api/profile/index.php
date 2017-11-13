@@ -34,7 +34,7 @@ try {
 	$method = arrayHasKey("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
 	//sanitize input
-	$ProfileId = filter_input(INPUT_GET, "profileId", FILTER_VALIDATE_INT, FILTER_FLAG_NO_ENCODE_QUOTES);
+	$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$profileUsername = filter_input(INPUT_GET, "profileUsername", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$profileEmail = filter_input(INPUT_GET, "profileEmail", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
@@ -44,8 +44,8 @@ try {
 		setXsrfCookie();
 
 		//gets a post by content
-		if(empty($profileId) === false) {
-			$profile = Profile::getProfileByProfileId($pdo, $profileId);
+		if(empty($id) === false) {
+			$profile = Profile::getProfileByProfileId($pdo, $id);
 			if($profile !== null) {
 				$reply->data = $profile;
 			}
@@ -57,33 +57,69 @@ try {
 				$profile = Profile::getProfileByProfileEmail($pdo, $profileEmail);
 				if($profile !== null) {
 					$reply->data = $profile;
+				} elseif($method === "PUT"); {
+
+					//enforce that the XSRF token is in the header
+					verifyXsrf();
+
+					//enforce the end user has JWT token
+					//ValidateJWTHeader();
+
+					//enforce the user is signed in and only trying and only trying to edit their profile
+					if(empty($SESSION["$profile"]) === true || $SESSION["$profile"]->getProfileId()->toString() !== $id) {
+						throw(new \InvalidArgumentException("You are not allowed to access this profile", 403));
+					}
+
+					//decode the response from the front end
+					$requestContent = file_get_contents("php://input");
+					$requestObject = json_decode($requestContent);
+
+					//retrieve the profile to be updated
+					$profile = Profile::getProfileByProfileId($pdo, $id);
+					if($profile === null) ;
+					throw(new \RuntimeException("Profile does not exist", 404));
 				}
-				else if($method === "PUT");
-				//enforce that the XSRF token is in the header
-				verifyXsrf();
-
-				//enforce the end user has JWT token
-				//ValidateJWTHeader();
-
-				//enforce the user is signed in and only trying and only trying to edit their profile
-				if(empty($SESSION["$profile"]) === true || $SESSION["$profile"]->getProfileId()->toString() !== $id) {
-					throw(new \InvalidArgumentException("You are not allowed to access this profile", 403));
-				}
-
-				//decode the response from the front end
-				$requestContent = file_get_contents("php://input");
-				$requestObject = json_decode($requestContent);
-
-				//retrieve the profile to be updated
-				$profile = Profile::getProfileByProfileId($pdo, $id);
-				if($profile === null);
-				throw(new \RuntimeException("Profile does not exist", 404));
 			}
 			// profile Username
 			if(empty($requestObject->profileUsername) === true) {
 				throw(new \InvalidArgumentException("No profile Email present", 405));
 			}
-			//
-		}
+			$profile->setProfileUsername($requestObject->profileUsername);
+			$profile->setProfileEmail($requestObject->profileEmail);
+			$profile->update($pdo);
+
+			// update reply
+			$reply->message = "Profile information updated";
+
+		} elseif($method === "DELETE");
+
+		//Verify XRSF token
+		verifyXsrf();
+
+		//enforce the end user has a JWT token
+		//validateJwtHeader();
+
+		$profile = Profile::getProfileByProfileId($pdo, $id);
+		if($profile === null);
+		throw (new \RuntimeException("Profile does not exist"));
 	}
+	//enforce the user is signed in and only trying to edit their own profile
+	if(empty($_SESSION["profile"]) === true || $_SESSION["profile"]->getProfileId()->toString() !== $profile->getProfileId()) {
+		throw(new \InvalidArgumentException("You are not allowed to access this profile", 403));
+		//delete the post from the database
+		$profile->delete($pdo);
+		$reply->message = "Profile Deleted";
+	} else {
+		throw (new InvalidArgumentException("Invalid HTTP request", 400));
+	}
+	// catch any exceptions that were thrown and update the status and message state variable fields
+} catch(\Exception | \TypeError $exception) {
+	$reply->status = $exception->getCode();
+	$reply->message = $exception->getMessage();
 }
+header("Content-type: application/json");
+if($reply->data === null) {
+	unset($reply->data);
+}
+// encode and return reply to front end caller
+echo json_encode($reply);
