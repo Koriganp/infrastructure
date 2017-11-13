@@ -2,7 +2,7 @@
 /**
  * Class 'Report' for Entity 'report' in Infrastructure
  *
- * @author Kevin Atkins
+ * @author Kevin D. Atkins
  **/
 namespace Edu\Cnm\Infrastructure;
 

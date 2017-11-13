@@ -2,7 +2,7 @@
 /**
  * Unit Test for 'Report' Class
  *
- * @author Kevin Atkins
+ * @author Kevin D. Atkins
  **/
 namespace Edu\Cnm\Infrastructure\Test;
 
