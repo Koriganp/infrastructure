@@ -181,4 +181,28 @@ class ImageTest extends InfrastructureTest {
 		$this->assertEquals($pdoImage->getImageReportId(), $this->report->getReportId());
 	}
 
+	/**
+	 * test grabbing all Images
+	 **/
+	public function testGetAllValidImages() : void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("image");
+		// create a new Image and insert to into mySQL
+		$imageId = generateUuidV4();
+		$image = new Image($imageId, $this->report->getReportId(), $this->VALID_CLOUDINARY, $this->VALID_LAT, $this->VALID_LONG);
+		$image->insert($this->getPDO());
+		// grab the data from mySQL and enforce the fields match our expectations
+		$results = Image::getAllImages($this->getPDO());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("image"));
+		$this->assertCount(1, $results);
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Infrastructure\\Image", $results);
+		// grab the result from the array and validate it
+		$pdoImage = $results[0];
+		$this->assertEquals($pdoImage->getImageId(), $imageId);
+		$this->assertEquals($pdoImage->getImageReportId(), $this->report->getReportId());
+		$this->assertEquals($pdoImage->getImageCloudinary(), $this->VALID_CLOUDINARY);
+		$this->assertEquals($pdoImage->getImageLat(), $this->VALID_LAT);
+		$this->assertEquals($pdoImage->getImageLong(), $this->VALID_LONG);
+	}
+
 }
