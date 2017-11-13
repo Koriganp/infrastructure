@@ -4,13 +4,16 @@ require_once(dirname(__DIR__,3) ."/vendor/autoload.php");
 require_once(dirname(__DIR__, 3) . "/php/classes/autoload.php");
 require_once(dirname(_DIR_, 3) . "/php/lib/xrsf.php");
 require_once(dirname(_DIR_,3) . "/php/lib/uuid.php");
-
+require_once("/etc/apache2/capstone-mysql/infrastructure.ini");
 use Edu\Cnm\Infrastructure\ {
 	Profile
 };
 
-/**
+/**$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/infrastructure.ini");
  * API for Profile
+ *
+ * @author Tanisha Purnell
+ * version 1.0
  **/
 
 //verify the session, if it is not active start it
@@ -41,8 +44,8 @@ try {
 		setXsrfCookie();
 
 		//gets a post by content
-		if(empty($id) === false) {
-			$profile = Profile::getProfileByProfileId($pdo, $id);
+		if(empty($profileId) === false) {
+			$profile = Profile::getProfileByProfileId($pdo, $profileId);
 			if($profile !== null) {
 				$reply->data = $profile;
 			}
@@ -55,8 +58,32 @@ try {
 				if($profile !== null) {
 					$reply->data = $profile;
 				}
-				else if();
+				else if($method === "PUT");
+				//enforce that the XSRF token is in the header
+				verifyXsrf();
+
+				//enforce the end user has JWT token
+				//ValidateJWTHeader();
+
+				//enforce the user is signed in and only trying and only trying to edit their profile
+				if(empty($SESSION["$profile"]) === true || $SESSION["$profile"]->getProfileId()->toString() !== $id) {
+					throw(new \InvalidArgumentException("You are not allowed to access this profile", 403));
+				}
+
+				//decode the response from the front end
+				$requestContent = file_get_contents("php://input");
+				$requestObject = json_decode($requestContent);
+
+				//retrieve the profile to be updated
+				$profile = Profile::getProfileByProfileId($pdo, $id);
+				if($profile === null);
+				throw(new \RuntimeException("Profile does not exist", 404));
 			}
+			// profile Username
+			if(empty($requestObject->profileUsername) === true) {
+				throw(new \InvalidArgumentException("No profile Email present", 405));
+			}
+			//
 		}
 	}
 }

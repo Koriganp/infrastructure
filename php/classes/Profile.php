@@ -307,7 +307,8 @@ public function update(\PDO $pdo) : void {
 	$parameters = ["profileId" => $this->profileId,"profileActivationToken" => $this->profileActivationToken,"profileUsername" => $this->profileUsername, "profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash, "profileSalt" => $this->profileSalt];
 	$statement->execute($parameters);
 	}
-	/**
+
+		/**
 	 * gets the Profile by profile id
 	 *
 	 * @param \PDO $pdo $pdo PDO connection object
@@ -382,7 +383,7 @@ public function update(\PDO $pdo) : void {
 	}
 
 	/**
-	 * gets the Profile by at handle
+	 * gets the Profile by Username
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param string $profileUsername at handle to search for
