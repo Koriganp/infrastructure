@@ -1,0 +1,13 @@
+<phpunit>
+	<testsuites>
+		<testsuite name="Infrastructure API">
+			<!-- <file></file> -->
+			<!-- <file></file> -->
+		</testsuite>
+	</testsuites>
+	<filter>
+		<whitelist processUncoveredFilesFromWhitelist="true">
+			<directory suffix=".php">..</directory>
+		</whitelist>
+	</filter>
+</phpunit>
