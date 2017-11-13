@@ -65,35 +65,6 @@ try {
 				$reply->data = $categories;
 			}
 		}
-	} else if($method === "PUT" || $method === "POST") {
-
-		//enforce that the XSRF token is present in the header
-		verifyXsrf();
-
-		// Retrieves the JSON package that the front end sent, and stores it in $requestContent. Here we are using file_get_contents("php://input") to get the request from the front end. file_get_contents() is a PHP function that reads a file into a string. The argument for the function, here, is "php://input". This is a read only stream that allows raw data to be read from the front end request which is, in this case, a JSON package.
-		$requestContent = file_get_contents("php://input");
-
-		// This Line Then decodes the JSON package and stores that result in $requestObject
-		$requestObject = json_decode($requestContent);
-
-		//make sure category name is available (required field)
-		if(empty($requestObject->categoryName) === true) {
-			throw(new \InvalidArgumentException ("No named Category.", 405));
-		}
-
-		//perform the actual put or post
-		if($method === "PUT") {
-			// retrieve the category to update
-			$category = Category::getCategoryByCategoryId($pdo, $id);
-			if($category === null) {
-				throw(new RuntimeException("Category does not exist", 404));
-			}
-		}
-
-		//I AM STUCK RIGHT HERE!!!!!
-		//OMG PLEASE HELP!!
-		//I AM NOT EVEN SURE THE STUFF UP THERE IS RIGHT OR EVEN USEFUL!!
-
 	}
 } catch(\Exception | \TypeError $exception) {
 	$reply->status = $exception->getCode();
