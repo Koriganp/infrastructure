@@ -5,11 +5,12 @@ require_once(dirname(__DIR__, 3) . "/php/classes/autoload.php");
 require_once(dirname(_DIR_, 3) . "/php/lib/xrsf.php");
 require_once(dirname(_DIR_,3) . "/php/lib/uuid.php");
 require_once("/etc/apache2/capstone-mysql/infrastructure.ini");
+
 use Edu\Cnm\Infrastructure\ {
 	Profile
 };
 
-/**$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/infrastructure.ini");
+/**
  * API for Profile
  *
  * @author Tanisha Purnell
