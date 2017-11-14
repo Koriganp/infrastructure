@@ -12,7 +12,7 @@ require_once(dirname(__DIR__, 3) . "/php/lib/uuid.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 use Edu\Cnm\Infrastructure\ {
-	Report, Category
+	Report, Category, Comment, Profile
 };
 
 //verify the xsrf challenge
@@ -28,7 +28,7 @@ $reply->data = null;
 try {
 
 	//grab the mySQL connection
-	$pdo = connectToEncryptedMySQL();
+	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/infrastructure.ini");
 
 	// mock a logged in user by forcing the session. For test purposes and not in live code
 	//determine which HTTP method was used
@@ -60,7 +60,7 @@ try {
 		} else if(empty($reportCategoryId) === false) {
 
 			// if the category is valid, grab all reports by that category
-			$reports = Report::getReportByReportCategoryId($pdo, $_SESSION["category"]->getCategoryId()->toArray());
+			$reports = Report::getReportByReportCategoryId($pdo, $report->getReportByCategoryId()->toArray());
 			if($reports !== null) {
 				$reply->data = $reports;
 			} else {
@@ -97,11 +97,37 @@ try {
 			}
 
 			// create new report and insert into database
-			$report = new Report(generateUuidV4(), $_SESSION["category"]->getCategoryId(), $requestObject->reportContent, null,  );
+			$report = new Report(generateUuidV4(), $requestObject->getReportCategoryId(), $requestObject->reportContent, $requestObject->reportDateTime, $_SERVER["REMOTE_ADDR"], $requestObject->reportLat, $requestObject->reportLong, $requestObject->reportStatus, $requestObject->reportUrgency, substr($_SERVER["HTTP_USER_AGENT"], 0, 255));
 			$report->insert($pdo);
 
 			// update reply
 			$reply->message = "Report Submitted";
+
+		} else if ($method === "DELETE") {
+
+			//enforce that the end user has a XSRF token.
+			verifyXsrf();
+
+			// retrieve the Report to be deleted
+			$report = Report::getReportByReportId($pdo, $id);
+			if($report === null) {
+
+				throw(new RuntimeException("Report does not exist", 404));
+
+			}
+
+			//enforce the end user has a JWT token
+			//validateJwtHeader();
+
+			//enforce the user is signed in and only trying to delete a report
+			if(empty($_SESSION["profile"]) === true) {
+				throw(new \InvalidArgumentException("You are not allowed to delete this report", 403));
+			}
+
+			// delete report
+			$report->delete($pdo);
+			// update reply
+			$reply->message = "Report was deleted";
 
 		} else {
 
