@@ -37,7 +37,8 @@ try {
 	//sanitize input
 	$id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$reportCategoryId = filter_input(INPUT_GET, "reportCategoryid", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-	$reportContent = filter_input(INPUT_GET, "reportContent", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	$reportStatus = filter_input(INPUT_GET, "reportStatus", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	$reportUrgency = filter_input(INPUT_GET, "reportUrgency", FILTER_VALIDATE_INT);
 
 	// make sure the id is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
@@ -53,9 +54,9 @@ try {
 		//get a specific report or all reports and update reply
 		if(empty($id) === false) {
 
+			$report = Report::getReportByReportId($pdo, $id);
 			// grab all the images for that report based on what report it is
 			$image = Image::getImageByImageReportId($pdo, $_SESSION["report"]->getReportId())->toArray();
-			$report = Report::getReportByReportId($pdo, $id);
 			if($report !== null) {
 				$reply->data = $report;
 				$reply->data = $image;
@@ -63,12 +64,15 @@ try {
 
 		} else if(empty($reportCategoryId) === false) {
 
-			// if the category is valid, grab all reports by that category
-			$category = Category::getCategoryByCategoryId($pdo, $_SESSION);
 			$reports = Report::getReportByReportCategoryId($pdo, $_SESSION["report"]->getReportByReportCategoryId()->toArray());
+			// grab all the images for that report based on what report it is
+			$image = Image::getImageByImageReportId($pdo, $_SESSION["report"]->getReportId())->toArray();
 			if($reports !== null) {
 				$reply->data = $reports;
+				$reply->data = $image;
 			}
+
+		} else if (empty($reportStatus) === false) {
 
 		} else {
 
