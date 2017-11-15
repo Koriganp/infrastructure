@@ -74,7 +74,78 @@ try {
 
         //make sure the comment content is available
         if(empty($requestObject->commentContent) === true) {
-            throw(new \InvalidArgumentException ("No comment for Content", 405));
+            throw(new \InvalidArgumentException ("No content for Comment", 405));
         }
+
+        // make sure the comment date is accurate
+        if(empty($requestObject->commentDateTime) === true) {
+            $requestObject->commentDateTime = date("Y-m-d H:i:s");
+        }
+
+
+        // perform the actual put or post
+        if($method === "PUT") {
+            $comment = Comment::getCommentByCommentId($pdo, $id);
+            if($comment === null) {
+                throw(new RuntimeException("Comment does not exist", 404));
+            }
+
+            // ensure the user is signed in
+            if(empty($_SESSION["profile"]) === true) {
+                throw(new \InvalidArgumentException("You are not authorized to edit this comment"));
+            }
+
+            // update all attributes
+            $comment->setCommentDateTime($requestObject->commentDateTime);
+            $comment->setCommentContent($requestObject->commentContent);
+            $comment->update($pdo);
+
+            $reply->message = "Comment updated OK";
+
+        } else if($method === "POST") {
+
+            if(empty($_SESSION["profile"]) === true) {
+                throw(new \InvalidArgumentException("You must be logged in to post comments", 403));
+            }
+
+            // create new comment and insert it into the database
+            $comment = new Comment(generateUuidV4(), $_SESSION["profile"]->getProfileId(), $_SESSION["report"]->getReportId(), $requestObject->commentContent, $requestObject->commentDateTime);
+            $comment->insert($pdo);
+
+            // update reply
+            $reply->message = "Comment created OK";
+        }
+    } else if($method === "DELETE") {
+
+        // ensure that the end user has an XSRF token
+        verifyXsrf();
+
+        // retrieve the Comment to be deleted
+        $comment = Comment::getCommentByCommentId($pdo, $id);
+        if($comment === null) {
+            throw(new RuntimeException("Comment does not exist", 404));
+        }
+
+        // ensure the user is signed in and only trying to delete their own comment
+        if(empty($_SESSION["profile"]) === true) {
+            throw(new \InvalidArgumentException("You are not allowed to delete this comment", 403));
+        }
+
+        // delete comment
+        $comment->delete($pdo);
+        // update reply
+        $reply->message = "Comment deleted OK";
+    } else {
+        throw (new InvalidArgumentException("Invalid HTTP method request", 418));
     }
+} catch(\Exception | \TypeError $exception) {
+    $reply->status = $exception->getCode();
+    $reply->message = $exception->getMessage();
 }
+
+header("Content-type: application/json");
+if($reply->data === null) {
+    unset($reply->data);
+}
+
+echo json_encode($reply);
