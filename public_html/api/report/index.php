@@ -130,22 +130,37 @@ try {
 
 		} else if($method === "POST") {
 
-			// enforce that the anonymous user chooses a category
-			if(empty($_SESSION["category"]) === true) {
-				throw(new \InvalidArgumentException("You must choose a category to submit a report", 403));
+			if($_SESSION["category"]) {
+
+				//Anonymous User
+				// enforce that the anonymous user chooses a category
+				if(empty($_SESSION["category"]) === true) {
+					throw(new \InvalidArgumentException("You must choose a category to submit a report", 403));
+				}
+
+				// create a new report and insert into database
+				$report = new Report(generateUuidV4(), $requestObject->getReportCategoryId(), $requestObject->reportContent, $requestObject->reportDateTime, $_SERVER["REMOTE_ADDR"], $requestObject->reportLat, $requestObject->reportLong, $requestObject->reportStatus, $requestObject->reportUrgency, substr($_SERVER["HTTP_USER_AGENT"], 0, 255));
+				$report->insert($pdo);
+
+				// update reply
+				$reply->message = "Report Submitted";
+
+			}
+		} else if($_SESSION["profile"]) {
+			// Admin User
+			// enforce admin is signed in to post status and urgency
+			if(empty($_SESSION["profile"]) === true) {
+				throw(new \InvalidArgumentException("You must be signed in to determine status and urgency", 403));
 			}
 
-		}
+			$report = Report::getReportByReportId($pdo, $id);
+			// insert status and urgency
+			$report->setReportStatus($requestObject->reportStatus);
+			$report->setReportUrgency($requestObject->reportUrgency);
+			$report->insert($pdo);
 
-
-		//POST
-		// create new report and insert into database
-		$report = new Report(generateUuidV4(), $requestObject->getReportCategoryId(), $requestObject->reportContent, $requestObject->reportDateTime, $_SERVER["REMOTE_ADDR"], $requestObject->reportLat, $requestObject->reportLong, $requestObject->reportStatus, $requestObject->reportUrgency, substr($_SERVER["HTTP_USER_AGENT"], 0, 255));
-		$report->insert($pdo);
-
-		// update reply
-		$reply->message = "Report Submitted";
-
+			$reply->message = "Status and Urgency Determined";
+			}
 	} else if($method === "DELETE") {
 		//enforce that the end user has a XSRF token.
 		verifyXsrf();
