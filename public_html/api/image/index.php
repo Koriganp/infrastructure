@@ -40,7 +40,7 @@ try {
 	$imageLong = filter_input(INPUT_GET, "imageLong", FILTER_VALIDATE_FLOAT);
 
 	$config = readConfig("/etc/apache2/capstone-mysql/abqreport.ini");
-	$cloudinary = json_decode($config["cloudinarykey"]);
+	$cloudinary = json_decode($config["cloudinary"]);
 	\Cloudinary::config(["cloud_name" => $cloudinary->cloudName, "api_key" => $cloudinary->apiKey, "api_secret" => $cloudinary->apiSecret]);
 
 	// handle GET request - if id is present, that image is returned, otherwise all images for that report are returned
