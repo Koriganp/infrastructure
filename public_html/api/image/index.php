@@ -46,8 +46,10 @@ try {
 
 	// handle GET request - if id is present, that image is returned, otherwise all images for that report are returned
 	if($method === "GET") {
+
 		//set XSRF cookie
 		setXsrfCookie();
+
 		//get a specific image or all images and update reply
 		if(empty($id) === false) {
 			$image = Image::getImageByImageId($pdo, $id);
