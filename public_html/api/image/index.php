@@ -40,13 +40,9 @@ try {
 	$imageLong = filter_input(INPUT_GET, "imageLong", FILTER_VALIDATE_FLOAT);
 
 	$config = readConfig("/etc/apache2/capstone-mysql/abqreport.ini");
-	$cloudinary = json_decode($config["cloudinary"]);
+	$cloudinary = json_decode($config["cloudinarykey"]);
 	\Cloudinary::config(["cloud_name" => $cloudinary->cloudName, "api_key" => $cloudinary->apiKey, "api_secret" => $cloudinary->apiSecret]);
 
-	//make sure the id is valid for methods that require it
-	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true)) {
-		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
-	}
 	// handle GET request - if id is present, that image is returned, otherwise all images for that report are returned
 	if($method === "GET") {
 		//set XSRF cookie
