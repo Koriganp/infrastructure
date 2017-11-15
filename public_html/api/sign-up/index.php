@@ -139,5 +139,4 @@ EOF;
 		$mailer = new Swift_Mailer($smtp);
 
 		//send message
-
 }
