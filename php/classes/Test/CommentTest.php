@@ -271,7 +271,5 @@ class CommentTest extends InfrastructureTest {
 		$this->assertEquals($pdoComment->getCommentProfileId(), $this->profile->getProfileId());
 		$this->assertEquals($pdoComment->getCommentReportId(), $this->report->getReportId());
 		$this->assertEquals($pdoComment->getCommentContent(), $this->VALID_CONTENT);
-		//format the date too seconds since the beginning of time to avoid round off error
-		$this->assertEquals($pdoComment->getCommentDate()->getTimestamp(), $this->VALID_DATE->getTimestamp());
 	}
 }
