@@ -46,11 +46,35 @@ try {
 
         if(empty($id) === false) {
             $comment = Comment::getCommentByCommentId($pdo, $id);
+            if ($comment !== null) {
+                $reply->data = $comment;
+            }
+        } else if(empty($commentProfileId) === false) {
+            $comment = Comment::getCommentByCommentProfileId($pdo, $_SESSION["profile"]->getProfileId())->toArray();
             if($comment !== null) {
                 $reply->data = $comment;
-            } else if(empty($commentProfileId) === false) {
-
             }
+        } else if(empty($commentReportId) === false) {
+            $comment = Comment::getCommentByCommentReportId($pdo, $_SESSION["report"]->getReportId())->toArray();
+            if ($comment !== null) {
+                $reply->data = $comment;
+            }
+        } else if(empty($commentContent) === false) {
+            $comments = Comment::getCommentByCommentContent($pdo, $commentContent)->toArray();
+            if($comments !== null) {
+                $reply->data = $comments;
+            }
+        }
+    } else if($method === "PUT" || $method === "POST") {
+
+        verifyXsrf();
+
+        $requestContent = file_get_contents("php://input");
+        $requestObject = json_decode($requestContent);
+
+        //make sure the comment content is available
+        if(empty($requestObject->commentContent) === true) {
+            throw(new \InvalidArgumentException ("No comment for Content", 405));
         }
     }
 }
