@@ -65,14 +65,16 @@ try {
 		} else if(empty($reportCategoryId) === false) {
 
 			$reports = Report::getReportByReportCategoryId($pdo, $_SESSION["report"]->getReportByReportCategoryId()->toArray());
-			// grab all the images for that report based on what report it is
-			$image = Image::getImageByImageReportId($pdo, $_SESSION["report"]->getReportId())->toArray();
 			if($reports !== null) {
 				$reply->data = $reports;
-				$reply->data = $image;
 			}
 
 		} else if (empty($reportStatus) === false) {
+
+			$reports = Report::getReportByReportStatus($pdo, $_SESSION["report"]->getReportByReportStatus()->toArray());
+			if($reports !== null) {
+				$reply->data = $reports;
+			}
 
 		} else {
 
@@ -82,10 +84,13 @@ try {
 			}
 
 			if($reports !== null) {
+
 				$reply->data = $reports;
 			}
+
 		}
-	} else if($method === "POST") {
+	} else if($method === "POST" || $method === "PUT") {
+
 		verifyXsrf();
 		$requestContent = file_get_contents("php://input");
 		// Retrieves the JSON package that the front end sent, and stores it in $requestContent. Here we are using file_get_contents("php://input") to get the request from the front end. file_get_contents() is a PHP function that reads a file into a string. The argument for the function, here, is "php://input". This is a read only stream that allows raw data to be read from the front end request which is, in this case, a JSON package.
@@ -97,21 +102,50 @@ try {
 			throw(new \InvalidArgumentException ("No content for Report.", 405));
 		}
 
-		// make sure report date is accurate (optional field)
+		// make sure report date is accurate
 		if(empty($requestObject->reportDateTime) === true) {
 			$requestObject->reportDateTime = date("Y-m-d H:i:s.u");
 		}
 
-		if(empty($_SESSION["category"]) === true) {
-			throw(new \InvalidArgumentException("You must choose a category to submit a report", 403));
+		//PUT
+		if($method === "PUT") {
+
+			$report = Report::getReportByReportId($pdo, $id);
+			if($report === null) {
+				throw(new RuntimeException("Report doesn't exist", 404));
+			}
+
+			//enforce the user is signed in and only trying to update the status and urgency
+			if(empty($_SESSION["profile"]) === true) {
+				throw(new \InvalidArgumentException("You are not allowed to edit this report", 403));
+			}
+
+			// update status and urgency
+			$report->setReportStatus($requestObject->reportStatus);
+			$report->setReportUrgency($requestObject->reportUrgency);
+			$report->update($pdo);
+
+			// update reply
+			$reply->message = "Report Updated";
+
+		} else if($method === "POST") {
+
+			// enforce that the anonymous user chooses a category
+			if(empty($_SESSION["category"]) === true) {
+				throw(new \InvalidArgumentException("You must choose a category to submit a report", 403));
+			}
+
 		}
 
+
+		//POST
 		// create new report and insert into database
 		$report = new Report(generateUuidV4(), $requestObject->getReportCategoryId(), $requestObject->reportContent, $requestObject->reportDateTime, $_SERVER["REMOTE_ADDR"], $requestObject->reportLat, $requestObject->reportLong, $requestObject->reportStatus, $requestObject->reportUrgency, substr($_SERVER["HTTP_USER_AGENT"], 0, 255));
 		$report->insert($pdo);
 
 		// update reply
 		$reply->message = "Report Submitted";
+
 	} else if($method === "DELETE") {
 		//enforce that the end user has a XSRF token.
 		verifyXsrf();

@@ -566,7 +566,7 @@ class Report implements \JsonSerializable {
 //	}
 
 	/**
-	 * get the Report by report status
+	 * get the Reports by report status
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param string $reportStatus report status to search for
@@ -611,7 +611,7 @@ class Report implements \JsonSerializable {
 	}
 
 	/**
-	 * get the Report by report urgency
+	 * get the Reports by report urgency
 	 *
 	 * @param \PDO $pdo PDO connection object
 	 * @param int $reportUrgency report status to search for
@@ -678,7 +678,7 @@ class Report implements \JsonSerializable {
 		$formattedSunsetDate = $sunsetReportDateTime->format("Y-m-d H:i:s.u");
 		$parameters = ["sunriseReportDateTime" => $formattedSunriseDate, "sunsetReportDateTime" => $formattedSunsetDate];
 		$statement->execute($parameters);
-		//build an array of tweets
+		//build an array of reports
 		$reports = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch())  !== false) {
