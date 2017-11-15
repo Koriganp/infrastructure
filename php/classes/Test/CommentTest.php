@@ -247,4 +247,31 @@ class CommentTest extends InfrastructureTest {
         $pdoComment = $results[0];
         $this->assertEquals($pdoComment->getCommentProfileId(), $this->profile->getProfileId());
     }
+
+	/**
+	 * test grabbing a Comment by comment content
+	 **/
+	public function testGetValidCommentByCommentContent() : void {
+		// count the number of rows and save it for later
+		$numRows = $this->getConnection()->getRowCount("comment");
+		// create a new Comment and insert to into mySQL
+		$commentId = generateUuidV4();
+		$this->VALID_DATE = new \DateTime();
+		$comment = new Comment($commentId, $this->profile->getProfileId(), $this->report->getReportId(), $this->VALID_CONTENT, $this->VALID_DATE);
+		$comment->insert($this->getPDO());
+		// grab the data from mySQL and enforce the fields match our expectations
+		$results = Comment::getCommentByCommentContent($this->getPDO(), $comment->getCommentContent());
+		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("comment"));
+		$this->assertCount(1, $results);
+		// enforce no other objects are bleeding into the test
+		$this->assertContainsOnlyInstancesOf("Edu\\Cnm\\Infrastructure\\Comment", $results);
+		// grab the result from the array and validate it
+		$pdoComment = $results[0];
+		$this->assertEquals($pdoComment->getCommentId(), $commentId);
+		$this->assertEquals($pdoComment->getCommentProfileId(), $this->profile->getProfileId());
+		$this->assertEquals($pdoComment->getCommentReportId(), $this->report->getReportId());
+		$this->assertEquals($pdoComment->getCommentContent(), $this->VALID_CONTENT);
+		//format the date too seconds since the beginning of time to avoid round off error
+		$this->assertEquals($pdoComment->getCommentDate()->getTimestamp(), $this->VALID_DATE->getTimestamp());
+	}
 }
