@@ -116,7 +116,7 @@ try {
 		$reply->message = "Profile Deleted";
 
 	} else {
-		throw (new \InvalidArgumentException(("Invalid HTTP request", 400));
+		throw (new \InvalidArgumentException(("Invalid HTTP request"), 400));
 	}
 } catch (\Exception | \TypeError $exception) {
 	$reply->status = $exception->getCode();
