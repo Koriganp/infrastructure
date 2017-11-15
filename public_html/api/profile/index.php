@@ -4,7 +4,7 @@ require_once(dirname(__DIR__,3) ."/vendor/autoload.php");
 require_once(dirname(__DIR__, 3) . "/php/classes/autoload.php");
 require_once(dirname(_DIR_, 3) . "/php/lib/xrsf.php");
 require_once(dirname(_DIR_,3) . "/php/lib/uuid.php");
-require_once("/etc/apache2/capstone-mysql/infrastructure.ini");
+require_once("/etc/apache2/capstone-mysql/abqreport.ini");
 
 use Edu\Cnm\Infrastructure\ {
 	Profile
@@ -29,7 +29,7 @@ $reply->data = null;
 
 try {
 	//grab the mySQL connection
-	$pdo = connectToEncrytedMySQL("/etc/apache2/capstone-mysql/infrastructure.ini");
+	$pdo = connectToEncrytedMySQL("/etc/apache2/capstone-mysql/abqreport.ini");
 
 	//determine which HTTP method was used
 	$method = arrayHasKey("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
@@ -84,7 +84,7 @@ try {
 
 		//profile Username
 		if(empty($requestObject->profileUsername) === true) {
-			throw(new \InvalidArgumentException("No profile Email present", 405));
+			throw(new \InvalidArgumentException("No profile Username present", 405));
 		}
 
 		$profile->setProfileUsername($requestObject->profileUsername);
