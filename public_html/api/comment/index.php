@@ -13,8 +13,7 @@ use Edu\Cnm\Infrastructure\{
 
 /**
  * API for the Comment class
- *
- * @author Jack Arnold
+* @author Jack Arnold
  **/
 
 //verify the session, start if not active
@@ -28,7 +27,7 @@ $reply->status = 200;
 $reply->data = null;
 
 try {
-    $pdo = connectEncryptedMySQL("/etc/apache2/capstone-mysql/abqreport.ini");
+    $pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/abqreport.ini");
 
     $method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
