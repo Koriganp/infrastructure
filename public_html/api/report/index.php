@@ -66,7 +66,7 @@ try {
 
 			$report = Report::getReportByReportId($pdo, $id);
 			// grab all the images for that report based on what report it is
-			$image = Image::getImageByImageReportId($pdo, $imageReportId)->toArray();
+			$image = Image::getImageByImageReportId($pdo, $_SESSION["imageReportId"])->toArray();
 			if($report !== null) {
 				$reply->data = $report;
 				$reply->data = $image;
