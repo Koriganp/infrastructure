@@ -88,7 +88,7 @@ try {
 
 		//compose message to send with email
 		$message = <<< EOF
-<h2>Welcome to ABQReport</h2>
+<h2>Welcome to ABQReport</h2> 
 <p>Confirm account before proceeding</p>
 <p><a href="$confirmLink">$confirmLink</a></p>
 EOF;
@@ -104,6 +104,7 @@ EOF;
 		 * notice this is an array that can include or omit the recipient's name
 		 * use the recipient's real name where possible;
 		 * this reduces the probability of the email is marked as spam
+		 *
 		 */
 
 		//define who the recipient is
