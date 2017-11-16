@@ -39,10 +39,11 @@ try {
 	$reportCategoryId = filter_input(INPUT_GET, "reportCategoryid", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$reportStatus = filter_input(INPUT_GET, "reportStatus", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$reportUrgency = filter_input(INPUT_GET, "reportUrgency", FILTER_VALIDATE_INT);
+	$reportContent = filter_input(INPUT_GET, "reportContent", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
 	// make sure the id is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
-		throw(new \Nette\InvalidArgumentException("id cannot be empty or negative", 405));
+		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
 	}
 
 	// handle GET request - if id is present, the report is returned, otherwise all reports are returned
@@ -139,7 +140,7 @@ try {
 				}
 
 				// create a new report and insert into database
-				$report = new Report(generateUuidV4(), $requestObject->getReportCategoryId(), $requestObject->reportContent, $requestObject->reportDateTime, $_SERVER["REMOTE_ADDR"], $requestObject->reportLat, $requestObject->reportLong, $requestObject->reportStatus, $requestObject->reportUrgency, substr($_SERVER["HTTP_USER_AGENT"], 0, 255));
+				$report = new Report(generateUuidV4(), $_SESSION["category"]->getReportCategoryId, $requestObject->reportContent, $requestObject->reportDateTime, $_SERVER["REMOTE_ADDR"], $requestObject->reportLat, $requestObject->reportLong, $requestObject->reportStatus, $requestObject->reportUrgency, substr($_SERVER["HTTP_USER_AGENT"], 0, 255));
 				$report->insert($pdo);
 
 				// update reply
