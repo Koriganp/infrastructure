@@ -36,7 +36,6 @@ try {
 
 	//sanitize input
 	$id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-	$imageReportId = filter_input(INPUT_GET, "imageReportId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$reportCategoryId = filter_input(INPUT_GET, "reportCategoryid", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$reportStatus = filter_input(INPUT_GET, "reportStatus", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$reportUrgency = filter_input(INPUT_GET, "reportUrgency", FILTER_VALIDATE_INT);
@@ -66,10 +65,8 @@ try {
 
 			$report = Report::getReportByReportId($pdo, $id);
 			// grab all the images for that report based on what report it is
-			$image = Image::getImageByImageReportId($pdo, $_SESSION["image"]->getImageReportId())->toArray();
 			if($report !== null) {
 				$reply->data = $report;
-				$reply->data = $image;
 			}
 
 		} else if(empty($reportCategoryId) === false) {
