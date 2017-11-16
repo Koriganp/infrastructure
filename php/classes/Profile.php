@@ -106,9 +106,9 @@ public function  __construct($newProfileId, $newProfileActivationToken, $newProf
 	}
 	/**
 	 * accessor method for activation token
-	 * @return string value of the activation token
+	 * @return string | null value of the activation token
 	 **/
-	public function getProfileActivationToken(): string {
+	public function getProfileActivationToken(): ?string {
 		return ($this->profileActivationToken);
 	}
 	/**
