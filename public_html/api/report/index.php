@@ -104,23 +104,13 @@ try {
 		$requestObject = json_decode($requestContent);
 		// This line decodes the JSON package and stores that result in $requestObject
 
-		//make sure report content is available (required field)
-		if(empty($requestObject->reportContent) === true) {
-			throw(new \InvalidArgumentException ("No content for Report.", 405));
-		}
-
-		// make sure report date is accurate
-		if(empty($requestObject->reportDateTime) === true) {
-			$requestObject->reportDateTime = date("Y-m-d H:i:s.u");
-		}
-
-		// make sure anonymous user chooses category
-		if(empty($requestObject->reportCategoryId) === true) {
-			throw(new \InvalidArgumentException("You must choose a category to submit a report", 403));
-		}
-
 		//PUT
 		if($method === "PUT") {
+
+			//enforce the user is signed in and only trying to update the status and urgency
+			if(empty($_SESSION["profile"]) === true) {
+				throw(new \InvalidArgumentException("You are not allowed to edit this report", 403));
+			}
 
 			if(empty($profile)) {
 				throw(new InvalidArgumentException("You're not allowed to update status or urgency. Please Log In", 403));
@@ -129,11 +119,6 @@ try {
 			$report = Report::getReportByReportId($pdo, $id);
 			if($report === null) {
 				throw(new RuntimeException("Report doesn't exist", 404));
-			}
-
-			//enforce the user is signed in and only trying to update the status and urgency
-			if(empty($_SESSION["profile"]) === true) {
-				throw(new \InvalidArgumentException("You are not allowed to edit this report", 403));
 			}
 
 			// update status and urgency
@@ -145,6 +130,21 @@ try {
 			$reply->message = "Report Updated";
 
 		} else if($method === "POST") {
+
+			//make sure report content is available (required field)
+			if(empty($requestObject->reportContent) === true) {
+				throw(new \InvalidArgumentException ("No content for Report.", 405));
+			}
+
+			// make sure report date is accurate
+			if(empty($requestObject->reportDateTime) === true) {
+				$requestObject->reportDateTime = date("Y-m-d H:i:s.u");
+			}
+
+			// make sure anonymous user chooses category
+			if(empty($requestObject->reportCategoryId) === true) {
+				throw(new \InvalidArgumentException("You must choose a category to submit a report", 403));
+			}
 
 //			if($_SESSION["profile"]) {
 //				// Admin User
