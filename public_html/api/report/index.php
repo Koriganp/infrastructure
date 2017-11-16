@@ -66,7 +66,7 @@ try {
 
 			$report = Report::getReportByReportId($pdo, $id);
 			// grab all the images for that report based on what report it is
-			$image = Image::getImageByImageReportId($pdo, $_SESSION["imageReportId"])->toArray();
+			$image = Image::getImageByImageReportId($pdo, $_SESSION["image"]->getImageReportId())->toArray();
 			if($report !== null) {
 				$reply->data = $report;
 				$reply->data = $image;
@@ -74,14 +74,14 @@ try {
 
 		} else if(empty($reportCategoryId) === false) {
 
-			$reports = Report::getReportByReportCategoryId($pdo, $_SESSION["report"]->getReportByReportCategoryId()->toArray());
+			$reports = Report::getReportByReportCategoryId($pdo, $_SESSION["report"]->getReportByReportCategoryId())->toArray();
 			if($reports !== null) {
 				$reply->data = $reports;
 			}
 
 		} else if (empty($reportStatus) === false) {
 
-			$reports = Report::getReportByReportStatus($pdo, $_SESSION["report"]->getReportByReportStatus()->toArray());
+			$reports = Report::getReportByReportStatus($pdo, $_SESSION["report"]->getReportByReportStatus())->toArray();
 			if($reports !== null) {
 				$reply->data = $reports;
 			}
