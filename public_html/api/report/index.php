@@ -12,7 +12,7 @@ require_once(dirname(__DIR__, 3) . "/php/lib/uuid.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 use Edu\Cnm\Infrastructure\ {
-	Report, Category, Comment, Profile, Image
+	Report, Profile, Image
 };
 
 //verify the xsrf challenge
@@ -41,8 +41,16 @@ try {
 	$reportUrgency = filter_input(INPUT_GET, "reportUrgency", FILTER_VALIDATE_INT);
 	$reportContent = filter_input(INPUT_GET, "reportContent", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
+	// assigning profile according to session
+	if(!empty($_SESSION["profile"])) {
+		if(Profile::getProfileByProfileId($pdo, $_SESSION["profile"]->getProfileId()) === null) {
+			throw(new InvalidArgumentException("GTFO Hacker", 418));
+		}
+		$profile = Profile::getProfileByProfileId($pdo, $_SESSION["profile"]->getProfileId());
+	}
+
 	// make sure the id is valid for methods that require it
-	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true || $id < 0)) {
+	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true)) {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
 	}
 
@@ -99,7 +107,7 @@ try {
 		// This line decodes the JSON package and stores that result in $requestObject
 
 		//make sure report content is available (required field)
-		if(empty($requestObject->reportContent === true)) {
+		if(empty($requestObject->reportContent) === true) {
 			throw(new \InvalidArgumentException ("No content for Report.", 405));
 		}
 
@@ -108,8 +116,17 @@ try {
 			$requestObject->reportDateTime = date("Y-m-d H:i:s.u");
 		}
 
+		// make sure anonymous user chooses category
+		if(empty($requestObject->reportCategoryId) === true) {
+			throw(new \InvalidArgumentException("You must choose a category to submit a report", 403));
+		}
+
 		//PUT
 		if($method === "PUT") {
+
+			if(empty($profile)) {
+				throw(new InvalidArgumentException("You're not allowed to update status or urgency. Please Log In", 403));
+			}
 
 			$report = Report::getReportByReportId($pdo, $id);
 			if($report === null) {
@@ -131,40 +148,40 @@ try {
 
 		} else if($method === "POST") {
 
-			if($_SESSION["category"]) {
+//			if($_SESSION["profile"]) {
+//				// Admin User
+//				// enforce admin is signed in to post status and urgency
+//
+//				$report = Report::getReportByReportId($pdo, $id);
+//				// insert status and urgency
+//				$report->setReportStatus($requestObject->reportStatus);
+//				$report->setReportUrgency($requestObject->reportUrgency);
+//				$report->insert($pdo);
+//
+//				$reply->message = "Status and Urgency Determined";
+//
+//
+//		} else {
+			//Anonymous User
+			// enforce that the anonymous user chooses a category
 
-				//Anonymous User
-				// enforce that the anonymous user chooses a category
-				if(empty($_SESSION["category"]) === true) {
-					throw(new \InvalidArgumentException("You must choose a category to submit a report", 403));
-				}
 
-				// create a new report and insert into database
-				$report = new Report(generateUuidV4(), $_SESSION["category"]->getReportCategoryId, $requestObject->reportContent, $requestObject->reportDateTime, $_SERVER["REMOTE_ADDR"], $requestObject->reportLat, $requestObject->reportLong, $requestObject->reportStatus, $requestObject->reportUrgency, substr($_SERVER["HTTP_USER_AGENT"], 0, 255));
-				$report->insert($pdo);
-
-				// update reply
-				$reply->message = "Report Submitted";
-
-			}
-		} else if($_SESSION["profile"]) {
-			// Admin User
-			// enforce admin is signed in to post status and urgency
-			if(empty($_SESSION["profile"]) === true) {
-				throw(new \InvalidArgumentException("You must be signed in to determine status and urgency", 403));
-			}
-
-			$report = Report::getReportByReportId($pdo, $id);
-			// insert status and urgency
-			$report->setReportStatus($requestObject->reportStatus);
-			$report->setReportUrgency($requestObject->reportUrgency);
+			// create a new report and insert into database
+			$report = new Report(generateUuidV4(), $requestObject->reportCategoryId, $requestObject->reportContent, $requestObject->reportDateTime, $_SERVER["REMOTE_ADDR"], $requestObject->reportLat, $requestObject->reportLong, $requestObject->reportStatus, $requestObject->reportUrgency, substr($_SERVER["HTTP_USER_AGENT"], 0, 255));
 			$report->insert($pdo);
 
-			$reply->message = "Status and Urgency Determined";
-			}
+			// update reply
+			$reply->message = "Report Submitted";
+//		}
+		}
+
 	} else if($method === "DELETE") {
 		//enforce that the end user has a XSRF token.
 		verifyXsrf();
+
+		if(empty($profile)) {
+			throw(new InvalidArgumentException("You're not allowed to delete report", 403));
+		}
 
 		// retrieve the Report to be deleted
 		$report = Report::getReportByReportId($pdo, $id);

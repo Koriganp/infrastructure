@@ -313,7 +313,7 @@ public function update(\PDO $pdo) : void {
 	 *
 	 * @param \PDO $pdo $pdo PDO connection object
 	 * @param string $profileId profile Id to search for
-	 * @return Profile|null Profile or null if not found
+	 * @return Profile|null Profile or null if not foundcategory
 	 * @throws \PDOException when mySQL related errors occur
 	 * @throws \TypeError when a variable are not the correct data type
 	 **/
@@ -332,7 +332,7 @@ public function update(\PDO $pdo) : void {
 		$statement->execute($parameters);
 		// grab the Profile from mySQL
 		try {
-			$profile = null;
+			$profile = generateUuidV4();
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
