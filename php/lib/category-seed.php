@@ -1,4 +1,9 @@
 <?php
+/**
+ * Creates seed data for the Category class to use on the front end
+ *
+ * @author Korigan Payne <koriganp@gmail.com>
+ **/
 use Edu\Cnm\Infrastructure\Category;
 // grab the class under scrutiny
 require_once(dirname(__DIR__) . "/classes/autoload.php");
