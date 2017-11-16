@@ -96,7 +96,7 @@ EOF;
 		$swiftMessage = new Swift_Message();
 
 		//attach sender to message
-		$swiftMessage->setForm(["tpurnell@cnm.edu" => "Tpurnell"]);
+		$swiftMessage->setForm(["holy@shit.com" => "Joe Mama"]);
 
 		/**
 		 * attach recipients to the message
@@ -152,7 +152,7 @@ EOF;
 		}
 
 		// update reply
-		$reply->message = "Thank you for creating a profile with DDC-Twitter";
+		$reply->message = "Thank you for creating a profile";
 	} else {
 		throw (new InvalidArgumentException("invalid http request"));
 	}
