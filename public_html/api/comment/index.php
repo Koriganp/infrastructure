@@ -13,7 +13,8 @@ use Edu\Cnm\Infrastructure\{
 
 /**
  * API for the Comment class
-* @author Jack Arnold
+ *
+ * @author Jack Arnold
  **/
 
 //verify the session, start if not active
