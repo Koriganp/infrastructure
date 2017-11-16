@@ -97,7 +97,7 @@ EOF;
 		$swiftMessage = new Swift_Message();
 
 		//attach sender to message
-		$swiftMessage->setForm(["holy@shit.com" => "Joe Mama"]);
+		$swiftMessage->setFrom(["holy@shit.com" => "Joe Mama"]);
 
 		/**
 		 * attach recipients to the message
@@ -136,12 +136,12 @@ EOF;
 		 * @see http://swiftmailer.org/docs/sending.html Sending Messages - Documentation - SwitftMailer
 		 **/
 		//set up smtp
-		$smtp = new swift_SmtpTransport(
-			"loacalhost", 25);
+		$smtp = new Swift_SmtpTransport (
+			"localhost", 25);
 		$mailer = new Swift_Mailer($smtp);
 
 		//send message
-		$numset = $mailer->send($swiftMessage, $failedRecipients);
+		$numSent = $mailer->send($swiftMessage, $failedRecipients);
 
 		/**
 		 * the send method returns the number of recipients that accepted the Email
