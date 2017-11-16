@@ -8,7 +8,8 @@
     "phpunit/dbunit": "@stable",
     "phpunit/phpunit": "@stable",
     "ramsey/uuid": "@stable",
-    "roave/better-reflection": "dev-master#a402048"
+    "roave/better-reflection": "dev-master#a402048",
+    "swiftmailer/swiftmailer": "^6.0"
   },
   "scripts": {
     "apigen": "./vendor/bin/apigen generate ./php/classes/*.php --destination doc",

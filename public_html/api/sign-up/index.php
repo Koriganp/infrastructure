@@ -3,12 +3,13 @@
 require_once (dirname(__DIR__, 3)) . "/vendor/autoload.php";
 require_once (dirname(__DIR__, 3)) . "/php/classes/autoload.php";
 require_once (dirname(__DIR__, 3)) . "/php/lib/xsrf.php";
+require_once dirname(__DIR__, 3) . "/php/lib/uuid.php";
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 //$config = readConfig("/etc/apache2/capstone-mysql/abqreport.ini");
 
 use Edu\Cnm\Infrastructure\ {
-	signup
+	Signup, Profile
 };
 
 /**
@@ -67,7 +68,7 @@ try {
 		$profileActivationToken = bin2hex(random_bytes(16));
 
 		//create the profile object and prepare it to insert into database
-		$profile = new Profile(null, $profileActivationToken, $requestObject->profileUsername, $requestObject->profileEmail, $hash, $salt);
+		$profile = new Profile (generateUuidV4(), $profileActivationToken, $requestObject->profileUsername, $requestObject->profileEmail, $hash, $salt);
 
 		//insert profile into database
 		$profile->insert($pdo);
@@ -80,10 +81,10 @@ try {
 		$basePath = dirname($_SERVER["SCRIPT_NAME"], 3);
 
 		//create path
-		$urlglue = $basepath . "/api/activation/?activation=" . $profileActivationToken;
+		$urlglue = $basePath . "/api/activation/?activation=" . $profileActivationToken;
 
 		//create the redirect link
-		$confirmLink = "https://" . $_SERVER["$SERVER_NAME"] . $urlglue;
+		$confirmLink = "https://" . $_SERVER["SERVER_NAME"] . $urlglue;
 
 		//compose message to send with email
 		$message = <<< EOF
@@ -145,7 +146,6 @@ EOF;
 		 * the send method returns the number of recipients that accepted the Email
 		 * so, if the number attempted is not the number accepted, this is an Exception
 		 **/
-
 		if($numSent !== count($recipients)) {
 			// the $failedRecipients parameter passed in the send() method now contains contains an array of the Emails that failed
 			throw(new RuntimeException("unable to send email"));

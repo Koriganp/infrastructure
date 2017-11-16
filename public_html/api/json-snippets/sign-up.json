@@ -1,1 +1,7 @@
-[{"profilePassword":"password","profilePasswordConfirm":"password","profileUsername":"WTF Jones","profileEmail":"tpurnell@cnm.edu","profilePhone":"455-555-5555"}]
+[
+  {"profilePassword":"password",
+  "profilePasswordConfirm":"password",
+  "profileUsername":"Joe Mama",
+  "profileEmail":"holy@shit.com",
+  "profilePhone":"455-555-5555"}
+]
