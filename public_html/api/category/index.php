@@ -65,6 +65,8 @@ try {
 				$reply->data = $categories;
 			}
 		}
+	}else {
+		throw (new InvalidArgumentException("Invalid HTTP method request", 418));
 	}
 } catch(\Exception | \TypeError $exception) {
 	$reply->status = $exception->getCode();
