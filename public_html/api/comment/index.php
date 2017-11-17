@@ -44,6 +44,9 @@ try {
     if($method === "GET") {
         setXsrfCookie();
 
+        $requestContent = file_get_contents("php://input");
+        $requestObject = json_decode($requestContent);
+
         if(empty($id) === false) {
             $comment = Comment::getCommentByCommentId($pdo, $id);
             if ($comment !== null) {
@@ -55,7 +58,7 @@ try {
                 $reply->data = $comment;
             }
         } else if(empty($commentReportId) === false) {
-            $comment = Comment::getCommentByCommentReportId($pdo, $_SESSION["report"]->getReportId())->toArray();
+            $comment = Comment::getCommentByCommentReportId($pdo, $requestObject->commentReportId)->toArray();
             if ($comment !== null) {
                 $reply->data = $comment;
             }
@@ -109,7 +112,7 @@ try {
             }
 
             // create new comment and insert it into the database
-            $comment = new Comment(generateUuidV4(), $_SESSION["profile"]->getProfileId(), $_SESSION["report"]->getReportId(), $requestObject->commentContent, $requestObject->commentDateTime);
+            $comment = new Comment(generateUuidV4(), $_SESSION["profile"]->getProfileId(), $requestObject->commentReportId, $requestObject->commentContent, $requestObject->commentDateTime);
             $comment->insert($pdo);
 
             // update reply
