@@ -15,7 +15,6 @@ use Edu\Cnm\Infrastructure\ {
 	Report, Profile, Image
 };
 
-
 //verify the xsrf challenge
 if(session_status() !== PHP_SESSION_ACTIVE){
 	session_start();
