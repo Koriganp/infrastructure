@@ -13,6 +13,7 @@ if(session_status() !== PHP_SESSION_ACTIVE) {
 	session_start();
 }
 
+
 //prepare default error message
 $reply = new stdClass();
 $reply->status = 200;
