@@ -145,7 +145,7 @@ class Category implements \JsonSerializable {
 		$query = "DELETE FROM category WHERE categoryId = :categoryId";
 		$statement = $pdo->prepare($query);
 		//bind the member variables to the place holders in the template
-		$parameters = ["categoryId" => $this->categoryId];
+		$parameters = ["categoryId" => $this->categoryId->getBytes()];
 		$statement->execute($parameters);
 	}
 
