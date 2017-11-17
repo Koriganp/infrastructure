@@ -308,7 +308,7 @@ public function update(\PDO $pdo) : void {
 	$statement->execute($parameters);
 	}
 
-		/**
+	/**
 	 * gets the Profile by profile id
 	 *
 	 * @param \PDO $pdo $pdo PDO connection object

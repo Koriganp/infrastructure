@@ -35,7 +35,7 @@ try {
 		throw(new InvalidArgumentException("activation has an incorrect length", 405));
 	}
 
-	// verify that the activation token is a string value of a hexadeciaml
+	// verify that the activation token is a string value of a hexadecimal
 	if(ctype_xdigit($activation) === false) {
 		throw (new \InvalidArgumentException("activation is empty or has invalid contents", 405));
 	}
