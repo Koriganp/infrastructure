@@ -304,7 +304,7 @@ public function update(\PDO $pdo) : void {
 	$statement = $pdo->prepare($query);
 
 	//bind the member variables to the place holders in template
-	$parameters = ["profileId" => $this->profileId,"profileActivationToken" => $this->profileActivationToken,"profileUsername" => $this->profileUsername, "profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash, "profileSalt" => $this->profileSalt];
+	$parameters = ["profileId" => $this->profileId->getBytes(),"profileActivationToken" => $this->profileActivationToken,"profileUsername" => $this->profileUsername, "profileEmail" => $this->profileEmail, "profileHash" => $this->profileHash, "profileSalt" => $this->profileSalt];
 	$statement->execute($parameters);
 	}
 
@@ -332,7 +332,7 @@ public function update(\PDO $pdo) : void {
 		$statement->execute($parameters);
 		// grab the Profile from mySQL
 		try {
-			$profile = generateUuidV4();
+			$profile = null;
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
