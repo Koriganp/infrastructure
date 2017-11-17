@@ -78,7 +78,14 @@ try {
 
 		} else if (empty($reportStatus) === false) {
 
-			$reports = Report::getReportByReportStatus($pdo, $_SESSION["report"]->getReportByReportStatus())->toArray();
+			$reports = Report::getReportByReportStatus($pdo, $reportStatus)->toArray();
+			if($reports !== null) {
+				$reply->data = $reports;
+			}
+
+		} else if (empty($reportUrgency)) {
+
+			$reports = Report::getReportByReportUrgency($pdo, $reportUrgency)->toArray();
 			if($reports !== null) {
 				$reply->data = $reports;
 			}
