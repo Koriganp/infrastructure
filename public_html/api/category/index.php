@@ -59,7 +59,7 @@ try {
 		} else {
 			$categories = Category::getAllCategories($pdo)->toArray();
 			if($categories === null) {
-				echo "nothing here";
+				$reply->message = "nothing here";
 			}
 			if($categories !== null) {
 				$reply->data = $categories;
