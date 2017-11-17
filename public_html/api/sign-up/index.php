@@ -97,7 +97,7 @@ EOF;
 		$swiftMessage = new Swift_Message();
 
 		//attach sender to message
-		$swiftMessage->setFrom(["holy@shit.com" => "Joe Mama"]);
+		$swiftMessage->setFrom(["bull@shit.com" => "Angie Daddy"]);
 
 		/**
 		 * attach recipients to the message

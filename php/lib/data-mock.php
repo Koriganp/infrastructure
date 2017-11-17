@@ -11,5 +11,5 @@ $password ="abc123";
 $SALT = bin2hex(random_bytes(32));
 $HASH = hash_pbkdf2("sha512", $password, $SALT, 262144);
 
-$profile = new Profile(generateUuidV4(),null,"joe mama", "holy@shit.com", $HASH,$SALT);
+$profile = new Profile(generateUuidV4(),null,"Joe Mama", "holy@shit.com", $HASH,$SALT);
 $profile->insert($pdo);
