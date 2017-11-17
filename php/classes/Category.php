@@ -184,7 +184,7 @@ class Category implements \JsonSerializable {
 		$query="SELECT categoryId, categoryName FROM category WHERE categoryId = :categoryId";
 		$statement=$pdo->prepare($query);
 		//bind the category id to the place holder in the template
-		$parameters=["categoryId"=>$categoryId];
+		$parameters=["categoryId"=>$categoryId->getBytes()];
 		$statement->execute($parameters);
 		//grab the category from mySQL
 		try{
