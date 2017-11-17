@@ -6,7 +6,6 @@ require_once (dirname(__DIR__, 3)) . "/php/lib/xsrf.php";
 require_once dirname(__DIR__, 3) . "/php/lib/uuid.php";
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
-//$config = readConfig("/etc/apache2/capstone-mysql/abqreport.ini");
 
 use Edu\Cnm\Infrastructure\ {
 	Profile
@@ -110,7 +109,7 @@ EOF;
 		$recipients = [$requestObject->profileEmail];
 
 		//set the recipient to the swift message
-		$swiftMessage->setTo($recipients);
+		$config = readConfig("/etc/apache2/capstone-mysql/abqreport.ini");
 
 		//attach the subject line to the email
 		$swiftMessage->setSubject($messageSubject);

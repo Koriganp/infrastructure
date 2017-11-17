@@ -63,7 +63,7 @@ private $profileSalt;
 	 * @throws \TypeError if data types violate type hints
 	 * @throw \Exception if some other exception occurs
  	 **/
-public function  __construct($newProfileId, $newProfileActivationToken, $newProfileUsername, $newProfileEmail, $newProfileHash, $newProfileSalt) {
+public function  __construct(string $newProfileId, ?string $newProfileActivationToken, string $newProfileUsername, string $newProfileEmail, string $newProfileHash, string $newProfileSalt) {
 	try {
 		$this->setProfileId($newProfileId);
 		$this->setProfileActivationToken($newProfileActivationToken);
