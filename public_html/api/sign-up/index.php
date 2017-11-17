@@ -9,7 +9,7 @@ require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 //$config = readConfig("/etc/apache2/capstone-mysql/abqreport.ini");
 
 use Edu\Cnm\Infrastructure\ {
-	Signup, Profile
+	Profile
 };
 
 /**
