@@ -87,7 +87,7 @@ try {
 
 		//compose message to send with email
 		$message = <<< EOF
-<h2>"Welcome, Please confirm account to proceed."</h2>
+<h2>Welcome, Please confirm account to proceed.</h2>
 <p><a href="$confirmLink">$confirmLink</a></p>
 EOF;
 
@@ -107,7 +107,6 @@ EOF;
 		$config = readConfig("/etc/apache2/capstone-mysql/abqreport.ini");
 		$superUser = json_decode($config["superuser"]);
 
-		var_dump($superUser);
 
 		//define who the recipient is
 		$recipients = [$superUser];
