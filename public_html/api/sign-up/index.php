@@ -87,7 +87,7 @@ try {
 
 		//compose message to send with email
 		$message = <<< EOF
- <h2>"Welcome, Please confirm account to proceed."</h2>
+<h2>"Welcome, Please confirm account to proceed."</h2>
 <p><a href="$confirmLink">$confirmLink</a></p>
 EOF;
 
@@ -107,8 +107,12 @@ EOF;
 		$config = readConfig("/etc/apache2/capstone-mysql/abqreport.ini");
 		$superUser = json_decode($config["superuser"]);
 
+		var_dump($superUser);
+
 		//define who the recipient is
 		$recipients = [$superUser];
+
+		$swiftMessage->setTo($recipients);
 
 		//attach the subject line to the email
 		$swiftMessage->setSubject($messageSubject);
@@ -121,7 +125,7 @@ EOF;
 		 */
 
 		//attach the html version for the message
-		$swiftMessage->setBody("$message", "test/html");
+		$swiftMessage->setBody("$message", "text/html");
 
 		//attach the plain text version of the message
 		$swiftMessage->addPart(html_entity_decode($message),"text/plain");
