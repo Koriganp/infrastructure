@@ -57,6 +57,12 @@ try {
 			throw(new \InvalidArgumentException("Must input valid password", 405));
 		}
 
+		//check for duplicate email
+		$emailCheck = Profile::getProfileByProfileEmail($pdo, $requestObject->profileEmail);
+		if(!emapty($emailCheck) || $emailCheck!== null) {
+			throw (new \InvalidArgumentException("This email is already in use", 403));
+		}
+
 		//make sure the password and confirm password match
 		if ($requestObject->profilePassword !== $requestObject->profilePasswordConfirm) {
 			throw(new \InvalidArgumentException("passwords do not match"));
