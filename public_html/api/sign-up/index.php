@@ -87,8 +87,7 @@ try {
 
 		//compose message to send with email
 		$message = <<< EOF
-<h2>Welcome to ABQReport</h2> 
-<p>Confirm account before proceeding</p>
+ <h2>"Welcome, Please confirm account to proceed."</h2>
 <p><a href="$confirmLink">$confirmLink</a></p>
 EOF;
 
@@ -96,7 +95,7 @@ EOF;
 		$swiftMessage = new Swift_Message();
 
 		//attach sender to message
-		$swiftMessage->setFrom(["bull@shit.com" => "Angie Daddy"]);
+		$swiftMessage->setFrom(["tpurnell@cnm.edu" => "tpurnell"]);
 
 		/**
 		 * attach recipients to the message
@@ -104,12 +103,12 @@ EOF;
 		 * use the recipient's real name where possible;
 		 * this reduces the probability of the email is marked as spam
 		 */
-
-		//define who the recipient is
-		$recipients = [$requestObject->profileEmail];
-
 		//set the recipient to the swift message
 		$config = readConfig("/etc/apache2/capstone-mysql/abqreport.ini");
+		$superUser = json_decode($config["superuser"]);
+
+		//define who the recipient is
+		$recipients = [$superUser];
 
 		//attach the subject line to the email
 		$swiftMessage->setSubject($messageSubject);
@@ -148,13 +147,13 @@ EOF;
 		 **/
 		if($numSent !== count($recipients)) {
 			// the $failedRecipients parameter passed in the send() method now contains contains an array of the Emails that failed
-			throw(new RuntimeException("unable to send email"));
+			throw(new RuntimeException("unable to send email",401));
 		}
 
 		// update reply
 		$reply->message = "Thank you for creating a profile";
 	} else {
-		throw (new InvalidArgumentException("invalid http request"));
+		throw (new InvalidArgumentException("invalid http request",418));
 	}
 } catch(\Exception $exception) {
 	$reply->status = $exception->getCode();
