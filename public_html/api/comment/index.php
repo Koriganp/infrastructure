@@ -1,8 +1,9 @@
 <?php
-require_once dirname(__DIR__, 3) . "/vendor/autoload.php";
-require_once dirname(__DIR__, 3) . "/php/classes/autoload.php";
-require_once dirname(__DIR__, 3) . "/php/lib/xsrf.php";
+require_once(dirname(__DIR__, 3) . "/vendor/autoload.php");
+require_once(dirname(__DIR__, 3) . "/php/classes/autoload.php");
+require_once(dirname(__DIR__, 3) . "/php/lib/xsrf.php");
 require_once(dirname(__DIR__, 3) . "/php/lib/uuid.php");
+require_once(dirname(__DIR__, 3) . "/php/lib/jwt.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 use Edu\Cnm\Infrastructure\{
@@ -53,7 +54,7 @@ try {
                 $reply->data = $comment;
             }
         } else if(empty($commentProfileId) === false) {
-            $comment = Comment::getCommentByCommentProfileId($pdo, $_SESSION["profile"]->getProfileId())->toArray();
+            $comment = Comment::getCommentByCommentProfileId($pdo, $commentProfileId)->toArray();
             if($comment !== null) {
                 $reply->data = $comment;
             }
@@ -82,9 +83,8 @@ try {
 
         // make sure the comment date is accurate
         if(empty($requestObject->commentDateTime) === true) {
-            $requestObject->commentDateTime = date("Y-m-d H:i:s");
+            $requestObject->commentDateTime = date("Y-m-d H:i:s.u");
         }
-
 
         // perform the actual put or post
         if($method === "PUT") {
@@ -98,6 +98,8 @@ try {
                 throw(new \InvalidArgumentException("You are not authorized to edit this comment"));
             }
 
+            validateJwtHeader();
+
             // update all attributes
             $comment->setCommentDateTime($requestObject->commentDateTime);
             $comment->setCommentContent($requestObject->commentContent);
@@ -110,6 +112,8 @@ try {
             if(empty($_SESSION["profile"]) === true) {
                 throw(new \InvalidArgumentException("You must be logged in to post comments", 403));
             }
+
+            validateJwtHeader();
 
             // create new comment and insert it into the database
             $comment = new Comment(generateUuidV4(), $_SESSION["profile"]->getProfileId(), $requestObject->commentReportId, $requestObject->commentContent, $requestObject->commentDateTime);
@@ -133,6 +137,8 @@ try {
         if(empty($_SESSION["profile"]) === true) {
             throw(new \InvalidArgumentException("You are not allowed to delete this comment", 403));
         }
+
+        validateJwtHeader();
 
         // delete comment
         $comment->delete($pdo);

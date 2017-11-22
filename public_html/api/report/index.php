@@ -5,14 +5,15 @@
  * @author Kevin D. Atkins
  */
 
-require_once dirname(__DIR__, 3) . "/vendor/autoload.php";
-require_once dirname(__DIR__, 3) . "/php/classes/autoload.php";
-require_once dirname(__DIR__, 3) . "/php/lib/xsrf.php";
+require_once(dirname(__DIR__, 3) . "/vendor/autoload.php");
+require_once(dirname(__DIR__, 3) . "/php/classes/autoload.php");
+require_once(dirname(__DIR__, 3) . "/php/lib/xsrf.php");
 require_once(dirname(__DIR__, 3) . "/php/lib/uuid.php");
+require_once(dirname(__DIR__, 3) . "/php/lib/jwt.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 use Edu\Cnm\Infrastructure\ {
-	Report, Profile, Image
+	Report, Profile
 };
 
 //verify the xsrf challenge
@@ -41,19 +42,18 @@ try {
 	$reportUrgency = filter_input(INPUT_GET, "reportUrgency", FILTER_VALIDATE_INT);
 	$reportContent = filter_input(INPUT_GET, "reportContent", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
-	// assigning profile according to session
-	if(!empty($_SESSION["profile"])) {
-		if(Profile::getProfileByProfileId($pdo, $_SESSION["profile"]->getProfileId()) === null) {
-			throw(new InvalidArgumentException("GTFO Hacker", 418));
-		}
-		$profile = Profile::getProfileByProfileId($pdo, $_SESSION["profile"]->getProfileId());
-	}
-
 	// make sure the id is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true)) {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
 	}
 
+//	// assigning profile according to session
+//	if(!empty($_SESSION["profile"])) {
+//		if(Profile::getProfileByProfileId($pdo, $_SESSION["profile"]->getProfileId()) === null) {
+//			throw(new InvalidArgumentException("GTFO Hacker", 418));
+//		}
+//		$profile = Profile::getProfileByProfileId($pdo, $_SESSION["profile"]->getProfileId());
+//	}
 	// handle GET request - if id is present, the report is returned, otherwise all reports are returned
 	if($method === "GET") {
 
@@ -71,7 +71,7 @@ try {
 
 		} else if(empty($reportCategoryId) === false) {
 
-			$reports = Report::getReportByReportCategoryId($pdo, $_SESSION["report"]->getReportByReportCategoryId())->toArray();
+			$reports = Report::getReportByReportCategoryId($pdo, $reportCategoryId)->toArray();
 			if($reports !== null) {
 				$reply->data = $reports;
 			}
@@ -93,12 +93,7 @@ try {
 		} else {
 
 			$reports = Report::getAllReports($pdo)->toArray();
-			if($reports === null) {
-				echo "There are no reports";
-			}
-
 			if($reports !== null) {
-
 				$reply->data = $reports;
 			}
 
@@ -118,6 +113,8 @@ try {
 			if(empty($_SESSION["profile"]) === true) {
 				throw(new \InvalidArgumentException("You are not allowed to edit this report", 403));
 			}
+
+			validateJwtHeader();
 
 			if(empty($profile)) {
 				throw(new InvalidArgumentException("You're not allowed to update status or urgency. Please Log In", 403));
@@ -184,9 +181,9 @@ try {
 		//enforce that the end user has a XSRF token.
 		verifyXsrf();
 
-		if(empty($profile)) {
-			throw(new InvalidArgumentException("You're not allowed to delete report", 403));
-		}
+//		if(empty($profile)) {
+//			throw(new InvalidArgumentException("You're not allowed to delete report", 403));
+//		}
 
 		// retrieve the Report to be deleted
 		$report = Report::getReportByReportId($pdo, $id);
@@ -196,13 +193,13 @@ try {
 
 		}
 
-		//enforce the end user has a JWT token
-		//validateJwtHeader();
-
 		//enforce the user is signed in and only trying to delete a report
 		if(empty($_SESSION["profile"]) === true) {
 			throw(new \InvalidArgumentException("You are not allowed to delete this report", 403));
 		}
+
+		//enforce the end user has a JWT token
+		validateJwtHeader();
 
 		// delete report
 		$report->delete($pdo);
