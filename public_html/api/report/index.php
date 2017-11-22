@@ -142,7 +142,12 @@ try {
 
 			// make sure report date is accurate
 			if(empty($requestObject->reportDateTime) === true) {
-				$requestObject->reportDateTime = date("Y-m-d H:i:s.u");
+				// if the date exists, Angular's milliseconds since the beginning of time MUST be converted
+				$reportDateTime = DateTime::createFromFormat("U.u", $requestObject->reportDateTime / 1000);
+				if($reportDateTime === false) {
+					throw(new RuntimeException("invalid report date", 400));
+				}
+				$requestObject->reportDateTime = $reportDateTime;
 			}
 
 			// make sure anonymous user chooses category
