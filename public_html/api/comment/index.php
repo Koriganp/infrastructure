@@ -83,7 +83,12 @@ try {
 
         // make sure the comment date is accurate
         if(empty($requestObject->commentDateTime) === true) {
-            $requestObject->commentDateTime = date("Y-m-d H:i:s.u");
+			  // if the date exists, Angular's milliseconds since the beginning of time MUST be converted
+			  $commentDateTime = DateTime::createFromFormat("U.u", $requestObject->commentDateTime / 1000);
+			  if($commentDateTime === false) {
+				  throw(new RuntimeException("invalid comment date", 400));
+			  }
+			  $requestObject->commentDateTime = $commentDateTime;
         }
 
         // perform the actual put or post
