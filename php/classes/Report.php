@@ -381,9 +381,9 @@ class Report implements \JsonSerializable {
 	 **/
 	public function insert(\PDO $pdo) : void {
 		// create query template
-		$query = "INSERT INTO report(reportId, reportCategoryId, reportContent, commentDateTime, reportIpAddress, 
+		$query = "INSERT INTO report(reportId, reportCategoryId, reportContent, reportDateTime, reportIpAddress, 
 		reportLat, reportLong, reportStatus, reportUrgency, reportUserAgent) VALUES (:reportId, :reportCategoryId, 
-		:reportContent, :commentDateTime, :reportIpAddress, :reportLat, :reportLong, :reportStatus, :reportUrgency,
+		:reportContent, :reportDateTime, :reportIpAddress, :reportLat, :reportLong, :reportStatus, :reportUrgency,
 		:reportUserAgent)";
 
 		$statement = $pdo->prepare($query);
