@@ -4,3 +4,11 @@
 /phpunit.phar
 /composer.phar
 /coverage
+/src/**/*.js
+/src/**/*.js.map
+/public_html/dist
+/public_html/index.html
+/npm-debug.log
+/webpack/target.js
+/node_modules
+/.sync-config.cson
