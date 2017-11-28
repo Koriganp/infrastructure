@@ -140,14 +140,14 @@ try {
 				throw(new \InvalidArgumentException ("No content for Report.", 405));
 			}
 
-			// make sure report date is accurate
+//			// make sure report date is accurate
+//			if(empty($requestObject->reportDateTime) === true) {
+//				$requestObject->reportDateTime = null;
+//			}
+//
 			if(empty($requestObject->reportDateTime) === true) {
 				// if the date exists, Angular's milliseconds since the beginning of time MUST be converted
-				$reportDateTime = DateTime::createFromFormat("U.u", $requestObject->reportDateTime / 1000);
-				if($reportDateTime === false) {
-					throw(new RuntimeException("invalid report date", 400));
-				}
-				$requestObject->reportDateTime = $reportDateTime;
+				$requestObject->reportDateTime = null;
 			}
 
 			// make sure anonymous user chooses category
