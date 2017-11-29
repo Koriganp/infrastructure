@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Conceptual Model</title>
+		<title>ABQ Report Wireframe</title>
 	</head>
 	<body>
 		<img src="images/abqreport0.png" alt="ABQ Report 0"/>
