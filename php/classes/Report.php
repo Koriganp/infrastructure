@@ -391,7 +391,7 @@ class Report implements \JsonSerializable {
 		// bind the member variables to the place holders in the template
 		$formattedDateTime = $this->reportDateTime->format("Y-m-d H:i:s.u");
 		$parameters = ["reportId" => $this->reportId->getBytes(), "reportCategoryId" => $this->reportCategoryId->getBytes(),
-		"reportContent" => $this->reportContent, "commentDateTime" => $formattedDateTime, "reportIpAddress" => $this->reportIpAddress,
+		"reportContent" => $this->reportContent, "reportDateTime" => $formattedDateTime, "reportIpAddress" => $this->reportIpAddress,
 		"reportLat" => $this->reportLat, "reportLong" => $this->reportLong, "reportStatus" => $this->reportStatus,
 		"reportUrgency" => $this->reportUrgency, "reportUserAgent" => $this->reportUserAgent];
 		$statement->execute($parameters);
@@ -425,14 +425,14 @@ class Report implements \JsonSerializable {
 	public function update(\PDO $pdo) : void {
 		// create query template
 		$query = "UPDATE report SET reportCategoryId = :reportCategoryId, reportContent = :reportContent, 
-		commentDateTime = :commentDateTime, reportStatus = :reportStatus, reportUrgency = :reportUrgency 
+		reportDateTime = :reportDateTime, reportStatus = :reportStatus, reportUrgency = :reportUrgency 
 		WHERE reportId = :reportId";
 
 		$statement = $pdo->prepare($query);
 
 		$formattedDateTime = $this->reportDateTime->format("Y-m-d H:i:s.u");
 		$parameters = ["reportId" => $this->reportId->getBytes(), "reportCategoryId" => $this->reportCategoryId->getBytes(),
-		"reportContent" => $this->reportContent, "commentDateTime" => $formattedDateTime, "reportStatus" => $this->reportStatus,
+		"reportContent" => $this->reportContent, "reporttDateTime" => $formattedDateTime, "reportStatus" => $this->reportStatus,
 		"reportUrgency" => $this->reportUrgency];
 		$statement->execute($parameters);
 	}
@@ -455,7 +455,7 @@ class Report implements \JsonSerializable {
 		}
 
 		// create equal template
-		$query = "SELECT reportId, reportCategoryId, reportContent, commentDateTime, reportIpAddress, reportLat, reportLong,
+		$query = "SELECT reportId, reportCategoryId, reportContent, reportDateTime, reportIpAddress, reportLat, reportLong,
 		reportStatus, reportUrgency, reportUserAgent FROM report WHERE reportId = :reportId";
 
 		$statement = $pdo->prepare($query);
@@ -471,7 +471,7 @@ class Report implements \JsonSerializable {
 			$statement->setFetchMode(\PDO::FETCH_ASSOC);
 			$row = $statement->fetch();
 			if($row !== false) {
-				$report = new Report($row["reportId"], $row["reportCategoryId"], $row["reportContent"], $row["commentDateTime"], $row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"], $row["reportUserAgent"]);
+				$report = new Report($row["reportId"], $row["reportCategoryId"], $row["reportContent"], $row["reportDateTime"], $row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"], $row["reportUserAgent"]);
 			}
 		} catch(\Exception $exception) {
 			// if the row couldn't be converted, rethrow it
@@ -498,7 +498,7 @@ class Report implements \JsonSerializable {
 		}
 
 		// create query template
-		$query = "SELECT reportId, reportCategoryId, reportContent, commentDateTime, reportIpAddress, reportLat, reportLong,
+		$query = "SELECT reportId, reportCategoryId, reportContent, reportDateTime, reportIpAddress, reportLat, reportLong,
 		reportStatus, reportUrgency, reportUserAgent FROM report WHERE reportCategoryId = :reportCategoryId";
 		$statement = $pdo->prepare($query);
 		// bind the report profile id to the place holder in the template
@@ -509,7 +509,7 @@ class Report implements \JsonSerializable {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$report = new Report($row["reportId"], $row["reportCategoryId"], $row["reportContent"], $row["commentDateTime"], $row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"], $row["reportUserAgent"]);
+				$report = new Report($row["reportId"], $row["reportCategoryId"], $row["reportContent"], $row["reportDateTime"], $row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"], $row["reportUserAgent"]);
 				$reports[$reports->key()] = $report;
 				$reports->next();
 			} catch(\Exception $exception) {
@@ -541,7 +541,7 @@ class Report implements \JsonSerializable {
 //		$reportContent = str_replace("_", "\\_", str_replace("%", "\\%", $reportContent));
 //
 //		// create query template
-//		$query = "SELECT reportId, reportCategoryId, reportContent, commentDateTime, reportIpAddress, reportLat, reportLong, reportStatus, reportUrgency, reportUserAgent FROM report WHERE reportContent LIKE :reportContent";
+//		$query = "SELECT reportId, reportCategoryId, reportContent, reporttDateTime, reportIpAddress, reportLat, reportLong, reportStatus, reportUrgency, reportUserAgent FROM report WHERE reportContent LIKE :reportContent";
 //		$statement = $pdo->prepare($query);
 //
 //		// bind the report content to the place holder in the template
@@ -554,7 +554,7 @@ class Report implements \JsonSerializable {
 //		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 //		while(($row = $statement->fetch()) !== false) {
 //			try {
-//				$report = new Report($row["reportId"], $row["reportCategoryId"], $row["reportContent"], $row["commentDateTime"], $row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"],$row["reportUserAgent"]);
+//				$report = new Report($row["reportId"], $row["reportCategoryId"], $row["reportContent"], $row["reportDateTime"], $row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"],$row["reportUserAgent"]);
 //				$reports[$reports->key()] = $report;
 //				$reports->next();
 //			} catch(\Exception $exception) {
@@ -586,7 +586,7 @@ class Report implements \JsonSerializable {
 		$reportStatus = str_replace("_", "\\_", str_replace("%", "\\%", $reportStatus));
 
 		// create query template
-		$query = "SELECT reportId, reportCategoryId, reportContent, commentDateTime, reportIpAddress, reportLat, reportLong, reportStatus, reportUrgency, reportUserAgent FROM report WHERE reportStatus LIKE :reportStatus";
+		$query = "SELECT reportId, reportCategoryId, reportContent, reportDateTime, reportIpAddress, reportLat, reportLong, reportStatus, reportUrgency, reportUserAgent FROM report WHERE reportStatus LIKE :reportStatus";
 		$statement = $pdo->prepare($query);
 
 		// bind the report content to the place holder in the template
@@ -599,7 +599,7 @@ class Report implements \JsonSerializable {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$report = new Report($row["reportId"], $row["reportCategoryId"], $row["reportContent"], $row["commentDateTime"], $row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"],$row["reportUserAgent"]);
+				$report = new Report($row["reportId"], $row["reportCategoryId"], $row["reportContent"], $row["reportDateTime"], $row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"],$row["reportUserAgent"]);
 				$reports[$reports->key()] = $report;
 				$reports->next();
 			} catch(\Exception $exception) {
@@ -621,7 +621,7 @@ class Report implements \JsonSerializable {
 	 **/
 	public static function getReportByReportUrgency(\PDO $pdo, int $reportUrgency) : \SplFixedArray {
 		// create query template
-		$query = "SELECT reportId, reportCategoryId, reportContent, commentDateTime, reportIpAddress, reportLat, reportLong, reportStatus, reportUrgency, reportUserAgent FROM report WHERE reportUrgency = :reportUrgency";
+		$query = "SELECT reportId, reportCategoryId, reportContent, reportDateTime, reportIpAddress, reportLat, reportLong, reportStatus, reportUrgency, reportUserAgent FROM report WHERE reportUrgency = :reportUrgency";
 		$statement = $pdo->prepare($query);
 
 		// bind the report content to the place holder in the template
@@ -634,7 +634,7 @@ class Report implements \JsonSerializable {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$report = new Report($row["reportId"], $row["reportCategoryId"], $row["reportContent"], $row["commentDateTime"], $row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"],$row["reportUserAgent"]);
+				$report = new Report($row["reportId"], $row["reportCategoryId"], $row["reportContent"], $row["reportDateTime"], $row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"],$row["reportUserAgent"]);
 				$reports[$reports->key()] = $report;
 				$reports->next();
 			} catch(\Exception $exception) {
@@ -671,7 +671,7 @@ class Report implements \JsonSerializable {
 			throw(new $exceptionType($exception->getMessage(), 0, $exception));
 		}
 		//create query template
-		$query = "SELECT reportId, reportCategoryId, reportContent, commentDateTime, reportIpAddress, reportLat, reportLong, reportStatus, reportUrgency, reportUserAgent from report WHERE commentDateTime >= :sunriseReportDateTime AND commentDateTime <= :sunsetReportDateTime";
+		$query = "SELECT reportId, reportCategoryId, reportContent, reportDateTime, reportIpAddress, reportLat, reportLong, reportStatus, reportUrgency, reportUserAgent from report WHERE reportDateTime >= :sunriseReportDateTime AND reportDateTime <= :sunsetReportDateTime";
 		$statement = $pdo->prepare($query);
 		//format the dates so that mySQL can use them
 		$formattedSunriseDate = $sunriseReportDateTime->format("Y-m-d H:i:s.u");
@@ -683,7 +683,7 @@ class Report implements \JsonSerializable {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch())  !== false) {
 			try {
-				$report = new Report($row["reportId"], $row["reportCategoryId"], $row["reportContent"], $row["commentDateTime"],$row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"], $row["reportUserAgent"]);
+				$report = new Report($row["reportId"], $row["reportCategoryId"], $row["reportContent"], $row["reportDateTime"],$row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"], $row["reportUserAgent"]);
 				$reports[$reports->key()] = $report;
 				$reports->next();
 			} catch(\Exception $exception) {
@@ -703,7 +703,7 @@ class Report implements \JsonSerializable {
 	 **/
 	public static function getAllReports(\PDO $pdo) : \SPLFixedArray {
 		// create query template
-		$query = "SELECT reportId, reportCategoryId, reportContent, commentDateTime,reportIpAddress, reportLat, reportLong, reportStatus, reportUrgency, reportUserAgent FROM report";
+		$query = "SELECT reportId, reportCategoryId, reportContent, reportDateTime,reportIpAddress, reportLat, reportLong, reportStatus, reportUrgency, reportUserAgent FROM report";
 		$statement = $pdo->prepare($query);
 		$statement->execute();
 
@@ -713,7 +713,7 @@ class Report implements \JsonSerializable {
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
 		while(($row = $statement->fetch()) !== false) {
 			try {
-				$report = new Report($row["reportId"], $row["reportCategoryId"], $row["reportContent"], $row["commentDateTime"], $row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"], $row["reportUserAgent"]);
+				$report = new Report($row["reportId"], $row["reportCategoryId"], $row["reportContent"], $row["reportDateTime"], $row["reportIpAddress"], $row["reportLat"], $row["reportLong"], $row["reportStatus"], $row["reportUrgency"], $row["reportUserAgent"]);
 				$reports[$reports->key()] = $report;
 				$reports->next();
 			} catch(\Exception $exception) {
@@ -736,7 +736,7 @@ class Report implements \JsonSerializable {
 		$fields["reportCategoryId"] = $this->reportCategoryId;
 
 		// format the date so that the front end can consume it
-		$fields["commentDateTime"] = round(floatval($this->reportDateTime->format("U.u")) * 1000);
+		$fields["reportDateTime"] = round(floatval($this->reportDateTime->format("U.u")) * 1000);
 		return ($fields);
 	}
 }
