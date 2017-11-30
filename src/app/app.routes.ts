@@ -4,13 +4,15 @@ import {APP_BASE_HREF} from "@angular/common";
 // import all components
 import {SplashComponent} from "./components/splash.component";
 import {AdminDashboardComponent} from "./components/admin-dashboard.component";
+import {NavbarComponent} from "./components/navbar.component";
 
 // import services
 import {UserService} from "./services/user.service";
 
 export const allAppComponents = [
 	SplashComponent,
-	AdminDashboardComponent
+	AdminDashboardComponent,
+	NavbarComponent
 ];
 
 export const routes: Routes = [
