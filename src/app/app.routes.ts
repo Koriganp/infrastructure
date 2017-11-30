@@ -7,15 +7,18 @@ import {DeepDiveInterceptor} from "./services/deep.dive.intercepters";
 import {SplashComponent} from "./components/splash.component";
 import {AdminDashboardComponent} from "./components/admin-dashboard.component";
 import {NavbarComponent} from "./components/navbar.component";
+import {FooterComponent} from "./components/footer.component";
 
 // import services
 import {UserService} from "./services/user.service";
 
 
+
 export const allAppComponents = [
 	SplashComponent,
 	AdminDashboardComponent,
-	NavbarComponent
+	NavbarComponent,
+	FooterComponent
 ];
 
 export const routes: Routes = [
