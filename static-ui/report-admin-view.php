@@ -1,5 +1,4 @@
 <!-- Report Admin View (Pop-Up) -->
-
 <div class="card" style="width: 50em; height: 50em">
 
 	<h1>Submitted Report</h1>
@@ -66,6 +65,5 @@
 			</div>
 		</form>
 	</div>
-
 
 </div>
