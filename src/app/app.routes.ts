@@ -22,6 +22,7 @@ export const routes: Routes = [
 
 export const appRoutingProviders: any[] = [
 	{provide: APP_BASE_HREF, useValue: window["_base_href"]},
+	{provide: HTTP_INTERCEPTORS, useClass: DeepDiveInterceptor, multi: true},
 	UserService
 ];
 
