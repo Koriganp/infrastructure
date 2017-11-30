@@ -432,7 +432,7 @@ class Report implements \JsonSerializable {
 
 		$formattedDateTime = $this->reportDateTime->format("Y-m-d H:i:s.u");
 		$parameters = ["reportId" => $this->reportId->getBytes(), "reportCategoryId" => $this->reportCategoryId->getBytes(),
-		"reportContent" => $this->reportContent, "reporttDateTime" => $formattedDateTime, "reportStatus" => $this->reportStatus,
+		"reportContent" => $this->reportContent, "reportDateTime" => $formattedDateTime, "reportStatus" => $this->reportStatus,
 		"reportUrgency" => $this->reportUrgency];
 		$statement->execute($parameters);
 	}
