@@ -36,6 +36,6 @@
 				<h2>User Story</h2>
 				<p class="story">George ran over a pothole in the road and wants it fixed.</p>
 			</div>
-		</main>
+        </main>
 	</body>
 </html>
