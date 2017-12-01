@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 
 @Component({
 	templateUrl: "./templates/home-view.html",
-	selector: "homeview"
+	selector: "home-view"
 })
 
 export class HomeViewComponent {}

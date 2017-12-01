@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 
 @Component({
 	templateUrl: "./templates/sign-up.html",
-	selector: "signup"
+	selector: "sign-up"
 })
 
 export class SignUpComponent {}

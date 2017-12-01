@@ -33,6 +33,7 @@ export const allAppComponents = [
 	ReportPublicViewComponent,
 	ReportsMadeComponent,
 	ReportSubmitComponent,
+	HomeViewComponent,
 	FooterComponent,
 	SignInComponent,
 	SignUpComponent,
