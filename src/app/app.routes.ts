@@ -28,7 +28,8 @@ export const routes: Routes = [
 	{path: "", component: SplashComponent},
 	{path: "admin-dashboard", component: AdminDashboardComponent},
 	{path: "report-admin-view", component: ReportAdminViewComponent},
-	{path: "report-public-view", component: ReportPublicViewComponent}
+	{path: "report-public-view", component: ReportPublicViewComponent},
+	{path: "reports-made", component: Rep}
 ];
 
 export const appRoutingProviders: any[] = [

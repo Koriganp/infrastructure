@@ -4,4 +4,4 @@ import {Component} from "@angular/core";
 	templateUrl: "./templates/reports-made.html"
 })
 
-export class ReportPublicViewComponent {}
+export class ReportsMadeComponent {}
