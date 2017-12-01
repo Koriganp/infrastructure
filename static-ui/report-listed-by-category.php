@@ -1,4 +1,4 @@
-<!-- Reports Made/History List (Home View Partial)-->
+<!-- Reports Made/History List (for admin view) -->
 <table class="table">
 	<thead>
 		<tr>
