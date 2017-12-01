@@ -38,7 +38,8 @@ export const allAppComponents = [
 	SignUpComponent,
 	SignOutComponent,
 	ReportListedByCategoryComponent,
-	ReportCategoryDropdownComponent
+	ReportCategoryDropdownComponent,
+	HomeViewComponent
 ];
 
 export const routes: Routes = [
