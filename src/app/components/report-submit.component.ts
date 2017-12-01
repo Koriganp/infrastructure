@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 
 @Component({
 	templateUrl: "./templates/report-submit.html",
-	selector: "reportsubmit"
+	selector: "report-submit"
 })
 
 export class ReportSubmitComponent {}
