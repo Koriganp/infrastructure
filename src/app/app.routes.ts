@@ -11,6 +11,7 @@ import {FooterComponent} from "./components/footer.component";
 
 // import services
 import {UserService} from "./services/user.service";
+import {FooterComponent} from "./components/footer.component";
 
 
 
