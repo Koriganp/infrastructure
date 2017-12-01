@@ -24,7 +24,6 @@ import {HomeViewComponent} from "./components/home-view.component";
 import {UserService} from "./services/user.service";
 
 
-
 export const allAppComponents = [
 	SplashComponent,
 	AdminDashboardComponent,
