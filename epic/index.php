@@ -15,6 +15,7 @@
 				<a href="venus.php">Persona 2</a>
 				<a href="use-cases.php">Use Cases</a>
 				<a href="conceptual-model.php">Conceptual Model</a>
+				<a href="abqreport-wireframe.php">ABQ Report Wireframe</a>
 			</nav>
 		</header>
 		<main>
