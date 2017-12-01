@@ -8,10 +8,11 @@ import {SplashComponent} from "./components/splash.component";
 import {AdminDashboardComponent} from "./components/admin-dashboard.component";
 import {NavbarComponent} from "./components/navbar.component";
 import {FooterComponent} from "./components/footer.component";
+import {ReportAdminViewComponent} from "./components/report-admin-view";
 
 // import services
 import {UserService} from "./services/user.service";
-import {FooterComponent} from "./components/footer.component";
+
 
 
 
@@ -19,12 +20,14 @@ export const allAppComponents = [
 	SplashComponent,
 	AdminDashboardComponent,
 	NavbarComponent,
+	ReportAdminViewComponent,
 	FooterComponent
 ];
 
 export const routes: Routes = [
 	{path: "", component: SplashComponent},
-	{path: "admin-dashboard", component: AdminDashboardComponent}
+	{path: "admin-dashboard", component: AdminDashboardComponent},
+	{path: "report-admin-view", component: ReportAdminViewComponent}
 ];
 
 export const appRoutingProviders: any[] = [
