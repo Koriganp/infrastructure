@@ -17,10 +17,12 @@ import {SignUpComponent} from "./components/sign-up.component";
 import {SignOutComponent} from "./components/sign-out.component";
 import {ReportListedByCategoryComponent} from "./components/report-listed-by-category.component";
 import {ReportCategoryDropdownComponent} from "./components/report-category-dropdown.component";
+import {HomeViewComponent} from "./components/home-view.component";
 
 
 // import services
 import {UserService} from "./services/user.service";
+
 
 
 export const allAppComponents = [
@@ -47,7 +49,11 @@ export const routes: Routes = [
 	{path: "reports-made", component: ReportsMadeComponent},
 	{path: "sign-in", component: SignInComponent},
 	{path: "sign-up", component: SignUpComponent},
-	{path: "sign-out", component: SignOutComponent}
+	{path: "sign-out", component: SignOutComponent},
+	{path: "home-view", component: HomeViewComponent},
+	{path: "report-listed-by-category", component: ReportListedByCategoryComponent},
+	{path: "report-category-dropdown", component: ReportCategoryDropdownComponent},
+	{path: "report-submit", component: ReportSubmitComponent}
 ];
 
 export const appRoutingProviders: any[] = [
