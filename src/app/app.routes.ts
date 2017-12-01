@@ -12,10 +12,13 @@ import {ReportAdminViewComponent} from "./components/report-admin-view.component
 import {ReportPublicViewComponent} from "./components/report-public-view.component";
 import {ReportsMadeComponent} from "./components/reports-made.component";
 import {ReportSubmitComponent} from "./components/report-submit.component";
+import {ReportListedByCategoryComponent} from "./components/report-listed-by-category.component";
+import {ReportCategoryDropdownComponent} from "./components/report-category-dropdown.component";
 
 
 // import services
 import {UserService} from "./services/user.service";
+
 
 
 export const allAppComponents = [
@@ -26,7 +29,9 @@ export const allAppComponents = [
 	ReportPublicViewComponent,
 	ReportsMadeComponent,
 	ReportSubmitComponent,
-	FooterComponent
+	FooterComponent,
+	ReportListedByCategoryComponent,
+	ReportCategoryDropdownComponent
 ];
 
 export const routes: Routes = [
