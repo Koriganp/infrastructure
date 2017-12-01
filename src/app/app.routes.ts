@@ -7,7 +7,7 @@ import {DeepDiveInterceptor} from "./services/deep.dive.intercepters";
 import {SplashComponent} from "./components/splash.component";
 import {AdminDashboardComponent} from "./components/admin-dashboard.component";
 import {NavbarComponent} from "./components/navbar.component";
-import {FooterComponent} from "./components/footer.component";
+import {FooterComponent} from "./components/foot.component";
 import {ReportAdminViewComponent} from "./components/report-admin-view.component";
 import {ReportPublicViewComponent} from "./components/report-public-view.component";
 import {ReportsMadeComponent} from "./components/reports-made.component";
