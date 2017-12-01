@@ -10,9 +10,11 @@ import {NavbarComponent} from "./components/navbar.component";
 import {FooterComponent} from "./components/footer.component";
 import {ReportAdminViewComponent} from "./components/report-admin-view.component";
 import {ReportPublicViewComponent} from "./components/report-public-view.component";
+import {ReportsMadeComponent} from "./components/reports-made.component";
 
 // import services
 import {UserService} from "./services/user.service";
+
 
 
 export const allAppComponents = [
@@ -21,6 +23,7 @@ export const allAppComponents = [
 	NavbarComponent,
 	ReportAdminViewComponent,
 	ReportPublicViewComponent,
+	ReportsMadeComponent,
 	FooterComponent
 ];
 
@@ -29,7 +32,7 @@ export const routes: Routes = [
 	{path: "admin-dashboard", component: AdminDashboardComponent},
 	{path: "report-admin-view", component: ReportAdminViewComponent},
 	{path: "report-public-view", component: ReportPublicViewComponent},
-	{path: "reports-made", component: Rep}
+	{path: "reports-made", component: ReportsMadeComponent}
 ];
 
 export const appRoutingProviders: any[] = [
