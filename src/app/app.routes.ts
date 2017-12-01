@@ -8,7 +8,7 @@ import {SplashComponent} from "./components/splash.component";
 import {AdminDashboardComponent} from "./components/admin-dashboard.component";
 import {NavbarComponent} from "./components/navbar.component";
 import {FooterComponent} from "./components/footer.component";
-import {ReportAdminViewComponent} from "./components/report-admin-view";
+import {ReportAdminViewComponent} from "./components/report-admin-view.component";
 
 // import services
 import {UserService} from "./services/user.service";
