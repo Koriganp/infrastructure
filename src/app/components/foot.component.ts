@@ -5,4 +5,4 @@ import {Component} from "@angular/core";
 	selector: "foot"
 })
 
-export class FooterComponent {}
+export class FootComponent {}

@@ -7,7 +7,7 @@ import {DeepDiveInterceptor} from "./services/deep.dive.intercepters";
 import {SplashComponent} from "./components/splash.component";
 import {AdminDashboardComponent} from "./components/admin-dashboard.component";
 import {NavbarComponent} from "./components/navbar.component";
-import {FooterComponent} from "./components/foot.component";
+import {FootComponent} from "./components/foot.component";
 import {ReportAdminViewComponent} from "./components/report-admin-view.component";
 import {ReportPublicViewComponent} from "./components/report-public-view.component";
 import {ReportsMadeComponent} from "./components/reports-made.component";
@@ -34,7 +34,7 @@ export const allAppComponents = [
 	ReportsMadeComponent,
 	ReportSubmitComponent,
 	HomeViewComponent,
-	FooterComponent,
+	FootComponent,
 	SignInComponent,
 	SignUpComponent,
 	SignOutComponent,
@@ -54,7 +54,8 @@ export const routes: Routes = [
 	{path: "home-view", component: HomeViewComponent},
 	{path: "report-listed-by-category", component: ReportListedByCategoryComponent},
 	{path: "report-category-dropdown", component: ReportCategoryDropdownComponent},
-	{path: "report-submit", component: ReportSubmitComponent}
+	{path: "report-submit", component: ReportSubmitComponent},
+	{path: "foot", component: FootComponent}
 ];
 
 export const appRoutingProviders: any[] = [
