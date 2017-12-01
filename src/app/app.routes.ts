@@ -12,13 +12,15 @@ import {ReportAdminViewComponent} from "./components/report-admin-view.component
 import {ReportPublicViewComponent} from "./components/report-public-view.component";
 import {ReportsMadeComponent} from "./components/reports-made.component";
 import {ReportSubmitComponent} from "./components/report-submit.component";
+import {SignInComponent} from "./components/sign-in.component";
+import {SignUpComponent} from "./components/sign-up.component";
+import {SignOutComponent} from "./components/sign-out.component";
 import {ReportListedByCategoryComponent} from "./components/report-listed-by-category.component";
 import {ReportCategoryDropdownComponent} from "./components/report-category-dropdown.component";
 
 
 // import services
 import {UserService} from "./services/user.service";
-
 
 
 export const allAppComponents = [
@@ -30,6 +32,9 @@ export const allAppComponents = [
 	ReportsMadeComponent,
 	ReportSubmitComponent,
 	FooterComponent,
+	SignInComponent,
+	SignUpComponent,
+	SignOutComponent,
 	ReportListedByCategoryComponent,
 	ReportCategoryDropdownComponent
 ];
@@ -39,7 +44,10 @@ export const routes: Routes = [
 	{path: "admin-dashboard", component: AdminDashboardComponent},
 	{path: "report-admin-view", component: ReportAdminViewComponent},
 	{path: "report-public-view", component: ReportPublicViewComponent},
-	{path: "reports-made", component: ReportsMadeComponent}
+	{path: "reports-made", component: ReportsMadeComponent},
+	{path: "sign-in", component: SignInComponent},
+	{path: "sign-up", component: SignUpComponent},
+	{path: "sign-out", component: SignOutComponent}
 ];
 
 export const appRoutingProviders: any[] = [
