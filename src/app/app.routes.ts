@@ -57,6 +57,27 @@ export const routes: Routes = [
 	{path: "foot", component: FootComponent}
 ];
 
+//an array of the components that will be passed off to the module
+export const allAppComponents = [
+	AdminDashboardComponent,
+	NavbarComponent,
+	ReportAdminViewComponent,
+	ReportPublicViewComponent,
+	ReportsMadeComponent,
+	ReportSubmitComponent,
+	HomeViewComponent,
+	FootComponent,
+	SignInComponent,
+	SignUpComponent,
+	SignOutComponent,
+	ReportListedByCategoryComponent,
+	ReportCategoryDropdownComponent];
+
+//an array of routes that will be passed of to the module
+export const routes: Routes = [
+	{path: "", component: HomeViewComponent}
+];
+
 export const appRoutingProviders: any[] = [
 	{provide: APP_BASE_HREF, useValue: window["_base_href"]},
 	{provide: HTTP_INTERCEPTORS, useClass: DeepDiveInterceptor, multi: true},
