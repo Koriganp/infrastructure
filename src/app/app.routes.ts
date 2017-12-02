@@ -1,4 +1,7 @@
+//import needed @angularDependencies
 import {RouterModule, Routes} from "@angular/router";
+
+//import all needed Interceptors
 import {APP_BASE_HREF} from "@angular/common";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import {DeepDiveInterceptor} from "./services/deep.dive.intercepters";
@@ -21,9 +24,17 @@ import {HomeViewComponent} from "./components/home-view.component";
 
 
 // import services
+import {AuthService} from "../services/auth.service";
+import {CookieService} from "ng2-cookies";
+import {JwtHelperService} from "@auth0/angular-jwt";
 import {UserService} from "./services/user.service";
+import {ProfileService} from "./services/profile.service";
+import {SessionService} from "./services/session.service";
+import {SignInService} from "./services/sign.in.service";
+import {SignUpService} from "./services/sign.up.service";
 
 
+//an array of the components that will be passed off to the module
 export const allAppComponents = [
 	SplashComponent,
 	AdminDashboardComponent,
@@ -41,6 +52,7 @@ export const allAppComponents = [
 	ReportCategoryDropdownComponent,
 ];
 
+//an array of routes that will be passed of to the module
 export const routes: Routes = [
 	{path: "", component: SplashComponent},
 	{path: "admin-dashboard", component: AdminDashboardComponent},
@@ -57,31 +69,16 @@ export const routes: Routes = [
 	{path: "foot", component: FootComponent}
 ];
 
-//an array of the components that will be passed off to the module
-export const allAppComponents = [
-	AdminDashboardComponent,
-	NavbarComponent,
-	ReportAdminViewComponent,
-	ReportPublicViewComponent,
-	ReportsMadeComponent,
-	ReportSubmitComponent,
-	HomeViewComponent,
-	FootComponent,
-	SignInComponent,
-	SignUpComponent,
-	SignOutComponent,
-	ReportListedByCategoryComponent,
-	ReportCategoryDropdownComponent];
+// an array of services that will be passed off to the module
 
-//an array of routes that will be passed of to the module
-export const routes: Routes = [
-	{path: "", component: HomeViewComponent}
-];
 
+// an array of misc providers
 export const appRoutingProviders: any[] = [
 	{provide: APP_BASE_HREF, useValue: window["_base_href"]},
 	{provide: HTTP_INTERCEPTORS, useClass: DeepDiveInterceptor, multi: true},
 	UserService
 ];
+
+export const appRoutingProviders: any[] = [providers, services];
 
 export const routing = RouterModule.forRoot(routes);
