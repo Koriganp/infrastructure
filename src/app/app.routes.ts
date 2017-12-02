@@ -96,6 +96,6 @@ export const Providers: any[] = [
 	UserService
 ];
 
-export const appRoutingProviders: any[] = [providers, services];
+export const appRoutingProviders: any[] = [providers, services ];
 
 export const routing = RouterModule.forRoot(routes);
