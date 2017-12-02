@@ -23,7 +23,6 @@ export class ReportService {
 		return(this.http.delete<Status>(this.reportUrl + reportId));
 	}
 
-
 	// call to the report API and get a report object based on its ID
 	getReport(reportId : number) : Observable<Report> {
 		return(this.http.get<Report>(this.reportUrl + reportId));
@@ -38,6 +37,5 @@ export class ReportService {
 	getAllReport() : Observable<Report[]> {
 		return(this.http.get<Report[]>(this.reportUrl));
 	}
-
 
 }
