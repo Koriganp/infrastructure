@@ -1,7 +1,7 @@
 import {Injectable}  from "@angular/core";
 
-import {Status} from "../classes/status";
-import {Report} from "../classes/report";
+import {Status} from "./classes/status";
+import {Report} from "./classes/report";
 import {Observable} from "rxjs/Observable";
 import {HttpClient} from "@angular/common/http";
 

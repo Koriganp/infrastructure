@@ -1,11 +1,11 @@
 import {Component, OnInit} from "@angular/core";
 
-import {AuthService} from "../services/auth.service";
-import {ReportService} from "../services/report.service";
-import {CategoryService} from "../services/category.service";
-import {Status} from "../classes/status";
-import {Report} from "../classes/report";
-import {Category} from "../classes/category";
+import {AuthService} from "./services/auth.service";
+import {ReportService} from "./services/report.service";
+import {CategoryService} from "./services/category.service";
+import {Status} from "./classes/status";
+import {Report} from "./classes/report";
+import {Category} from "./classes/category";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
