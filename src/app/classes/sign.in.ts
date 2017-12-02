@@ -1,3 +1,6 @@
 export class SignIn {
-	constructor ( public profileEmail: string, public profilePassword: string){}
+	constructor (
+		public profileEmail: string,
+		public profilePassword: string
+	){}
 }
