@@ -14,15 +14,19 @@ export class CommentService {
     private commentUrl = "api/comment/";
 
 
-    // call to API to delete comment
+    // call to API to delete a comment
     deleteComment(commentId: number) : Observable<Status> {
         return(this.http.delete<Status>(this.commentUrl + commentId));
     }
 
-    // call to API to update comment
+    // call to API to update a comment
     editComment(comment : Comment) : Observable<Status> {
         return(this.http.put<Status>(this.commentUrl + comment.commentId, comment));
     }
 
+    // call to API to create a comment
+    createComment(comment : Comment) : Observable<Status> {
+        return(this.http.post<Status>(this.commentUrl + comment));
+    }
 
 }
