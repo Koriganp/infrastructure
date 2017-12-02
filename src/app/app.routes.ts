@@ -90,7 +90,7 @@ const services : any[] = [
 	SignUpService];
 
 // an array of misc providers
-export const appRoutingProviders: any[] = [
+export const Providers: any[] = [
 	{provide: APP_BASE_HREF, useValue: window["_base_href"]},
 	{provide: HTTP_INTERCEPTORS, useClass: DeepDiveInterceptor, multi: true},
 	UserService
