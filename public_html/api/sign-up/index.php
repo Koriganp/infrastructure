@@ -12,7 +12,7 @@ use Edu\Cnm\Infrastructure\ {
 };
 
 /**
- * api for signing up too DDC Twitter
+ * api for signing up to ABQ Report
  *
  * @author Tansiha Purnell <tpurnell@cnm.edu>
  **/
