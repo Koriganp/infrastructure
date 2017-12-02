@@ -29,6 +29,8 @@ import {CookieService} from "ng2-cookies";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {UserService} from "../services/user.service";
 import {ProfileService} from "../services/profile.service";
+import {ReportService} from "../services/report.service";
+import {CommentService} from "../services/comment.service";
 import {SessionService} from "../services/session.service";
 import {SignInService} from "../services/sign.in.service";
 import {SignUpService} from "../services/sign.up.service";
@@ -70,7 +72,16 @@ export const routes: Routes = [
 ];
 
 // an array of services that will be passed off to the module
-
+const services : any[] = [
+	AuthService,
+	CookieService,
+	JwtHelperService,
+	ProfileService,
+	ReportService,
+	CommentService,
+	SessionService,
+	SignInService,
+	SignUpService];
 
 // an array of misc providers
 export const appRoutingProviders: any[] = [
