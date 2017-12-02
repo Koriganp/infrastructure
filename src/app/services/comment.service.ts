@@ -26,7 +26,7 @@ export class CommentService {
 
     // call to API to create a comment
     createComment(comment : Comment) : Observable<Status> {
-        return(this.http.post<Status>(this.commentUrl + comment));
+        return(this.http.post<Status>(this.commentUrl, comment));
     }
 
 }
