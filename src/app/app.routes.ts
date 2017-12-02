@@ -4,34 +4,34 @@ import {RouterModule, Routes} from "@angular/router";
 //import all needed Interceptors
 import {APP_BASE_HREF} from "@angular/common";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
-import {DeepDiveInterceptor} from "./services/deep.dive.intercepters";
+import {DeepDiveInterceptor} from "../services/deep.dive.intercepters";
 
 // import all components
-import {SplashComponent} from "./components/splash.component";
-import {AdminDashboardComponent} from "./components/admin-dashboard.component";
-import {NavbarComponent} from "./components/navbar.component";
-import {FootComponent} from "./components/foot.component";
-import {ReportAdminViewComponent} from "./components/report-admin-view.component";
-import {ReportPublicViewComponent} from "./components/report-public-view.component";
-import {ReportsMadeComponent} from "./components/reports-made.component";
-import {ReportSubmitComponent} from "./components/report-submit.component";
-import {SignInComponent} from "./components/sign-in.component";
-import {SignUpComponent} from "./components/sign-up.component";
-import {SignOutComponent} from "./components/sign-out.component";
-import {ReportListedByCategoryComponent} from "./components/report-listed-by-category.component";
-import {ReportCategoryDropdownComponent} from "./components/report-category-dropdown.component";
-import {HomeViewComponent} from "./components/home-view.component";
+import {SplashComponent} from "../components/splash.component";
+import {AdminDashboardComponent} from "../components/admin-dashboard.component";
+import {NavbarComponent} from "../components/navbar.component";
+import {FootComponent} from "../components/foot.component";
+import {ReportAdminViewComponent} from "../components/report-admin-view.component";
+import {ReportPublicViewComponent} from "../components/report-public-view.component";
+import {ReportsMadeComponent} from "../components/reports-made.component";
+import {ReportSubmitComponent} from "../components/report-submit.component";
+import {SignInComponent} from "../components/sign-in.component";
+import {SignUpComponent} from "../components/sign-up.component";
+import {SignOutComponent} from "../components/sign-out.component";
+import {ReportListedByCategoryComponent} from "../components/report-listed-by-category.component";
+import {ReportCategoryDropdownComponent} from "../components/report-category-dropdown.component";
+import {HomeViewComponent} from "../components/home-view.component";
 
 
 // import services
 import {AuthService} from "../services/auth.service";
 import {CookieService} from "ng2-cookies";
 import {JwtHelperService} from "@auth0/angular-jwt";
-import {UserService} from "./services/user.service";
-import {ProfileService} from "./services/profile.service";
-import {SessionService} from "./services/session.service";
-import {SignInService} from "./services/sign.in.service";
-import {SignUpService} from "./services/sign.up.service";
+import {UserService} from "../services/user.service";
+import {ProfileService} from "../services/profile.service";
+import {SessionService} from "../services/session.service";
+import {SignInService} from "../services/sign.in.service";
+import {SignUpService} from "../services/sign.up.service";
 
 
 //an array of the components that will be passed off to the module
