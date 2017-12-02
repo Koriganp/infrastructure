@@ -13,15 +13,16 @@ export class ReportService {
 	// define the API endpoint
 	private reportUrl = "api/report/";
 
+	// call to the report API and create the report in question
+	createReport(report : Report) : Observable<Status> {
+		return(this.http.post<Status>(this.reportUrl, report));
+	}
+
 	// call to the report API and delete the report in question
 	deleteReport(reportId : number) : Observable<Status> {
 		return(this.http.delete<Status>(this.reportUrl + reportId));
 	}
 
-	// call to the report API and create the report in question
-	createReport(report : Report) : Observable<Status> {
-		return(this.http.post<Status>(this.reportUrl, report));
-	}
 
 	// call to the report API and get a report object based on its ID
 	getReport(reportId : number) : Observable<Report> {
