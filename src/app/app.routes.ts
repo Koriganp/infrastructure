@@ -21,6 +21,7 @@ import {SignOutComponent} from "../components/sign-out.component";
 import {ReportListedByCategoryComponent} from "../components/report-listed-by-category.component";
 import {ReportCategoryDropdownComponent} from "../components/report-category-dropdown.component";
 import {HomeViewComponent} from "../components/home-view.component";
+import {CategoryComponent} from "./components/category.component";
 
 
 // import services
@@ -34,6 +35,8 @@ import {CommentService} from "../services/comment.service";
 import {SessionService} from "../services/session.service";
 import {SignInService} from "../services/sign.in.service";
 import {SignUpService} from "../services/sign.up.service";
+import {CategoryComponent} from "./components/category.component";
+import {CategoryService} from "./services/category.service";
 
 
 //an array of the components that will be passed off to the module
@@ -52,6 +55,7 @@ export const allAppComponents = [
 	SignOutComponent,
 	ReportListedByCategoryComponent,
 	ReportCategoryDropdownComponent,
+	CategoryComponent,
 ];
 
 //an array of routes that will be passed of to the module
@@ -68,7 +72,8 @@ export const routes: Routes = [
 	{path: "report-listed-by-category", component: ReportListedByCategoryComponent},
 	{path: "report-category-dropdown", component: ReportCategoryDropdownComponent},
 	{path: "report-submit", component: ReportSubmitComponent},
-	{path: "foot", component: FootComponent}
+	{path: "foot", component: FootComponent},
+	{path: "category", component: CategoryComponent},
 ];
 
 // an array of services that will be passed off to the module
@@ -77,6 +82,7 @@ const services : any[] = [
 	CookieService,
 	JwtHelperService,
 	ProfileService,
+	CategoryService,
 	ReportService,
 	CommentService,
 	SessionService,
