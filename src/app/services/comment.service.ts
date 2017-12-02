@@ -19,5 +19,10 @@ export class CommentService {
         return(this.http.delete<Status>(this.commentUrl + commentId));
     }
 
+    // call to API to update comment
+    editComment(comment : Comment) : Observable<Status> {
+        return(this.http.put<Status>(this.commentUrl + comment.commentId, comment));
+    }
+
 
 }
