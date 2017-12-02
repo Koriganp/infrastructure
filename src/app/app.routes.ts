@@ -29,7 +29,7 @@ import {AuthService} from "./services/auth.service";
 import {CookieService} from "ng2-cookies";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {UserService} from "./services/user.service";
-import {ProfileService} from "./services/profile.service";
+import {ProfileService} from "./services/profile.services";
 import {ReportService} from "./services/report.service";
 import {CommentService} from "./services/comment.service";
 import {SessionService} from "./services/session.service";
