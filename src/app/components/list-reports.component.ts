@@ -1,11 +1,11 @@
 import {Component, OnInit} from "@angular/core";
 
-import {AuthService} from "./services/auth.service";
-import {ReportService} from "./services/report.service";
-import {CategoryService} from "./services/category.service";
-import {Status} from "./classes/status";
-import {Report} from "./classes/report";
-import {Category} from "./classes/category";
+import {AuthService} from "../services/auth.service";
+import {ReportService} from "../services/report.service";
+import {CategoryService} from "../services/category.service";
+import {Status} from "../classes/status";
+import {Report} from "../classes/report";
+import {Category} from "../classes/category";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
@@ -17,7 +17,7 @@ export class ListReportsComponent implements OnInit{
 
 	createReportForm: FormGroup;
 
-	report : Report = new Report (null, null, null, null);
+	report : Report = new Report (null, null, null, null, null, null, null, null, null, null);
 
 	//declare needed state variables for latter use
 	status: Status = null;
@@ -29,7 +29,7 @@ export class ListReportsComponent implements OnInit{
 
 	//life cycling before my eyes
 	ngOnInit() : void {
-		this.listTweets();
+		this.listReports();
 
 		this.createReportForm = this.formBuilder.group({
 			ReportContent: ["",[Validators.maxLength(3000), Validators.minLength(1), Validators.required]]
@@ -47,7 +47,7 @@ export class ListReportsComponent implements OnInit{
 	}
 	createReport(): void  {
 
-		let report = new Report(null, null, this.createReportForm.value.reportContent, null);
+		let report = new Report(null, null, this.createReportForm.value.reportContent, null, null, null, null, null, null, null);
 
 		this.reportService.createReport(report)
 			.subscribe(status =>{

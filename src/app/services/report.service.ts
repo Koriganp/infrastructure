@@ -1,7 +1,7 @@
 import {Injectable}  from "@angular/core";
 
-import {Status} from "./classes/status";
-import {Report} from "./classes/report";
+import {Status} from "../classes/status";
+import {Report} from "../classes/report";
 import {Observable} from "rxjs/Observable";
 import {HttpClient} from "@angular/common/http";
 
@@ -34,7 +34,7 @@ export class ReportService {
 	}
 
 	//call to the API and get an array of all the reports in the database
-	getAllReport() : Observable<Report[]> {
+	getAllReports() : Observable<Report[]> {
 		return(this.http.get<Report[]>(this.reportUrl));
 	}
 
