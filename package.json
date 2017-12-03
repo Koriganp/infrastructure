@@ -2,7 +2,6 @@
   "name": "infrastructure",
   "version": "0.0.1",
   "license": "Apache-2.0",
-
   "scripts": {
     "build": "rimraf public_html/dist && tsc && webpack --config webpack/webpack.live.js --progress --profile --bail",
     "start": "rimraf public_html/dist && webpack-dev-server --config webpack/webpack.dev.js --inline --progress --port 7272"
