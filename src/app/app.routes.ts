@@ -86,13 +86,13 @@ const services : any[] = [
 	CommentService,
 	SessionService,
 	SignInService,
-	SignUpService];
+	SignUpService,
+	UserService];
 
 // an array of misc providers
 export const providers: any[] = [
 	{provide: APP_BASE_HREF, useValue: window["_base_href"]},
 	{provide: HTTP_INTERCEPTORS, useClass: DeepDiveInterceptor, multi: true},
-	UserService
 ];
 
 export const appRoutingProviders: any[] = [providers, services ];
