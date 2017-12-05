@@ -36,6 +36,7 @@ import {SessionService} from "./services/session.service";
 import {SignInService} from "./services/sign.in.service";
 import {SignUpService} from "./services/sign.up.service";
 import {CategoryService} from "./services/category.service";
+import {ImageService} from "./services/image.service";
 
 
 //an array of the components that will be passed off to the module
@@ -80,6 +81,7 @@ const services : any[] = [
 	JwtHelperService,
 	ProfileService,
 	CategoryService,
+	ImageService,
 	ReportService,
 	CommentService,
 	SessionService,
