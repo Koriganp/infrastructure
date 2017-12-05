@@ -29,4 +29,9 @@ export class CommentService {
         return(this.http.post<Status>(this.commentUrl, comment));
     }
 
+    // call to API to get comment by comment ID
+    getComment(commentId: string) : Observable<Status> {
+        return(this.http.get<Status>(this.commentUrl + commentId));
+    }
+
 }
