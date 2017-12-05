@@ -1,14 +1,9 @@
 body {
-	background-color: #000;
-	position: relative;
-}
-
-body::after {
 	content: "";
 	background-image: url("../public_html/images/Abqdowntown.jpg");
 	background-attachment: fixed;
+	background-size: 100%;
 	position: absolute;
 	height: 100%;
 	width: 100%;
-	z-index: -1;
 }
