@@ -110,6 +110,13 @@ try {
 		//PUT
 		if($method === "PUT") {
 
+			$report = Report::getReportByReportId($pdo, $id);
+			if($report === null) {
+				throw(new RuntimeException("Report doesn't exist", 404));
+			}
+
+			// enforce the end user has a JWT token
+
 			//enforce the user is signed in and only trying to update the status and urgency
 			if(empty($_SESSION["profile"]) === true) {
 				throw(new \InvalidArgumentException("You are not allowed to edit this report", 403));
@@ -119,11 +126,6 @@ try {
 
 			if(empty($profile)) {
 				throw(new InvalidArgumentException("You're not allowed to update status or urgency. Please Log In", 403));
-			}
-
-			$report = Report::getReportByReportId($pdo, $id);
-			if($report === null) {
-				throw(new RuntimeException("Report doesn't exist", 404));
 			}
 
 			// update status and urgency
@@ -145,7 +147,7 @@ try {
 //			if(empty($requestObject->reportDateTime) === true) {
 //				$requestObject->reportDateTime = null;
 //			}
-//
+
 			if(empty($requestObject->reportDateTime) === true) {
 				// if the date exists, Angular's milliseconds since the beginning of time MUST be converted
 				$requestObject->reportDateTime = null;
