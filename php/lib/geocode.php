@@ -17,7 +17,7 @@ function getLatLongByAddress ($address) : \stdClass {
 	$json = file_get_contents($url . '?address=' . urlencode($address) . '&key=' . $api);
 	$jsonObject = json_decode($json);
 	$lat = $jsonObject->results[0]->geometry->location->lat;
-	$long = $jsonObject->results[0]->geometry->location->lng;
+	$long = $jsonObject->results[0]->geometry->location->long;
 	$reply = new stdClass();
 	$reply->lat = $lat;
 	$reply->long = $long;
