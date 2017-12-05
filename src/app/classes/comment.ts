@@ -1,8 +1,8 @@
 export class Comment {
     constructor(
-        public commentId: number,
-        public commentProfileId: number,
-        public commentReportId: number,
+        public commentId: string,
+        public commentProfileId: string,
+        public commentReportId: string,
         public commentContent: string,
         public commentDateTime: string,
     ) {}
