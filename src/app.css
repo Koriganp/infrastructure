@@ -7,3 +7,14 @@ body {
 	height: 100%;
 	width: 100%;
 }
+
+.submitter {
+	margin: 5rem;
+	padding: 5rem;
+	width: 60em;
+	height: 50em;
+}
+
+.heading {
+	text-align: center;
+}
