@@ -5,8 +5,7 @@ export class Report {
 		public reportContent: string,
 		public reportDateTime: string,
 		public reportIpAddress: number,
-		public reportLat: number,
-		public reportLong: number,
+		public reportAddress: string,
 		public reportStatus: string,
 		public reportUrgency: number,
 		public reportUserAgent: number
