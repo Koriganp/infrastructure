@@ -5,4 +5,6 @@ import {Component} from "@angular/core";
 	selector: "category"
 })
 
-export class CategoryComponent {}
+export class CategoryComponent {
+
+}
