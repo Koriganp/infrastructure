@@ -59,7 +59,7 @@ try {
 
 		//check for duplicate email
 		$emailCheck = Profile::getProfileByProfileEmail($pdo, $requestObject->profileEmail);
-		if(!emapty($emailCheck) || $emailCheck!== null) {
+		if(!empty($emailCheck) || $emailCheck!== null) {
 			throw (new \InvalidArgumentException("This email is already in use", 403));
 		}
 
