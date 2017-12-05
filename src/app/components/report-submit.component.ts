@@ -13,7 +13,7 @@ export class ReportSubmitComponent {
 	//declare needed state variables for later use.
 	status: Status = null;
 
-	report: Report = new Report(null, null, null, null, null, null, null, null, null,);
+	report: Report = new Report(null, null, null, null, null, null, null, null, null);
 
 	constructor(private reportService : ReportService) {}
 
