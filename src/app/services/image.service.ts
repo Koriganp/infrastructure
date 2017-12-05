@@ -9,4 +9,7 @@ export class ImageService{
 
 	constructor(protected http : HttpClient ) {}
 
+	// define the API endpoint
+	private imageUrl = "api/image/";
+
 }
