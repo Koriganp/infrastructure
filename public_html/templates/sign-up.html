@@ -18,17 +18,17 @@
 				<!-- actual form -->
 				<form class="form-horizontal" [formGroup]="signUpForm"  (ngSubmit)="createSignUp();" novalidate>
 
-					<!-- twitter at handle -->
+					<!-- User Name -->
 					<div class="form-group">
-						<label for="atHandle" class="col-sm-2 control-label">Twitter @Handle</label>
+						<label for="userName" class="col-sm-2 control-label">User Name</label>
 						<div class="col-sm-10">
-							<input type="text" id="atHandle" name="atHandle" formControlName="atHandle" class="form-control">
+							<input type="text" id="userName" name="userName" formControlName="userName" class="form-control">
 						</div>
 					</div>
 
-					<div class="alert alert-danger" *ngIf="signUpForm.controls.atHandle?.invalid && signUpForm.controls.atHandle?.touched">
-						<p *ngIf="signUpForm.controls.atHandle?.errors.maxlength">Twitter Handle is to long</p>
-						<p *ngIf="signUpForm.controls.atHandle?.errors.required">Twitter Handle required</p>
+					<div class="alert alert-danger" *ngIf="signUpForm.controls.userName?.invalid && signUpForm.controls.userName?.touched">
+						<p *ngIf="signUpForm.controls.userName?.errors.maxlength">User name is too long.</p>
+						<p *ngIf="signUpForm.controls.userName?.errors.required">User name is required</p>
 					</div>
 
 					<!-- users profile email-->
@@ -44,19 +44,6 @@
 						<p *ngIf="signUpForm.controls.email?.errors.required">valid email address is required</p>
 					</div>
 
-
-
-					<!-- users phone number -->
-					<div class="form-group">
-						<label for="phoneNumber" class="col-sm-2 control-label">EPhone Number</label>
-						<div class="col-sm-10">
-							<input type="text" id="phoneNumber" name="phoneNumber" class="form-control input-sm" formControlName="phoneNumber">
-						</div>
-					</div>
-					<div class="alert alert-danger" *ngIf="signUpForm.controls.phoneNumber?.invalid && signUpForm.controls.email?.touched">
-						<p *ngIf="signUpForm.controls.email?.errors.maxlength"> phone # is to long</p>
-					</div>
-
 					<!-- user password -->
 					<div class="form-group">
 						<label for="password" class="col-sm-2 control-label">Password</label>
@@ -65,7 +52,7 @@
 						</div>
 					</div>
 					<div class="alert alert-danger" *ngIf="signUpForm.controls.password?.invalid && signUpForm.controls.password?.touched">
-						<p *ngIf="signUpForm.controls.password?.errors.maxlength">everyone loves long passwords but yours might be to long</p>
+						<p *ngIf="signUpForm.controls.password?.errors.maxlength">Too many characters in password</p>
 						<p *ngIf="signUpForm.controls.password?.errors.required">Valid password required</p>
 					</div>
 
@@ -78,8 +65,8 @@
 					</div>
 
 					<div class="alert alert-danger" *ngIf="signUpForm.controls.passwordConfirm?.invalid && signUpForm.controls.passwordConfirm?.touched">
-						<p *ngIf="signUpForm.controls.password?.errors.maxlength">everyone loves long passwords but yours might be to long</p>
-						<p *ngIf="signUpForm.controls.email?.errors.required">Valid password required</p>
+						<p *ngIf="signUpForm.controls.passwordConfirm?.errors.maxlength">Too many characters in password</p>
+						<p *ngIf="signUpForm.controls.passwordConfirm?.errors.required">Passwords do not match</p>
 					</div>
 
 					<!-- Submit button -->
