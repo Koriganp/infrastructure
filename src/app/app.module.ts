@@ -17,13 +17,13 @@ const JwtHelper = JwtModule.forRoot({
 		},
 		skipWhenExpired:true,
 		whitelistedDomains: ["localhost:7272", "https://bootcamp-coders.cnm.edu/"],
-		headerName:"X-JWT-TOKEN",
+		headerName: "X-JWT-TOKEN",
 		authScheme: ""
 	}
 });
 
 @NgModule({
-	imports:      [BrowserModule, Status, HttpClientModule, JwtHelper, ReactiveFormsModule, FormsModule, routing],
+	imports:      [BrowserModule, HttpClientModule, JwtHelper, ReactiveFormsModule, FormsModule, routing],
 	declarations: [...moduleDeclarations, ...allAppComponents],
 	bootstrap:    [AppComponent],
 	providers:    [...appRoutingProviders]
