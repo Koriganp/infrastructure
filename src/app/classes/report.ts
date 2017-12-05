@@ -9,6 +9,6 @@ export class Report {
 		public reportLong: number,
 		public reportStatus: string,
 		public reportUrgency: number,
-		public reportUserAgency: number
+		public reportUserAgent: number
 	) {}
 }
