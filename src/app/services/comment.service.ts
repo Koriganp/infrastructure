@@ -1,5 +1,4 @@
 import {Injectable} from "@angular/core";
-
 import {Status} from "../classes/status";
 import {Comment} from "../classes/comment";
 import {Observable} from "rxjs/Observable";
@@ -45,8 +44,8 @@ export class CommentService {
     }
 
     // call to API to get comment by comment content
-    getCommentByCommentContent(commentId: string) : Observable<Status> {
-        return(this.http.get<Status>(this.commentUrl + commentId));
+    getCommentByCommentContent(commentContent: string) : Observable<Status> {
+        return(this.http.get<Status>(this.commentUrl + commentContent));
     }
 
 }
