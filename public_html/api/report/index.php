@@ -156,33 +156,16 @@ try {
 				throw(new \InvalidArgumentException("You must choose a category to submit a report", 403));
 			}
 
-//			if($_SESSION["profile"]) {
-//				// Admin User
-//				// enforce admin is signed in to post status and urgency
-//
-//				$report = Report::getReportByReportId($pdo, $id);
-//				// insert status and urgency
-//				$report->setReportStatus($requestObject->reportStatus);
-//				$report->setReportUrgency($requestObject->reportUrgency);
-//				$report->insert($pdo);
-//
-//				$reply->message = "Status and Urgency Determined";
-//
-//
-//		} else {
-			//Anonymous User
-			// enforce that the anonymous user chooses a category
-
+			$latLongObject = getLatLongByAddress($requestObject->reportAddress);
 
 			// create a new report and insert into database
-			$report = new Report(generateUuidV4(), $requestObject->reportCategoryId, $requestObject->reportContent, $requestObject->reportDateTime, $_SERVER["REMOTE_ADDR"], $requestObject->reportLat, $requestObject->reportLong, $requestObject->reportStatus, $requestObject->reportUrgency, substr($_SERVER["HTTP_USER_AGENT"], 0, 255));
+			$report = new Report(generateUuidV4(), $requestObject->reportCategoryId, $requestObject->reportContent, $requestObject->reportDateTime, $_SERVER["REMOTE_ADDR"], $latLongObject->reportLat, $latLongObject->reportLong, $requestObject->reportStatus, $requestObject->reportUrgency, substr($_SERVER["HTTP_USER_AGENT"], 0, 255));
 			$report->insert($pdo);
 
 			// update reply
 			$reply->message = "Report Submitted";
-//		}
-		}
 
+		}
 	} else if($method === "DELETE") {
 		//enforce that the end user has a XSRF token.
 		verifyXsrf();
