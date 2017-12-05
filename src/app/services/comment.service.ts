@@ -39,4 +39,11 @@ export class CommentService {
         return(this.http.get<Status>(this.commentUrl + commentId));
     }
 
+    // call to API to get comment by comment report ID
+    getCommentByCommentReportId(commentId: string) : Observable<Status> {
+        return(this.http.get<Status>(this.commentUrl + commentId));
+    }
+
+
+
 }
