@@ -10,10 +10,7 @@ use Edu\Cnm\Infrastructure\Profile;
 /**
  * api for handling sign-in
  *
- * @author Gkephart
- * @coauthor Jack Arnold
- *
- * taken from gkephart's github
+ * @author Tpurnell
  **/
 
 //prepare an empty reply

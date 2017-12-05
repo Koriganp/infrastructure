@@ -1,8 +1,7 @@
 import {Injectable} from "@angular/core";
-import {Status} from "../classes/status";
-import {Observable} from "rxjs/Observable";
-import {SignUp} from "../classes/sign.up";
 import {HttpClient} from "@angular/common/http";
+import {SignUp} from "../classes/Sign.up";
+import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class SignUpService {
@@ -12,7 +11,12 @@ export class SignUpService {
 
 	private signUpUrl = "api/sign-up/";
 
-	createProfile(signUp: SignUp) : Observable<Status> {
-		return(this.http.post<Status>(this.signUpUrl, signUp));
+	// call to the API and get a Category by Category Name
+	getProfileByProfileEmail (ProfileEmail: string) :Observable<SignUp[]> {
+		return(this.http.get<SignUp[]>(this.signUpUrl + "?ProfileEmail=" + ProfileEmail));
+	}
+	createProfile(signUp: SignUp) : Observable<SignUp> {
+		return(this.http.post<SignUp>(this.signUpUrl, signUp));
+
 	}
 }
