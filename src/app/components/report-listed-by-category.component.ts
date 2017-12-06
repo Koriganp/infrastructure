@@ -29,7 +29,7 @@ export class ReportListedByCategoryComponent implements onInit {
 
     reports: Report[] = [];
 
-    constructor(private authService : AuthService, private formBuilder : FormBuilder, private reportService : ReportService, private categoryService : CategoryService, private profileService : ProfileService);
+    constructor(private authService : AuthService, private formBuilder : FormBuilder, private reportService : ReportService, private categoryService : CategoryService, private profileService : ProfileService) {}
 
     // life cycling before george's eyes
     ngOnInit() : void {
