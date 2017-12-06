@@ -43,8 +43,8 @@ try {
 		}
 
 		//profile username is a required field
-		if(empty($requestObject->profileUsername) === true) {
-			throw(new \InvalidArgumentException ("No profile Username", 405));
+		if(empty($requestObject->profileUserName) === true) {
+			throw(new \InvalidArgumentException ("No profile User Name", 405));
 		}
 
 		//verify that the profile password is present
@@ -73,7 +73,7 @@ try {
 		$profileActivationToken = bin2hex(random_bytes(16));
 
 		//create the profile object and prepare it to insert into database
-		$profile = new Profile (generateUuidV4(), $profileActivationToken, $requestObject->profileUsername, $requestObject->profileEmail, $hash, $salt);
+		$profile = new Profile (generateUuidV4(), $profileActivationToken, $requestObject->profileUserName, $requestObject->profileEmail, $hash, $salt);
 
 		//insert profile into database
 		$profile->insert($pdo);
