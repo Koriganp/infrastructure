@@ -12,4 +12,8 @@ export class ImageService{
 	// define the API endpoint
 	private imageUrl = "api/image/";
 
+	uploadImage(image : Image) : Observable<Status> {
+		return(this.http.post<Status>(this.imageUrl, image));
+	}
+
 }
