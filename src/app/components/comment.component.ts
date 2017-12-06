@@ -17,6 +17,7 @@ export class CommentComponent {
     constructor (private commentService : CommentService) {}
 
     createComment() : void {
-        this.commentService.createComment(this.comment).subscribe(status => this.status = status);
+        this.commentService.createComment(this.comment)
+            .subscribe(status => this.status = status);
     }
 }
