@@ -20,3 +20,12 @@ body {
 .heading {
 	text-align: center;
 }
+
+/** Report Listed By Category **/
+
+.category-table { border-collapse: collapse; }
+.category-table tr { border: none; }
+.category-table td {
+	border-right: solid 1px #bababa;
+	border-left: solid 1px #bababa;
+}
