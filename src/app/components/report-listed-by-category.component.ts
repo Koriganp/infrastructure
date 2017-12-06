@@ -31,15 +31,15 @@ export class ReportListedByCategoryComponent implements OnInit {
 
     // life cycling before george's eyes
     ngOnInit() : void {
-        this.listAllReports();
+        this.listReportsByCategory();
 
         this.reportListedByCategoryForm = this.formBuilder.group({
 
         });
     }
 
-    listAllReports() : void {
-        this.reportService.getAllReports()
+    listReportsByCategory() : void {
+        this.reportService.getReportByCategoryId()
             .subscribe(reports => this.reports = reports);
     }
 
