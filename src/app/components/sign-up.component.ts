@@ -1,58 +1,44 @@
 
-import {Component, OnInit} from "@angular/core";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Component, ViewChild} from "@angular/core";
 import {SignUpService} from "../services/sign.up.service";
 import {Router} from "@angular/router";
 import {Status} from "../classes/status";
-import {Profile} from "../classes/profile";
+import {SignUp} from "../classes/sign.up";
 
-declare const $: any;
+declare let $: any;
 
 @Component({
 	templateUrl: "./templates/sign-up.html",
 	selector: "sign-up"
 })
 
-export class SignUpComponent implements OnInit {
+export class SignUpComponent {
 
-	signUpForm : FormGroup;
-	profile: Profile = new Profile(null, null, null, null, null, null);
+	@ViewChild("signUpForm") signUpForm: any;
+	signItUp: SignUp = new SignUp (null, null, null, null);
 	status: Status = null;
 
 
 	constructor(
-		private formBuilder : FormBuilder,
+
 		private router: Router,
 		private signUpService: SignUpService) {}
 
-	ngOnInit()  : void {
-		this.signUpForm = this.formBuilder.group({
-			profileUserName: ["", [Validators.maxLength(32), Validators.required]],
-			profileEmail: ["", [Validators.maxLength(128), Validators.required]],
-			profilePassword:["", [Validators.maxLength(128), Validators.required]],
-			profilePasswordConfirm:["", [Validators.maxLength(128), Validators.required]]
-		});
-		this.applyFormChanges();
-	}
 
-	applyFormChanges() : void {
-		this.signUpForm.valueChanges.subscribe(values => {
-			for(let field in values) {
-				this.profile[field] = values[field];
-			}
-		});
-	}
-
-	signUp() : void {
-		this.signUpService.createProfile(this.profile)
+	signUp(): void {
+		this.signUpService.createSignUp(this.signItUp)
 			.subscribe(status => {
 				this.status = status;
-				if(this.status.status === 200) {
-					this.signUpService.createProfile(this.profile);
+				console.log(this.status);
+				if(status.status === 200) {
+					alert("Please check with the admin to confirm your account.");
 					this.signUpForm.reset();
-					console.log("signup successful");
+					setTimeout(function() {
+						$("signup-modal").modal('hide');
+					}, 500);
+					this.router.navigate([""]);
 				} else {
-					console.log("signup fail");
+					alert("Error, there was a problem with one of your entries. Please try again.");
 				}
 			});
 	}
