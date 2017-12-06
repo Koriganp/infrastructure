@@ -19,7 +19,6 @@ import {ReportSubmitComponent} from "./components/report-submit.component";
 import {SignInComponent} from "./components/sign-in.component";
 import {SignUpComponent} from "./components/sign-up.component";
 import {ReportListedByCategoryComponent} from "./components/report-listed-by-category.component";
-import {ReportCategoryDropdownComponent} from "./components/report-category-dropdown.component";
 import {HomeViewComponent} from "./components/home-view.component";
 import {CategoryComponent} from "./components/category.component";
 
@@ -53,7 +52,6 @@ export const allAppComponents = [
 	SignInComponent,
 	SignUpComponent,
 	ReportListedByCategoryComponent,
-	ReportCategoryDropdownComponent,
 	CategoryComponent,
 ];
 
@@ -68,7 +66,6 @@ export const routes: Routes = [
 	{path: "sign-up", component: SignUpComponent},
 	{path: "home-view", component: HomeViewComponent},
 	{path: "report-listed-by-category", component: ReportListedByCategoryComponent},
-	{path: "report-category-dropdown", component: ReportCategoryDropdownComponent},
 	{path: "report-submit", component: ReportSubmitComponent},
 	{path: "foot", component: FootComponent},
 	{path: "category", component: CategoryComponent},
