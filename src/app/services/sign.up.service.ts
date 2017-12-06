@@ -18,8 +18,8 @@ export class SignUpService {
 		return(this.http.get<Profile>(this.signUpUrl + "?ProfileEmail=" + ProfileEmail));
 	}
 
-	createProfile(signUp: SignUp) : Observable<Status> {
-		return(this.http.post<Status>(this.signUpUrl, signUp));
+	createProfile(profile: Profile) : Observable<Status> {
+		return(this.http.post<Status>(this.signUpUrl, profile));
 
 	}
 }

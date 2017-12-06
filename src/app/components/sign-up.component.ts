@@ -1,7 +1,6 @@
 
 import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {SignUp} from "../classes/sign.up";
 import {SignUpService} from "../services/sign.up.service";
 import {Router} from "@angular/router";
 import {Status} from "../classes/status";
@@ -45,11 +44,11 @@ export class SignUpComponent implements OnInit {
 	}
 
 	signUp() : void {
-		this.signUpService.postProfile(this.profile)
+		this.signUpService.createProfile(this.profile)
 			.subscribe(status => {
 				this.status = status;
 				if(this.status.status === 200) {
-					this.signUpService.postProfile(this.profile);
+					this.signUpService.createProfile(this.profile);
 					this.signUpForm.reset();
 					console.log("signup successful");
 				} else {
