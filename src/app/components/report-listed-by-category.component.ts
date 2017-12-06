@@ -1,3 +1,7 @@
+/*
+this is used to list all reports based on category or something
+*/
+
 import {Component, OnInit} from "@angular/core";
 
 import {AuthService} from "../services/auth.service";
