@@ -1,11 +1,15 @@
 import {Component, OnInit} from "@angular/core";
-import {ReportService} from "../services/report.service";
-import {Status} from "../classes/status";
-import {Report} from "../classes/report";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Params} from "@angular/router";
-import {CategoryService} from "../services/category.service";
+
+import {Status} from "../classes/status";
+import {Report} from "../classes/report";
+import {ReportService} from "../services/report.service";
 import {Category} from "../classes/category";
+import {CategoryService} from "../services/category.service";
+import {Image} from "../classes/image";
+import {ImageService} from "../services/image.service";
+
 
 @Component({
 	selector: "report-submit",
@@ -15,38 +19,47 @@ import {Category} from "../classes/category";
 export class ReportSubmitComponent implements OnInit {
 
 	//declare needed state variables for later use.
-	categories: Category[] = [];
-	reportForm: FormGroup;
+	reportSubmitForm: FormGroup;
+
+	category: Category = new Category(null, null);
+	report: Report = new Report(null, null, null, null, null, null, null);
+	image: Image = new Image(null, null, null, null, null);
+
+
 	status: Status = null;
-	report: Report = new Report(null, null, null, null, null, null, null, null, null,);
+
+	categories: Category[] = [];
 
 	constructor(
-		private reportService : ReportService,
+		private reportService: ReportService,
 		private categoryService: CategoryService,
+		private imageService: ImageService,
 		private formBuilder: FormBuilder,
-		private route: ActivatedRoute) {}
+		) {}
+
+	// private route: ActivatedRoute
+
+	createReport(): void {
+
+		let category = new Category(null, null);
+
+		let report = new Report(null, null, this.reportSubmitForm.value.reportContent, null, null,null,null);
+
+		let image = new Image(null, null, null, null, null);
+
+		this.reportService.createReport(this.report)
+			.subscribe(status => this.status = status);
+	}
 
 	ngOnInit() : void {
-		this.route.params.forEach((params : Params) => {
-			let reportId = params["reportId"];
-			this.reportService.getReport(reportId)
-				.subscribe(report => {
-					this.report = report;
-					this.reportForm.patchValue(report);
-				});
-		});
-		this.reportForm = this.formBuilder.group({
-			reportCategoryId: ["", []],
+
+		this.reportSubmitForm = this.formBuilder.group({
 			reportContent: ["", [Validators.maxLength(3000), Validators.required]],
-			reportStatus: ["", []],
-			reportUrgency: ["", []]
 		});
+
 		this.categoryService.getAllCategories()
 			.subscribe(categories => this.categories = categories);
 	}
 
-	createReport(): void {
-		this.reportService.createReport(this.report)
-			.subscribe(status => this.status = status);
-	}
+
 }
