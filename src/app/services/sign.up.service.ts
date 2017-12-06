@@ -7,13 +7,13 @@ import {Profile} from "../classes/profile";
 
 @Injectable()
 export class SignUpService {
-	constructor(protected http: HttpClient) {
 
-	}
+	constructor(
+		protected http: HttpClient) {}
 
 	private signUpUrl = "api/sign-up/";
 
-	// call to the API and get a Category by Category Name
+	// call to the API and get a Profile by Profile Email
 	getProfileByProfileEmail (ProfileEmail: string) :Observable<Profile> {
 		return(this.http.get<Profile>(this.signUpUrl + "?ProfileEmail=" + ProfileEmail));
 	}
