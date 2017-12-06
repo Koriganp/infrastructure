@@ -20,6 +20,7 @@ import {SignUpComponent} from "./components/sign-up.component";
 import {ReportListedByCategoryComponent} from "./components/report-listed-by-category.component";
 import {HomeViewComponent} from "./components/home-view.component";
 import {CategoryComponent} from "./components/category.component";
+import {FileSelectDirective} from "ng2-file-upload";
 
 
 // import services
@@ -51,6 +52,7 @@ export const allAppComponents = [
 	SignUpComponent,
 	ReportListedByCategoryComponent,
 	CategoryComponent,
+	FileSelectDirective
 ];
 
 //an array of routes that will be passed of to the module
