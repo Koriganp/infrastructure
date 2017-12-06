@@ -22,7 +22,7 @@ export class ReportAdminViewComponent {
 
 	category: Category = new Category(null, null);
 
-	report: Report = new Report(null, null, null, null, null, null, null, null, null);
+	report: Report = new Report(null, null, null, null, null, null, null);
 
 	image: Image = new Image(null, null, null, null, null);
 
@@ -41,7 +41,7 @@ export class ReportAdminViewComponent {
 	}
 	createReport(): void  {
 
-		let report = new Report(null,null,null,null, null, null, null, this.createReportAdminForm.value.reportContent, null);
+		let report = new Report(null,null,null,null,null,null,null);
 
 		this.reportService.createReport(report)
 			.subscribe(status =>{
