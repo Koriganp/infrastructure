@@ -33,7 +33,7 @@ export class ReportListedByCategoryComponent implements onInit {
 
     // life cycling before george's eyes
     ngOnInit() : void {
-        this.listReport();
+        this.listAllReports();
 
         this.reportListedByCategoryForm = this.formBuilder.group({
 
