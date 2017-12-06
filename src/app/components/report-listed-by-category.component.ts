@@ -24,4 +24,19 @@ export class ReportListedByCategoryComponent implements onInit {
 
     report : Report = new Report(null, null, null, null, null, null, null);
 
+    status: Status = null;
+
+    comments: Comments [] = [];
+
+    constructor(private authService : AuthService, private formBuilder : FormBuilder, private reportService : ReportService, private categoryService : CategoryService);
+
+    // life cycling before george's eyes
+    ngOnInit() : void {
+        this.listComments();
+
+        this.createCommentForm = this.formBuilder.group({
+            commentContent: ["", [Validators.maxLength(500), Validators.minLength(1)]]
+        });
+    }
+
 }
