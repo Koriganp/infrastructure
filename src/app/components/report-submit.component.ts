@@ -37,7 +37,20 @@ export class ReportSubmitComponent implements OnInit {
 		private formBuilder: FormBuilder,
 		) {}
 
-	// private route: ActivatedRoute
+	ngOnInit() : void {
+
+		this.listCategories();
+
+		this.reportSubmitForm = this.formBuilder.group({
+			reportCategoryId: ["", [Validators.required]],
+			reportContent: ["", [Validators.maxLength(3000), Validators.required]]
+		});
+	}
+
+	listCategories(): void {
+		this.categoryService.getAllCategories()
+			.subscribe(categories => this.categories = categories);
+	}
 
 	createReport(): void {
 
@@ -50,16 +63,4 @@ export class ReportSubmitComponent implements OnInit {
 		this.reportService.createReport(this.report)
 			.subscribe(status => this.status = status);
 	}
-
-	ngOnInit() : void {
-
-		this.reportSubmitForm = this.formBuilder.group({
-			reportContent: ["", [Validators.maxLength(3000), Validators.required]],
-		});
-
-		this.categoryService.getAllCategories()
-			.subscribe(categories => this.categories = categories);
-	}
-
-
 }
