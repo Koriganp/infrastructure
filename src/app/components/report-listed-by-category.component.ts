@@ -3,6 +3,8 @@ import {Component, OnInit} from "@angular/core";
 import {AuthService} from "../services/auth.service";
 import {ReportService} from "../services/report.service";
 import {CategoryService} from "../services/category.service";
+import {ProfileService} from "../services/profile.services";
+
 
 import {Report} from "../classes/report";
 import {Category} from "../classes/category";
@@ -24,11 +26,13 @@ export class ReportListedByCategoryComponent implements onInit {
 
     report : Report = new Report(null, null, null, null, null, null, null);
 
-    status: Status = null;
+    // status: Status = null; -- i don't know why this is here but i saw it in data-design ¯\_(ツ)_/¯
+
+    profile : Profile = new Profile(null, null, null, null, null, null);
 
     comments: Comments [] = [];
 
-    constructor(private authService : AuthService, private formBuilder : FormBuilder, private reportService : ReportService, private categoryService : CategoryService);
+    constructor(private authService : AuthService, private formBuilder : FormBuilder, private reportService : ReportService, private categoryService : CategoryService, private profileService : ProfileService);
 
     // life cycling before george's eyes
     ngOnInit() : void {
@@ -37,6 +41,10 @@ export class ReportListedByCategoryComponent implements onInit {
         this.createCommentForm = this.formBuilder.group({
             commentContent: ["", [Validators.maxLength(500), Validators.minLength(1)]]
         });
+    }
+
+    getCommentProfile() : void {
+        this.profileService.getProfile();
     }
 
 }
