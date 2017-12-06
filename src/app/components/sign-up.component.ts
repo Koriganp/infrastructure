@@ -34,7 +34,7 @@ export class SignUpComponent {
 	createSignUp(): void {
 
 		let signUp =  new SignUp(this.signUpForm.value.userName, this.signUpForm.value.email, this.signUpForm.value.password, this.signUpForm.value.passwordConfirm);
-
+		console.log(this.signUpService);
 		this.signUpService.createProfile(signUp)
 			.subscribe(status => {
 				this.status = status;
