@@ -15,17 +15,16 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
     selector: "report-listed-by-category"
 })
 
-export class ReportListedByCategoryComponent implements onInit {
+export class ReportListedByCategoryComponent implements OnInit {
 
     reportListedByCategoryForm: FormGroup;
 
-    status : Status = new Status(null, null, null);
 
     category : Category = new Category(null, null);
 
     report : Report = new Report(null, null, null, null, null, null, null);
 
-    // status: Status = null; -- i don't know why this is here but i saw it in data-design ¯\_(ツ)_/¯
+    status: Status = null;
 
     reports: Report[] = [];
 
