@@ -8,7 +8,6 @@ import {DeepDiveInterceptor} from "./services/deep.dive.intercepters";
 
 
 // import all components
-import {SplashComponent} from "./components/splash.component";
 import {AdminDashboardComponent} from "./components/admin-dashboard.component";
 import {NavbarComponent} from "./components/navbar.component";
 import {FootComponent} from "./components/foot.component";
@@ -40,7 +39,6 @@ import {ImageService} from "./services/image.service";
 
 //an array of the components that will be passed off to the module
 export const allAppComponents = [
-	SplashComponent,
 	AdminDashboardComponent,
 	NavbarComponent,
 	ReportAdminViewComponent,
@@ -57,7 +55,6 @@ export const allAppComponents = [
 
 //an array of routes that will be passed of to the module
 export const routes: Routes = [
-	{path: "", component: SplashComponent},
 	{path: "admin-dashboard", component: AdminDashboardComponent},
 	{path: "report-admin-view", component: ReportAdminViewComponent},
 	{path: "report-public-view", component: ReportPublicViewComponent},

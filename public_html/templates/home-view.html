@@ -1,22 +1,17 @@
-<!-- Public/Home Page -->
-<!DOCTYPE html>
-<html lang="en-US">
-	<!-- inject head-utils -->
+<div class="sfooter-content">
+	<router-outlet></router-outlet>
+</div>
 
-	<body>
-		<navbar></navbar>
+<navbar></navbar>
 
-		<!-- begin Home Page layout -->
-		<main>
-			<div class="container">
-				<report-submit></report-submit>
-			</div>
-			<div class="container-fluid">
-				<report-listed-by-category></report-listed-by-category>
-			</div>
-		</main>
-		<foot></foot>
+<!-- begin Home Page layout -->
+<main>
+	<div class="container-fluid">
+		<report-public-view></report-public-view>
+	</div>
+</main>
+<foot></foot>
 
-	</body>
-
-</html>
+<!-- modal window components -->
+<sign-in></sign-in>
+<sign-up></sign-up>
