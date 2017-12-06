@@ -1,6 +1,5 @@
 import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute, Params} from "@angular/router";
 
 import {Status} from "../classes/status";
 import {Report} from "../classes/report";
