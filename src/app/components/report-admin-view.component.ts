@@ -22,7 +22,7 @@ export class ReportAdminViewComponent {
 
 	category: Category = new Category(null, null);
 
-	report: Report = new Report(null, null, null,null, null, null,null, null, null);
+	report: Report = new Report(null, null, null, null, null, null, null);
 
 	image: Image = new Image(null, null, null, null, null);
 
