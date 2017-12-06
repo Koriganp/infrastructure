@@ -17,4 +17,11 @@ export class ImageComponent {
 	image: Image = new Image(null, null, null,null, null)
 
 	constructor(private imageService: ImageService) {}
+
+	uploadImage(): void {
+		let image = new Image(null, null, null, null, null);
+
+		this.imageService.uploadImage(this.image)
+			.subscribe(status => this.status = status);
+	}
 }
