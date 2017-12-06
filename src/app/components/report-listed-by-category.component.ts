@@ -42,6 +42,7 @@ export class ReportListedByCategoryComponent implements OnInit {
         });
     }
 
+    // needs to be fixed
     listReportsByCategory() : void {
         this.reportService.getReportByCategoryId()
             .subscribe(reports => this.reports = reports);
