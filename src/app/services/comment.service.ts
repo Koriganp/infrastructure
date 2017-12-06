@@ -14,7 +14,7 @@ export class CommentService {
 
 
     // call to API to delete a comment
-    deleteComment(commentId: number) : Observable<Status> {
+    deleteComment(commentId: string) : Observable<Status> {
         return(this.http.delete<Status>(this.commentUrl + commentId));
     }
 
