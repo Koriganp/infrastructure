@@ -71,16 +71,16 @@ export class ReportAdminViewComponent implements OnInit {
 	}
 
 
-	deleteComment() : void {
-		this.commentService.deleteComment(this.comment.commentId)
-			.subscribe(status => {
-				this.status = status;
-				if(this.status.status === 200) {
-					this.deleted = true;
-					this.comment = new Comment(null, null, null, null, null);
-				}
-			})
-	}
+	// deleteComment() : void {
+	// 	this.commentService.deleteComment(this.comment.commentId)
+	// 		.subscribe(status => {
+	// 			this.status = status;
+	// 			if(this.status.status === 200) {
+	// 				this.deleted = true;
+	// 				this.comment = new Comment(null, null, null, null, null);
+	// 			}
+	// 		})
+	// }
 
 	editComment() : void {
 		this.commentService.editComment(this.comment)
