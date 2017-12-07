@@ -26,11 +26,11 @@ export class ReportService {
 		return(this.http.post<Status>(this.reportUrl, report));
 	}
 
-	// call to the report API and get a report object based on its ID
 	getReport(reportId : string) : Observable<Report> {
 		return(this.http.get<Report>(this.reportUrl + reportId));
 	}
 
+	// call to the report API and get a report object based on its ID
 	getReportByReportId(reportId : string) : Observable<Report> {
 		return(this.http.get<Report>(this.reportUrl + reportId));
 	}
