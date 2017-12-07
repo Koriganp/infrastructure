@@ -1,13 +1,13 @@
 import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
-import {Status} from "../classes/status";
 import {Report} from "../classes/report";
 import {ReportService} from "../services/report.service";
 import {Category} from "../classes/category";
 import {CategoryService} from "../services/category.service";
 import {Image} from "../classes/image";
 import {ImageService} from "../services/image.service";
+import {Status} from "../classes/status";
 
 
 @Component({
@@ -21,7 +21,9 @@ export class ReportSubmitComponent implements OnInit {
 	reportSubmitForm: FormGroup;
 
 	category: Category = new Category(null, null);
+
 	report: Report = new Report(null, null, null, null, null, null, null);
+
 	image: Image = new Image(null, null, null, null, null);
 
 	status: Status = null;
@@ -29,10 +31,11 @@ export class ReportSubmitComponent implements OnInit {
 	categories: Category[] = [];
 
 	constructor(
+		private formBuilder: FormBuilder,
 		private reportService: ReportService,
 		private categoryService: CategoryService,
-		private imageService: ImageService,
-		private formBuilder: FormBuilder,
+		private imageService: ImageService
+
 		) {}
 
 	ngOnInit() : void {
@@ -53,15 +56,8 @@ export class ReportSubmitComponent implements OnInit {
 
 	createReport(): void {
 
-		let report = new Report(null, null, this.reportSubmitForm.value.reportContent, null, null, null, null);
-
-		this.reportService.createReport(report)
-			.subscribe(status => {
-				this.status = status;
-				if(this.status.status === 200) {
-					this.reportSubmitForm.reset();
-					alert(this.status.message);
-				}
-			});
+		this.reportService.createReport(this.report)
+			.subscribe(status => this.status = status);
 	}
+
 }
