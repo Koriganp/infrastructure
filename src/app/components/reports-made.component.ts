@@ -15,11 +15,11 @@ import {Status} from "../classes/status";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
-    templateUrl: "./templates/report-listed-by-category.html",
-    selector: "report-listed-by-category"
+    templateUrl: "./templates/reports-made.html",
+    selector: "reports-made"
 })
 
-export class ReportListedByCategoryComponent implements OnInit {
+export class ReportsMadeComponent implements OnInit {
 
     reportListedByCategoryForm: FormGroup;
 
