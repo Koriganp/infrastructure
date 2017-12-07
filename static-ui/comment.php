@@ -1,0 +1,44 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="comment-modal">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+
+            <!-- Heading -->
+
+            <div class="modal-header">
+                <h1 class="modal-title heading d-inline-block">Create Report Comment</h1>
+
+                <!-- Button to dismiss modal -->
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                    <span aria-hidden="true"> &times; </span>
+                </button>
+            </div>
+
+            <!-- Location -->
+
+            <div class="container">
+                <form name="reportForm" id="commentForm" [formGroup]="commentForm" (submit)="createComment()" novalidate>
+
+                    <!-- Form text area -->
+
+                    <div class="form-group">
+                        <textarea class="form-control" rows="5" placeholder="Please comment on the issue."></textarea>
+                    </div>
+
+                    <!-- Submit buttons -->
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="d-flex justify-content-center my-5">
+                                <button class="btn btn-primary mr-3" type="submit" value="Submit"><i class="fa fa-paper-plane"></i> Submit</button>
+                                <button class="btn btn-danger ml-3" type="submit" value="Cancel"><i class="fa fa-ban"></i> Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+        </div>
+    </div>
+</div>
