@@ -47,7 +47,10 @@ export class DeepDiveInterceptor implements HttpInterceptor {
 					// extract the data or message from the response body
 					let body = event.body;
 					if(body.status === 200) {
-						if(body.data) {
+						if(body.data && body.message) {
+							// extract everything from a request with data AND a message
+							dataEvent = event.clone({body: {data: body.data, message: {message: body.message, status: 200, type: "alert-success"}}});
+						} else if(body.data) {
 							// extract data returned from a GET request
 							dataEvent = event.clone({body: body.data});
 						} else if(body.message) {
