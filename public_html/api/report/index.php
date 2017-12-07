@@ -165,6 +165,7 @@ try {
 			$report->insert($pdo);
 
 			// update reply
+			$reply->data = $report->getReportId()->toString();
 			$reply->message = "Report Submitted";
 
 		}
