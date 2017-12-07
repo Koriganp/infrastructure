@@ -42,7 +42,8 @@ export class ReportSubmitComponent implements OnInit {
 
 		this.reportSubmitForm = this.formBuilder.group({
 			reportCategoryId: ["", [Validators.required]],
-			reportContent: ["", [Validators.maxLength(3000), Validators.required]]
+			reportContent: ["", [Validators.maxLength(3000), Validators.required]],
+			reportImage: ["", ]
 		});
 	}
 
@@ -53,13 +54,15 @@ export class ReportSubmitComponent implements OnInit {
 
 	createReport(): void {
 
-		let category = new Category(null, null);
+		let report = new Report(null, null, this.reportSubmitForm.value.reportContent, null, null, null, null);
 
-		let report = new Report(null, null, this.reportSubmitForm.value.reportContent, null, null,null,null);
-
-		let image = new Image(null, null, null, null, null);
-
-		this.reportService.createReport(this.report)
-			.subscribe(status => this.status = status);
+		this.reportService.createReport(report)
+			.subscribe(status => {
+				this.status = status;
+				if(this.status.status === 200) {
+					this.reportSubmitForm.reset();
+					alert(this.status.message);
+				}
+			});
 	}
 }
