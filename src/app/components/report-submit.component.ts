@@ -48,7 +48,9 @@ export class ReportSubmitComponent implements OnInit {
 		private formBuilder: FormBuilder,
 		private reportService: ReportService,
 		private categoryService: CategoryService
-		) {}
+		) {
+		this.createReport();
+	}
 
 	ngOnInit() : void {
 
@@ -72,6 +74,15 @@ export class ReportSubmitComponent implements OnInit {
 	}
 
 	createReport(): void {
+		this.reportSubmitForm = this.formBuilder.group({
+			reportStreetAddress: '',
+			reportCity: '',
+			reportState: '',
+			reportZipCode: '',
+			reportContent: ''
+
+		});
+
 
 		this.reportService.createReport(this.report)
 			.subscribe(status => this.status = status);
