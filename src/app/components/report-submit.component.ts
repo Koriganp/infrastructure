@@ -1,6 +1,8 @@
 import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
+import {FileUploader} from "ng2-file-upload";
+import {Cookie} from "ng2-cookies";
 import {Report} from "../classes/report";
 import {ReportService} from "../services/report.service";
 import {Category} from "../classes/category";
@@ -8,6 +10,8 @@ import {CategoryService} from "../services/category.service";
 import {Image} from "../classes/image";
 import {ImageService} from "../services/image.service";
 import {Status} from "../classes/status";
+import {Observable} from "rxjs";
+import "rxjs/add/observable/from";
 
 
 @Component({
@@ -16,6 +20,16 @@ import {Status} from "../classes/status";
 })
 
 export class ReportSubmitComponent implements OnInit {
+
+	public uploader: FileUploader = new FileUploader({
+		itemAlias: "",
+		url: "./api/image/",
+		headers: [{name: "X-XSRF-TOKEN", value: Cookie.get("XSRF-TOKEN")}],
+		additionalParameter: {}
+	});
+
+	protected cloudinaryPublicId : string = null;
+	protected cloudinaryPublicIdObservable : Observable<string> = new Observable<string>();
 
 	//declare needed state variables for later use.
 	reportSubmitForm: FormGroup;
@@ -33,9 +47,7 @@ export class ReportSubmitComponent implements OnInit {
 	constructor(
 		private formBuilder: FormBuilder,
 		private reportService: ReportService,
-		private categoryService: CategoryService,
-		private imageService: ImageService
-
+		private categoryService: CategoryService
 		) {}
 
 	ngOnInit() : void {
@@ -44,8 +56,11 @@ export class ReportSubmitComponent implements OnInit {
 
 		this.reportSubmitForm = this.formBuilder.group({
 			reportCategoryId: ["", [Validators.required]],
+			reportStreetAddress: ["", [Validators.maxLength(200),Validators.required]],
+			reportCity: ["",[Validators.maxLength(40), Validators.required]],
+			reportState: ["",[Validators.maxLength(30), Validators.required]],
+			reportZipCode: ["",[Validators.max(10), Validators.required]],
 			reportContent: ["", [Validators.maxLength(3000), Validators.required]],
-			reportImageId: ["", ]
 		});
 
 		this.uploadImage();
@@ -63,8 +78,7 @@ export class ReportSubmitComponent implements OnInit {
 	}
 
 	uploadImage(): void {
-		this.imageService.uploadImage(this.image)
-			.subscribe(status => this.status = status);
+		this.uploader.uploadAll();
 	}
 
 }
