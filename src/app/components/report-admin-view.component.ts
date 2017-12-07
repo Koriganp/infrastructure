@@ -47,7 +47,19 @@ export class ReportAdminViewComponent implements OnInit {
 		this.getReport();
 
 		this.reportAdminViewForm = this.formBuilder.group({
+			reportStatus: ["", [Validators.required]],
+			reportUrgency: ["", [Validators.required]],
 			commentContent: ["", [Validators.maxLength(500), Validators.required]]
+		});
+
+		this.applyFormChanges();
+	}
+
+	applyFormChanges() : void {
+		this.reportAdminViewForm.valueChanges.subscribe(values => {
+			for(let field in values) {
+				this.comment[field] = values[field];
+			}
 		});
 	}
 
@@ -56,8 +68,18 @@ export class ReportAdminViewComponent implements OnInit {
 			.subscribe(report => this.report = report);
 	}
 
-	createComment(): void {
+	deleteReport(): void {
+		this.reportService.deleteReport(this.report.reportId)
+			.subscribe(status => {
+				this.status = status;
+				if(this.status.status === 200) {
+					this.deleted = true;
+					this.report = new Report(null, null, null, null, null, null, null);
+				}
+			})
+	}
 
+	createComment(): void {
 	let comment = new Comment(null, null, null, this.reportAdminViewForm.value.commentContent, null)
 
 		this.commentService.createComment(comment)
@@ -70,22 +92,24 @@ export class ReportAdminViewComponent implements OnInit {
 			})
 	}
 
-
-	// deleteComment() : void {
-	// 	this.commentService.deleteComment(this.comment.commentId)
-	// 		.subscribe(status => {
-	// 			this.status = status;
-	// 			if(this.status.status === 200) {
-	// 				this.deleted = true;
-	// 				this.comment = new Comment(null, null, null, null, null);
-	// 			}
-	// 		})
-	// }
+	deleteComment() : void {
+		this.commentService.deleteComment(this.comment.commentId)
+			.subscribe(status => {
+				this.status = status;
+				if(this.status.status === 200) {
+					this.deleted = true;
+					this.comment = new Comment(null, null, null, null, null);
+				}
+			})
+	}
 
 	editComment() : void {
 		this.commentService.editComment(this.comment)
 			.subscribe(status => this.status = status);
 	}
+
+
+
+
+
 }
-
-
