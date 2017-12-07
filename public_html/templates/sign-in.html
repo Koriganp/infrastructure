@@ -24,13 +24,12 @@
 
 				<!-- actual login form -->
 
-				<form #signInForm="ngForm" class="form-horizontal" name="signInForm" id="signInForm" novalidate
-						(submit)="signIn();">
+				<form [formGroup]="signInForm" class="form-horizontal" (submit)="signIn();" novalidate>
 
 					<!-- email goes here -->
 
 					<div class="form-group">
-						<label for="profileEmail" class="sr-only">Email</label>
+						<label for="profileEmail" class="sr-only control-label">Email</label>
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-envelope"></i></span>
 							<input type="email" class="form-control" id="profileEmail" name="profileEmail" formControlName="profileEmail" placeholder="Email">
@@ -43,7 +42,7 @@
 
 					<!-- password goes here -->
 					<div class="form-group">
-						<label for="profilePassword" class="sr-only">Password</label>
+						<label for="profilePassword" class="sr-only control-label">Password</label>
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-key"></i></span>
 							<input type="password" class="form-control" id="profilePassword" name="profilePassword" formControlName="profilePassword" placeholder="Password">
