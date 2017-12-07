@@ -31,11 +31,16 @@ export class ReportListedByCategoryComponent implements OnInit {
 
     reports: Report[] = [];
 
-    constructor(private authService : AuthService, private formBuilder : FormBuilder, private reportService : ReportService, private categoryService : CategoryService, private profileService : ProfileService) {}
+    constructor(
+       private authService : AuthService,
+       private formBuilder : FormBuilder,
+       private reportService : ReportService,
+       private categoryService : CategoryService,
+       private profileService : ProfileService) {}
 
-    // life cycling before george's eyes
+    // life cycling before George's eyes
     ngOnInit() : void {
-        this.listReportsByCategory();
+        this.listReports();
 
         this.reportListedByCategoryForm = this.formBuilder.group({
 
@@ -43,8 +48,8 @@ export class ReportListedByCategoryComponent implements OnInit {
     }
 
     // needs to be fixed
-    listReportsByCategory() : void {
-        this.reportService.getReportByCategoryId()
+    listReports() : void {
+        this.reportService.getReport()
             .subscribe(reports => this.reports = reports);
     }
 
