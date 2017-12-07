@@ -107,9 +107,4 @@ export class ReportAdminViewComponent implements OnInit {
 		this.commentService.editComment(this.comment)
 			.subscribe(status => this.status = status);
 	}
-
-
-
-
-
 }
