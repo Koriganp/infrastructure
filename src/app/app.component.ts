@@ -3,8 +3,8 @@ import {SessionService} from "./services/session.service";
 import {Status} from "./classes/status";
 
 @Component({
-	selector: "home-view",
-	templateUrl: "./templates/home-view.html"
+	selector: "infrastructure-app",
+	templateUrl: "./templates/infrastructure-app.html"
 })
 
 export class AppComponent {

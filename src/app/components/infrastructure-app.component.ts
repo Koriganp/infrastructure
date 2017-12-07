@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
 
 @Component({
-	templateUrl: "./templates/home-view.html",
-	selector: "home-view"
+	templateUrl: "./templates/infrastructure-app.html",
+	selector: "infrastructure-app"
 })
 
 export class HomeViewComponent {}

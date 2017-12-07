@@ -19,7 +19,7 @@ import {SignInComponent} from "./components/sign-in.component";
 import {SignUpComponent} from "./components/sign-up.component";
 import {SignOutComponent} from "./components/sign-out.component";
 import {ReportListedByCategoryComponent} from "./components/report-listed-by-category.component";
-import {HomeViewComponent} from "./components/home-view.component";
+import {HomeViewComponent} from "./components/infrastructure-app.component";
 import {CategoryComponent} from "./components/category.component";
 import {FileSelectDirective} from "ng2-file-upload";
 
