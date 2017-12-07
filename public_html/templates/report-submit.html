@@ -17,10 +17,10 @@
 			<!-- Location -->
 
 			<div class="container">
-				<form name="reportForm" id="reportForm" [formGroup]="reportForm" (submit)="createReport()" novalidate>
-					<div>
-						<label for="selectedCategory">Select Category</label>
-						<select id="selectedCategory" class="form-control mb-2" name="selectedCategory" required [ngModel]="selectedCategory" #selectedCategory="ngModel" >
+				<form name="reportSubmitForm" id="reportSubmitForm" [formGroup]="reportSubmitForm" (submit)="createReport()" novalidate>
+					<div class="form-group">
+						<label for="reportCategoryId">Select Category</label>
+						<select id="reportCategoryId" class="form-control mb-2" name="reportCategoryId" required  formControlName="reportCategoryId">
 							<option *ngFor="let category of categories" [value]="category.categoryId">
 								{{category.categoryName}}
 							</option>
