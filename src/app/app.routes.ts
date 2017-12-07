@@ -17,6 +17,7 @@ import {ReportsMadeComponent} from "./components/reports-made.component";
 import {ReportSubmitComponent} from "./components/report-submit.component";
 import {SignInComponent} from "./components/sign-in.component";
 import {SignUpComponent} from "./components/sign-up.component";
+import {SignOutComponent} from "./components/sign-out.component";
 import {ReportListedByCategoryComponent} from "./components/report-listed-by-category.component";
 import {HomeViewComponent} from "./components/home-view.component";
 import {CategoryComponent} from "./components/category.component";
@@ -36,6 +37,7 @@ import {SignInService} from "./services/sign.in.service";
 import {SignUpService} from "./services/sign.up.service";
 import {CategoryService} from "./services/category.service";
 import {ImageService} from "./services/image.service";
+import {SignOutService} from "./services/sign.out.service";
 
 
 //an array of the components that will be passed off to the module
@@ -50,6 +52,7 @@ export const allAppComponents = [
 	FootComponent,
 	SignInComponent,
 	SignUpComponent,
+	SignOutComponent,
 	ReportListedByCategoryComponent,
 	CategoryComponent,
 	FileSelectDirective
@@ -63,6 +66,7 @@ export const routes: Routes = [
 	{path: "reports-made", component: ReportsMadeComponent},
 	{path: "sign-in", component: SignInComponent},
 	{path: "sign-up", component: SignUpComponent},
+	{path: "sign-out", component: SignOutComponent},
 	{path: "home-view", component: HomeViewComponent},
 	{path: "report-listed-by-category", component: ReportListedByCategoryComponent},
 	{path: "report-submit", component: ReportSubmitComponent},
@@ -82,6 +86,7 @@ const services : any[] = [
 	CommentService,
 	SessionService,
 	SignInService,
+	SignOutService,
 	SignUpService,
 	UserService];
 
