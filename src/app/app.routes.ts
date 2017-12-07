@@ -9,6 +9,7 @@ import {DeepDiveInterceptor} from "./services/deep.dive.intercepters";
 
 // import all components
 import {AdminDashboardComponent} from "./components/admin-dashboard.component";
+import {HomeViewComponent} from "./components/home-view.component";
 import {NavbarComponent} from "./components/navbar.component";
 import {FootComponent} from "./components/foot.component";
 import {ReportAdminViewComponent} from "./components/report-admin-view.component";
@@ -44,6 +45,7 @@ import {SignOutService} from "./services/sign.out.service";
 //an array of the components that will be passed off to the module
 export const allAppComponents = [
 	AdminDashboardComponent,
+	HomeViewComponent,
 	NavbarComponent,
 	ReportAdminViewComponent,
 	ReportPublicViewComponent,
@@ -74,7 +76,8 @@ export const routes: Routes = [
 	{path: "comment", component: CommentComponent},
 	{path: "foot", component: FootComponent},
 	{path: "category", component: CategoryComponent},
-	{path: "infrastructure-app", component: InfrastructureAppComponent}
+	{path: "infrastructure-app", component: InfrastructureAppComponent},
+	{path: "home-view", component: HomeViewComponent}
 ];
 
 // an array of services that will be passed off to the module
