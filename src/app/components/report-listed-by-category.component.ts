@@ -59,7 +59,7 @@ export class ReportListedByCategoryComponent implements OnInit {
 	// needs to be fixed
     getReportByCategoryId() : void {
 		this.reportService.getReportByReportCategoryId(this.report.reportCategoryId)
-			.subscribe((reports: any) => this.reports = reports);
+			.subscribe((reports: any) => this.report = reports);
 	}
 
 }
