@@ -24,7 +24,6 @@ export class ReportSubmitComponent implements OnInit {
 	report: Report = new Report(null, null, null, null, null, null, null);
 	image: Image = new Image(null, null, null, null, null);
 
-
 	status: Status = null;
 
 	categories: Category[] = [];
