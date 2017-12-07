@@ -31,11 +31,11 @@ export class ReportService {
 		return(this.http.get<Report>(this.reportUrl + reportId));
 	}
 
-	// call to the API and get an array of reports based off the categoryId
 	getReportByReportId(reportId : string) : Observable<Report[]> {
 		return(this.http.get<Report[]>(this.reportUrl + reportId));
 	}
 
+	// call to the API and get an array of reports based off the categoryId
 	getReportsByCategoryId(reportCategoryId: string) : Observable<Report[]> {
 		return(this.http.get<Report[]>(this.reportUrl + reportCategoryId));
 	}
