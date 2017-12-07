@@ -1,7 +1,7 @@
 <!-- setting up the modal -->
-<div class="modal fade" id="signin-modal" tabindex="-1" role="dialog" aria-labelledby="signIn">
+<div class="modal fade" id="signin-modal" tabindex="-1" role="dialog">
 
-	<div class="modal-dialog " role="document">
+	<div class="modal-dialog" role="document">
 
 		<div class="modal-content">
 
@@ -25,7 +25,7 @@
 				<!-- actual login form -->
 
 				<form #signInForm="ngForm" class="form-horizontal" name="signInForm" id="signInForm" novalidate
-						(ngSubmit)="signIn();">
+						(submit)="signIn();">
 
 					<!-- email goes here -->
 

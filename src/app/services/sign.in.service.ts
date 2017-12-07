@@ -8,14 +8,14 @@ import {Status} from "../classes/status";
 
 @Injectable()
 export class SignInService {
-	constructor(protected http : HttpClient) {
 
-	}
+	constructor(
+		protected http : HttpClient) {}
 
 	private signInUrl = "api/sign-in/";
 	private signOutUrl = "api/sign-out";
 
-	// call to the API and get a Category by Category Name
+
 	getProfileByProfileEmail (ProfileEmail: string) :Observable<Profile> {
 		return(this.http.get<Profile>(this.signInUrl + "?ProfileEmail=" + ProfileEmail));
 	}
@@ -31,7 +31,7 @@ export class SignInService {
 	}
 
 	//preform the post to initiate sign in
-	postSignIn(signIn:SignIn) : Observable<Status> {
+	postSignIn(signIn : SignIn) : Observable<Status> {
 		return(this.http.post<Status>(this.signInUrl, signIn));
 	}
 

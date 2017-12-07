@@ -1,5 +1,5 @@
 //this component controls the sign-in modal when "sign-in" is clicked
-import {Component, OnInit, ViewChild} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
 import {Status} from "../classes/status";
 import {SignInService} from "../services/sign.in.service";
@@ -7,7 +7,7 @@ import {SignIn} from "../classes/sign.in";
 import {CookieService} from "ng2-cookies";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {SessionService} from "../services/session.service";
-declare const $: any;
+declare let $: any;
 
 @Component({
 	templateUrl: "./templates/sign-in.html",
@@ -15,7 +15,6 @@ declare const $: any;
 })
 
 export class SignInComponent implements OnInit {
-	@ViewChild("signInForm")
 
 	signInForm: FormGroup;
 	signin: SignIn = new SignIn(null, null);
@@ -40,20 +39,24 @@ export class SignInComponent implements OnInit {
 	applyFormChanges() : void {
 		this.signInForm.valueChanges.subscribe(values => {
 			for(let field in values) {
-				this.signin[field] = values[field];
+				this.signIn[field] = values[field];
 			}
 		});
 	}
 
 	signIn() : void {
+		let signin = new SignIn(this.signInForm.value.profileEmail, this.signInForm.value.profilePassword);
 		this.signInService.postSignIn(this.signin)
 			.subscribe(status => {
 				this.status = status;
-				if(this.status.status === 200) {
+				if(status.status === 200) {
 					this.sessionService.setSession();
 					this.signInForm.reset();
+					setTimeout(function() {
+						$("#signin-modal").modal('hide');
+					}, 500);
 					this.router.navigate(["admin-dashboard"]);
-					console.log("signin successful");
+					console.log("Sign in successful");
 				} else {
 					console.log("failed login");
 				}
