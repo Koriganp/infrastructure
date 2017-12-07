@@ -31,8 +31,8 @@ export class ReportService {
 		return(this.http.get<Report>(this.reportUrl + reportId));
 	}
 
-	getReportByReportId(reportId : string) : Observable<Report[]> {
-		return(this.http.get<Report[]>(this.reportUrl + reportId));
+	getReportByReportId(reportId : string) : Observable<Report> {
+		return(this.http.get<Report>(this.reportUrl + reportId));
 	}
 
 	// call to the API and get an array of reports based off the categoryId
