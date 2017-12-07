@@ -17,12 +17,12 @@
 			<!-- Location -->
 
 			<div class="container">
-				<form name="reportForm" id="commentForm" [formGroup]="commentForm" (submit)="createComment()" novalidate>
+				<form name="commentForm" id="commentForm" [formGroup]="commentForm" (submit)="createComment()" novalidate>
 
 					<!-- Form text area -->
 
 					<div class="form-group">
-						<textarea class="form-control" rows="5" placeholder="Please comment on the issue."></textarea>
+						<textarea class="form-control" rows="5" formControlName="commentContent" placeholder="Please comment on the issue."></textarea>
 					</div>
 
 					<!-- Submit buttons -->
