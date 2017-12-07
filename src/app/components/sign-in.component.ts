@@ -17,7 +17,6 @@ declare let $: any;
 export class SignInComponent implements OnInit {
 
 	signInForm: FormGroup;
-	signin: SignIn = new SignIn(null, null);
 	status: Status = null;
 	//cookie: any = {};
 
@@ -46,17 +45,15 @@ export class SignInComponent implements OnInit {
 
 	signIn() : void {
 		let signin = new SignIn(this.signInForm.value.profileEmail, this.signInForm.value.profilePassword);
-		this.signInService.postSignIn(this.signin)
+		this.signInService.postSignIn(signin)
 			.subscribe(status => {
 				this.status = status;
 				if(status.status === 200) {
 					this.sessionService.setSession();
 					this.signInForm.reset();
-					setTimeout(function() {
-						$("#signin-modal").modal('hide');
-					}, 500);
 					this.router.navigate(["admin-dashboard"]);
 					console.log("Sign in successful");
+					setTimeout(function() {$("#signin-modal").modal('hide');}, 1000);
 				} else {
 					console.log("failed login");
 				}
