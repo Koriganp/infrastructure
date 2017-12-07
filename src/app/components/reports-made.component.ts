@@ -15,42 +15,42 @@ import {Status} from "../classes/status";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
-    templateUrl: "./templates/reports-made.html",
-    selector: "reports-made"
+	templateUrl: "./templates/reports-made.html",
+	selector: "reports-made"
 })
 
 export class ReportsMadeComponent implements OnInit {
 
-    reportsMadeForm: FormGroup;
+	reportsMadeForm: FormGroup;
 
-    status : Status = null;
+	status : Status = null;
 
-    category : Category = new Category(null, null);
+	category : Category = new Category(null, null);
 
-    report : Report = new Report(null, null, null, null, null, null, null);
+	report : Report = new Report(null, null, null, null, null, null, null);
 
-    reports: Report[] = [];
+	reports: Report[] = [];
 
-    constructor(
-       private authService : AuthService,
-       private formBuilder : FormBuilder,
-       private reportService : ReportService,
-       private categoryService : CategoryService,
-       private profileService : ProfileService) {}
+	 constructor(
+	 	private authService : AuthService,
+		private formBuilder : FormBuilder,
+		private reportService : ReportService,
+		private categoryService : CategoryService,
+		private profileService : ProfileService) {}
 
-    // life cycling before george's eyes
-    ngOnInit() : void {
-        this.listAllReports();
+	 // life cycling before george's eyes
+	 ngOnInit() : void {
+		this.listAllReports();
 
-        this.reportsMadeForm = this.formBuilder.group({
+		this.reportsMadeForm = this.formBuilder.group({
 
-        });
-    }
+		});
+	 }
 
-    listAllReports() : void {
-        this.reportService.getAllReports()
-            .subscribe(reports => this.reports = reports);
-    }
+	 listAllReports() : void {
+		this.reportService.getAllReports()
+			.subscribe(reports => this.reports = reports);
+	 }
 
 
 
