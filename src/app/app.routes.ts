@@ -15,6 +15,7 @@ import {ReportAdminViewComponent} from "./components/report-admin-view.component
 import {ReportPublicViewComponent} from "./components/report-public-view.component";
 import {ReportsMadeComponent} from "./components/reports-made.component";
 import {ReportSubmitComponent} from "./components/report-submit.component";
+import {CommentComponent} from "./components/comment.component";
 import {SignInComponent} from "./components/sign-in.component";
 import {SignUpComponent} from "./components/sign-up.component";
 import {SignOutComponent} from "./components/sign-out.component";
@@ -48,6 +49,7 @@ export const allAppComponents = [
 	ReportPublicViewComponent,
 	ReportsMadeComponent,
 	ReportSubmitComponent,
+	CommentComponent,
 	InfrastructureAppComponent,
 	FootComponent,
 	SignInComponent,
@@ -69,6 +71,7 @@ export const routes: Routes = [
 	{path: "sign-out", component: SignOutComponent},
 	{path: "report-listed-by-category", component: ReportListedByCategoryComponent},
 	{path: "report-submit", component: ReportSubmitComponent},
+	{path: "comment", component: CommentComponent},
 	{path: "foot", component: FootComponent},
 	{path: "category", component: CategoryComponent},
 	{path: "infrastructure-app", component: InfrastructureAppComponent}
