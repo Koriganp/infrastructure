@@ -3,20 +3,19 @@ this is used to list all reports based on category or something
 */
 
 import {Component, OnInit} from "@angular/core";
-
 import {AuthService} from "../services/auth.service";
 import {ReportService} from "../services/report.service";
 import {CategoryService} from "../services/category.service";
 import {ProfileService} from "../services/profile.services";
-
 import {Report} from "../classes/report";
 import {Category} from "../classes/category";
 import {Status} from "../classes/status";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Observable} from "rxjs/Observable";
 
 @Component({
-	 templateUrl: "./templates/report-listed-by-category.html",
-	 selector: "report-listed-by-category"
+	templateUrl: "./templates/report-listed-by-category.html",
+	selector: "report-listed-by-category"
 })
 
 export class ReportListedByCategoryComponent implements OnInit {
@@ -31,6 +30,8 @@ export class ReportListedByCategoryComponent implements OnInit {
 
 	reports: Report[] = [];
 
+	categories: Category[] = [];
+
 	constructor(
 		private authService : AuthService,
 		private formBuilder : FormBuilder,
@@ -38,20 +39,27 @@ export class ReportListedByCategoryComponent implements OnInit {
 		private categoryService : CategoryService,
 		private profileService : ProfileService) {}
 
-	 // life cycling before George's eyes
-	 ngOnInit() : void {
-		this.listReports();
+	// life cycling before George's eyes
+	ngOnInit() : void {
+
+		this.listCategories();
+
+		this.getReportsByCategoryId();
 
 		this.reportListedByCategoryForm = this.formBuilder.group({
 
 		});
-	 }
+	}
+
+	listCategories() : void {
+		this.categoryService.getAllCategories()
+			.subscribe(categories => this.categories = categories);
+	}
 
 	// needs to be fixed
-	listReports() : void {
-		this.reportService.getReport()
-
-			.subscribe(reports => this.reports = reports);
+	getReportsByCategoryId() : void {
+		this.reportService.getAllReports()
+			.subscribe((reports: any) => this.reports = reports);
 	}
 
 }

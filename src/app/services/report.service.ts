@@ -36,7 +36,7 @@ export class ReportService {
 		return(this.http.get<Report[]>(this.reportUrl + reportId));
 	}
 
-	getReportByCategoryId(reportCategoryId: string) : Observable<Report[]> {
+	getReportsByCategoryId(reportCategoryId: string) : Observable<Report[]> {
 		return(this.http.get<Report[]>(this.reportUrl + reportCategoryId));
 	}
 
