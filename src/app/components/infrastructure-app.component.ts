@@ -5,4 +5,4 @@ import {Component} from "@angular/core";
 	selector: "infrastructure-app"
 })
 
-export class HomeViewComponent {}
+export class InfrastructureAppComponent {}

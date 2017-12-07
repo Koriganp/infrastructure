@@ -5,4 +5,6 @@ import {Component} from "@angular/core";
 	selector: "admin-dashboard"
 })
 
-export class AdminDashboardComponent {}
+export class AdminDashboardComponent {
+
+}

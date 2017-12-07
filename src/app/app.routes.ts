@@ -19,7 +19,7 @@ import {SignInComponent} from "./components/sign-in.component";
 import {SignUpComponent} from "./components/sign-up.component";
 import {SignOutComponent} from "./components/sign-out.component";
 import {ReportListedByCategoryComponent} from "./components/report-listed-by-category.component";
-import {HomeViewComponent} from "./components/infrastructure-app.component";
+import {InfrastructureAppComponent} from "./components/infrastructure-app.component";
 import {CategoryComponent} from "./components/category.component";
 import {FileSelectDirective} from "ng2-file-upload";
 
@@ -48,7 +48,7 @@ export const allAppComponents = [
 	ReportPublicViewComponent,
 	ReportsMadeComponent,
 	ReportSubmitComponent,
-	HomeViewComponent,
+	InfrastructureAppComponent,
 	FootComponent,
 	SignInComponent,
 	SignUpComponent,
@@ -67,11 +67,11 @@ export const routes: Routes = [
 	{path: "sign-in", component: SignInComponent},
 	{path: "sign-up", component: SignUpComponent},
 	{path: "sign-out", component: SignOutComponent},
-	{path: "home-view", component: HomeViewComponent},
 	{path: "report-listed-by-category", component: ReportListedByCategoryComponent},
 	{path: "report-submit", component: ReportSubmitComponent},
 	{path: "foot", component: FootComponent},
 	{path: "category", component: CategoryComponent},
+	{path: "infrastructure-app", component: InfrastructureAppComponent}
 ];
 
 // an array of services that will be passed off to the module
