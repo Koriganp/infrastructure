@@ -21,7 +21,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 export class ReportsMadeComponent implements OnInit {
 
-    reportListedByCategoryForm: FormGroup;
+    reportsMadeForm: FormGroup;
 
     status : Status = null;
 
@@ -37,7 +37,7 @@ export class ReportsMadeComponent implements OnInit {
     ngOnInit() : void {
         this.listAllReports();
 
-        this.reportListedByCategoryForm = this.formBuilder.group({
+        this.reportsMadeForm = this.formBuilder.group({
 
         });
     }

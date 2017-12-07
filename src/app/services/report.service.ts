@@ -8,7 +8,9 @@ import {HttpClient} from "@angular/common/http";
 @Injectable ()
 export class ReportService {
 
-	constructor(protected http : HttpClient ) {}
+	constructor(
+		protected http : HttpClient
+	) {}
 
 	// define the API endpoint
 	private reportUrl = "api/report/";
