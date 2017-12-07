@@ -15,44 +15,43 @@ import {Status} from "../classes/status";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
-    templateUrl: "./templates/report-listed-by-category.html",
-    selector: "report-listed-by-category"
+	 templateUrl: "./templates/report-listed-by-category.html",
+	 selector: "report-listed-by-category"
 })
 
 export class ReportListedByCategoryComponent implements OnInit {
 
-    reportListedByCategoryForm: FormGroup;
+	reportListedByCategoryForm: FormGroup;
 
-    status : Status = null;
+	status : Status = null;
 
-    category : Category = new Category(null, null);
+	category : Category = new Category(null, null);
 
-    report : Report = new Report(null, null, null, null, null, null, null);
+	report : Report = new Report(null, null, null, null, null, null, null);
 
-    reports: Report[] = [];
+	reports: Report[] = [];
 
-    constructor(
-       private authService : AuthService,
-       private formBuilder : FormBuilder,
-       private reportService : ReportService,
-       private categoryService : CategoryService,
-       private profileService : ProfileService) {}
+	constructor(
+		private authService : AuthService,
+		private formBuilder : FormBuilder,
+		private reportService : ReportService,
+		private categoryService : CategoryService,
+		private profileService : ProfileService) {}
 
-    // life cycling before George's eyes
-    ngOnInit() : void {
-        this.listReports();
+	 // life cycling before George's eyes
+	 ngOnInit() : void {
+		this.listReports();
 
-        this.reportListedByCategoryForm = this.formBuilder.group({
+		this.reportListedByCategoryForm = this.formBuilder.group({
 
-        });
-    }
+		});
+	 }
 
-    // needs to be fixed
-    listReports() : void {
-        this.reportService.getReport()
-            .subscribe(reports => this.reports = reports);
-    }
+	// needs to be fixed
+	listReports() : void {
+		this.reportService.getReport()
 
-    
+			.subscribe(reports => this.reports = reports);
+	}
 
 }
