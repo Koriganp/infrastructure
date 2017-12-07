@@ -22,11 +22,11 @@ export class ReportListedByCategoryComponent implements OnInit {
 
 	reportListedByCategoryForm: FormGroup;
 
-	status : Status = null;
+	status: Status = null;
 
-	category : Category = new Category(null, null);
+	category: Category = new Category(null, null);
 
-	report : Report = new Report(null, null, null, null, null, null, null);
+	report: Report = new Report(null, null, null, null, null, null, null);
 
 	reports: Report[] = [];
 
@@ -44,7 +44,7 @@ export class ReportListedByCategoryComponent implements OnInit {
 
 		this.listCategories();
 
-		this.getReportsByCategoryId();
+		this.getReportByCategoryId();
 
 		this.reportListedByCategoryForm = this.formBuilder.group({
 
@@ -57,8 +57,8 @@ export class ReportListedByCategoryComponent implements OnInit {
 	}
 
 	// needs to be fixed
-	getReportsByCategoryId() : void {
-		this.reportService.getAllReports()
+    getReportByCategoryId() : void {
+		this.reportService.getReportByReportCategoryId(this.report.reportCategoryId)
 			.subscribe((reports: any) => this.reports = reports);
 	}
 
