@@ -17,7 +17,7 @@ export class ListReportsComponent implements OnInit{
 
 	createReportForm: FormGroup;
 
-	report : Report = new Report (null, null, null, null, null, null, null);
+	report : Report = new Report (null, null, null, null, null, null, null, null, null, null);
 
 	//declare needed state variables for latter use
 	status: Status = null;
@@ -47,7 +47,7 @@ export class ListReportsComponent implements OnInit{
 	}
 	createReport(): void  {
 
-		let report = new Report(null, null, this.createReportForm.value.reportContent, null, null, null, null);
+		let report = new Report(null, null, this.createReportForm.value.reportContent, null, null, null, null, null, null, null);
 
 		this.reportService.createReport(report)
 			.subscribe(status =>{
