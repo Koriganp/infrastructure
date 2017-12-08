@@ -34,3 +34,10 @@ body {
 .category-table td {
 	border: solid 1px #bababa;
 }
+
+.admin-report {
+	margin: 5rem;
+	padding: 5rem;
+	width: 60em;
+	height: 75em;
+}
