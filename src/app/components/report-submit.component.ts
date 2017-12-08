@@ -76,7 +76,7 @@ export class ReportSubmitComponent implements OnInit {
 	createReport(): void {
 		let report = new Report(null, this.reportSubmitForm.value.reportCategoryId, this.reportSubmitForm.value.reportContent, null, this.reportSubmitForm.value.reportStreetAddress, this.reportSubmitForm.value.reportCity, this.reportSubmitForm.value.reportState, this.reportSubmitForm.value.reportZipCode, null, null);
 
-		this.reportService.createReport(this.report)
+		this.reportService.createReport(report)
 			.subscribe(status =>{
 				this.status = status;
 				if(this.status.status === 200) {
