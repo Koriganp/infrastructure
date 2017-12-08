@@ -14,7 +14,7 @@ import {Status} from "../classes/status";
 export class ReportPublicViewComponent implements OnInit{
 	reportPublicViewForm: FormGroup;
 
-	report: Report = new Report(null, null, null, null, null, null, null);
+	report: Report = new Report(null, null, null, null, null, null, null, null, null, null);
 
 	image: Image = new Image(null, null, null, null, null);
 
