@@ -28,7 +28,7 @@ export class ReportAdminViewComponent implements OnInit {
 
 	category: Category = new Category(null, null);
 
-	report: Report = new Report(null, null, null, null, null, null, null);
+	report: Report = new Report(null, null, null, null, null, null, null, null, null, null);
 
 	image: Image = new Image(null, null, null, null, null);
 
@@ -48,18 +48,8 @@ export class ReportAdminViewComponent implements OnInit {
 
 		this.reportAdminViewForm = this.formBuilder.group({
 			reportStatus: ["", [Validators.required]],
-			reportUrgency: ["", [Validators.required]],
+			reportUrgency: ["", [Validators.min(0),Validators.max(5),Validators.required]],
 			commentContent: ["", [Validators.maxLength(500), Validators.required]]
-		});
-
-		this.applyFormChanges();
-	}
-
-	applyFormChanges() : void {
-		this.reportAdminViewForm.valueChanges.subscribe(values => {
-			for(let field in values) {
-				this.comment[field] = values[field];
-			}
 		});
 	}
 
@@ -74,13 +64,13 @@ export class ReportAdminViewComponent implements OnInit {
 				this.status = status;
 				if(this.status.status === 200) {
 					this.deleted = true;
-					this.report = new Report(null, null, null, null, null, null, null);
+					this.report = new Report(null, null, null, null, null, null, null, null, null, null);
 				}
 			})
 	}
 
 	createComment(): void {
-	let comment = new Comment(null, null, null, this.reportAdminViewForm.value.commentContent, null)
+	let comment = new Comment(null, null, null, this.reportAdminViewForm.value.commentContent, null);
 
 		this.commentService.createComment(comment)
 			.subscribe(status =>{
@@ -90,6 +80,11 @@ export class ReportAdminViewComponent implements OnInit {
 					alert(this.status.message);
 				}
 			})
+	}
+
+	editComment() : void {
+		this.commentService.editComment(this.comment)
+			.subscribe(status => this.status = status);
 	}
 
 	deleteComment() : void {
@@ -103,8 +98,4 @@ export class ReportAdminViewComponent implements OnInit {
 			})
 	}
 
-	editComment() : void {
-		this.commentService.editComment(this.comment)
-			.subscribe(status => this.status = status);
-	}
 }
