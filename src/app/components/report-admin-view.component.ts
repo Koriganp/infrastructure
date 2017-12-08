@@ -29,7 +29,7 @@ export class ReportAdminViewComponent implements OnInit {
 
 	category: Category = new Category(null, null);
 
-	report: Report = new Report(null, null, null, null, null, null, null, null, null, null);
+	report: Report = new Report(null, null, null, null, null, null, null);
 
 	image: Image = new Image(null, null, null, null, null);
 
@@ -65,7 +65,7 @@ export class ReportAdminViewComponent implements OnInit {
 				this.status = status;
 				if(this.status.status === 200) {
 					this.deleted = true;
-					this.report = new Report(null, null, null, null, null, null, null, null, null, null);
+					this.report = new Report(null, null, null, null, null, null, null);
 				}
 			})
 	}
