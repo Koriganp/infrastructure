@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {SignUp} from "../classes/Sign.up";
+import {SignUp} from "../classes/sign.up";
 import {Observable} from "rxjs/Observable";
 import {Status} from "../classes/status";
 
