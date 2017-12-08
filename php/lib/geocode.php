@@ -12,7 +12,7 @@ function getLatLongByAddress ($address) : \stdClass {
 	}
 	$address = filter_var($address, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$url = 'https://maps.googleapis.com/maps/api/geocode/json';
-	$config = readConfig("/etc/apache2/capstone-mysql/infrastructure.ini");
+	$config = readConfig("/etc/apache2/capstone-mysql/abqreport.ini");
 	$api = $config["google"];
 	$json = file_get_contents($url . '?address=' . urlencode($address) . '&key=' . $api);
 	$jsonObject = json_decode($json);
