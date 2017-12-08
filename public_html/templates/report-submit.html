@@ -20,31 +20,31 @@
 				<form name="reportSubmitForm" id="reportSubmitForm" [formGroup]="reportSubmitForm" (submit)="createReport()" novalidate>
 					<div class="form-group">
 						<label for="reportCategoryId">Select Category</label>
-						<select id="reportCategoryId" class="form-control mb-2" name="reportCategoryId" required [formControlName]="reportCategoryId">
+						<select id="reportCategoryId" class="form-control mb-2" name="reportCategoryId" required formControlName="reportCategoryId">
 							<option *ngFor="let category of categories" [value]="category.categoryId">
 								{{category.categoryName}}
 							</option>
 						</select>
 					</div>
-					<div class="row">
-						<div class="col-md-4">
-							<input type="text" readonly class="form-control" id="staticReportDateTime" [value]="report.reportDateTime">
-						</div>
-					</div>
+					<!--<div class="row">-->
+						<!--<div class="col-md-4">-->
+							<!--<input type="text" readonly class="form-control" id="staticReportDateTime" [value]="report.reportDateTime">-->
+						<!--</div>-->
+					<!--</div>-->
 					<div class="row">
 						<div class="col-md-12 col-sm-3 my-2">
-							<input type="text" class="form-control" placeholder="Street Address" formControlName="reportStreetAddress">
+							<input type="text" class="form-control" placeholder="Street Address" name="reportStreetAddress" formControlName="reportStreetAddress">
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-4 col-sm-3 my-2">
-							<input type="text" class="form-control" placeholder="City" formControlName="reportCity">
+							<input type="text" class="form-control" placeholder="City" name="reportCity" formControlName="reportCity">
 						</div>
 						<div class="col-md-4 col-sm-3 my-2">
-							<input type="text" class="form-control" placeholder="State" formControlName="reportState">
+							<input type="text" class="form-control" placeholder="State" name="reportState" formControlName="reportState">
 						</div>
 						<div class="col-md-4 col-sm-3 my-2">
-							<input type="text" class="form-control" placeholder="Zip Code" formControlName="reportZipCode">
+							<input type="text" class="form-control" placeholder="Zip Code" name="reportZipCode"  formControlName="reportZipCode">
 						</div>
 					</div>
 
@@ -52,7 +52,7 @@
 			<!-- Form text area -->
 
 					<div class="form-group">
-						<textarea class="form-control" rows="5" placeholder="Please describe the issue." formControlName="reportContent"></textarea>
+						<textarea class="form-control" rows="5" placeholder="Please describe the issue." name="reportContent" formControlName="reportContent"></textarea>
 					</div>
 
 			<!-- Upload Images Area -->

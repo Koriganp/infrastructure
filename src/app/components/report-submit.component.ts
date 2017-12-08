@@ -13,6 +13,7 @@ import {Status} from "../classes/status";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
 import "rxjs/add/observable/from";
+
 declare let $: any;
 
 @Component({
@@ -21,6 +22,8 @@ declare let $: any;
 })
 
 export class ReportSubmitComponent implements OnInit {
+
+
 
 	public uploader: FileUploader = new FileUploader({
 		itemAlias: "",
@@ -37,7 +40,7 @@ export class ReportSubmitComponent implements OnInit {
 
 	category: Category = new Category(null, null);
 
-	report: Report = new Report(null, null, null, null, null, null, null, null, null, null);
+	report: Report = new Report( null, null, null, null, null, null, null);
 
 	image: Image = new Image(null, null, null, null, null);
 
@@ -59,11 +62,13 @@ export class ReportSubmitComponent implements OnInit {
 
 		this.reportSubmitForm = this.formBuilder.group({
 			reportCategoryId: ["", [Validators.required]],
-			reportStreetAddress: ["", [Validators.maxLength(200),Validators.required]],
-			reportCity: ["",[Validators.maxLength(40), Validators.required]],
-			reportState: ["",[Validators.maxLength(30), Validators.required]],
-			reportZipCode: ["",[Validators.max(10), Validators.required]],
-			reportContent: ["", [Validators.maxLength(3000), Validators.required]],
+			reportStreetAddress: [" ", [Validators.maxLength(200),Validators.required]],
+			reportCity: [" ",[Validators.maxLength(40), Validators.required]],
+			reportState: [" ",[Validators.maxLength(30), Validators.required]],
+			reportZipCode: [" ",[Validators.max(10), Validators.required]],
+			reportContent: [" ", [Validators.maxLength(3000), Validators.required]],
+			reportStatus: ["Reported"],
+			reportUrgency: [1]
 		});
 
 		this.uploadImage();
@@ -84,9 +89,12 @@ export class ReportSubmitComponent implements OnInit {
 	}
 
 	createReport(): void {
-		let report = new Report(null, this.reportSubmitForm.value.reportCategoryId, this.reportSubmitForm.value.reportContent, null, this.reportSubmitForm.value.reportStreetAddress, this.reportSubmitForm.value.reportCity, this.reportSubmitForm.value.reportState, this.reportSubmitForm.value.reportZipCode, null, null);
 
-		this.reportService.createReport(this.report)
+		let reportContentAddress = this.reportSubmitForm.value.reportStreetAddress + " " + this.reportSubmitForm.value.reportCity + " " + this.reportSubmitForm.value.reportState + " " + this.reportSubmitForm.value.reportZipCode;
+
+		let report = new Report(null, this.reportSubmitForm.value.reportCategoryId, this.reportSubmitForm.value.reportContent, null, reportContentAddress, this.reportSubmitForm.value.reportStatus, this.reportSubmitForm.value.reportUrgency);
+
+		this.reportService.createReport(report)
 			.subscribe(status => {
 					this.status = status;
 					console.log(this.status);

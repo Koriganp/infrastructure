@@ -156,7 +156,7 @@ try {
 				throw(new \InvalidArgumentException("You must choose a category to submit a report", 403));
 			}
 
-			$latLongObject = getLatLongByAddress($requestObject->reportAddress);
+			$latLongObject = getLatLongByAddress($requestObject->reportContentAddress);
 
 			// create a new report and insert into database
 			$report = new Report(generateUuidV4(), $requestObject->reportCategoryId, $requestObject->reportContent, $requestObject->reportDateTime, $_SERVER["REMOTE_ADDR"], $latLongObject->reportLat, $latLongObject->reportLong, $requestObject->reportStatus, $requestObject->reportUrgency, substr($_SERVER["HTTP_USER_AGENT"], 0, 255));
