@@ -27,7 +27,7 @@ export class ReportsMadeComponent implements OnInit {
 
 	category : Category = new Category(null, null);
 
-	report : Report = new Report(null, null, null, null, null, null, null);
+	report : Report = new Report(null, null, null, null, null, null, null, null, null, null);
 
 	reports: Report[] = [];
 

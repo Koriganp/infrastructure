@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, Input} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 import {AuthService} from "../services/auth.service";
@@ -21,6 +21,7 @@ import {Status} from "../classes/status";
 })
 
 export class ReportAdminViewComponent implements OnInit {
+	@Input() commentContent: Comment;
 
 	reportAdminViewForm: FormGroup;
 
