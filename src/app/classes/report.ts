@@ -4,7 +4,10 @@ export class Report {
 		public reportCategoryId: string,
 		public reportContent: string,
 		public reportDateTime: string,
-		public reportAddress: string,
+		public reportStreetAddress: string,
+		public reportCity: string,
+		public reportState: string,
+		public reportZipCode: string,
 		public reportStatus: string,
 		public reportUrgency: number
 	) {}
