@@ -36,7 +36,7 @@ export class ReportSubmitComponent implements OnInit {
 
 	category: Category = new Category(null, null);
 
-	report: Report = new Report(null, null, null, null, null, null, null);
+	report: Report = new Report(null, null, null, null, null, null, null, null, null, null);
 
 	image: Image = new Image(null, null, null, null, null);
 
@@ -74,18 +74,16 @@ export class ReportSubmitComponent implements OnInit {
 	}
 
 	createReport(): void {
-		this.reportSubmitForm = this.formBuilder.group({
-			reportStreetAddress: '',
-			reportCity: '',
-			reportState: '',
-			reportZipCode: '',
-			reportContent: ''
-
-		});
-
+		let report = new Report(null, this.reportSubmitForm.value.reportCategoryId, this.reportSubmitForm.value.reportContent, null, this.reportSubmitForm.value.reportStreetAddress, this.reportSubmitForm.value.reportCity, this.reportSubmitForm.value.reportState, this.reportSubmitForm.value.reportZipCode, null, null);
 
 		this.reportService.createReport(this.report)
-			.subscribe(status => this.status = status);
+			.subscribe(status =>{
+				this.status = status;
+				if(this.status.status === 200) {
+					this.reportSubmitForm.reset();
+					alert(this.status.message);
+				}
+			})
 	}
 
 	uploadImage(): void {
