@@ -13,7 +13,7 @@ import {Status} from "../classes/status";
 import {Router} from "@angular/router";
 import {Observable} from "rxjs";
 import "rxjs/add/observable/from";
-
+declare let $: any;
 
 @Component({
 	selector: "report-submit",
