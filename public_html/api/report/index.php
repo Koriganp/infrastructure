@@ -8,7 +8,7 @@
 require_once(dirname(__DIR__, 3) . "/vendor/autoload.php");
 require_once(dirname(__DIR__, 3) . "/php/classes/autoload.php");
 require_once(dirname(__DIR__, 3) . "/php/lib/xsrf.php");
-require_once(dirname(__DIR__, 3)) . "php/lib/geocode.php";
+require_once(dirname(__DIR__, 3) . "/php/lib/geocode.php");
 require_once(dirname(__DIR__, 3) . "/php/lib/uuid.php");
 require_once(dirname(__DIR__, 3) . "/php/lib/jwt.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
@@ -63,7 +63,6 @@ try {
 
 		//get a specific report or all reports and update reply
 		if(empty($id) === false) {
-
 			$report = Report::getReportByReportId($pdo, $id);
 			// grab all the images for that report based on what report it is
 			if($report !== null) {
@@ -84,8 +83,7 @@ try {
 				$reply->data = $reports;
 			}
 
-		} else if (empty($reportUrgency)) {
-
+		} else if (empty($reportUrgency) === false) {
 			$reports = Report::getReportByReportUrgency($pdo, $reportUrgency)->toArray();
 			if($reports !== null) {
 				$reply->data = $reports;
