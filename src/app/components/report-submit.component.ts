@@ -10,6 +10,7 @@ import {CategoryService} from "../services/category.service";
 import {Image} from "../classes/image";
 import {ImageService} from "../services/image.service";
 import {Status} from "../classes/status";
+import {Router} from "@angular/router";
 import {Observable} from "rxjs";
 import "rxjs/add/observable/from";
 
@@ -47,7 +48,8 @@ export class ReportSubmitComponent implements OnInit {
 	constructor(
 		private formBuilder: FormBuilder,
 		private reportService: ReportService,
-		private categoryService: CategoryService
+		private categoryService: CategoryService,
+		private router: Router
 		) {
 	}
 
@@ -65,6 +67,15 @@ export class ReportSubmitComponent implements OnInit {
 		});
 
 		this.uploadImage();
+		this.applyFormChanges();
+	}
+
+	applyFormChanges() : void {
+		this.reportSubmitForm.valueChanges.subscribe(values => {
+			for(let field in values) {
+				this.report[field] = values[field];
+			}
+		});
 	}
 
 	listCategories(): void {
@@ -75,14 +86,29 @@ export class ReportSubmitComponent implements OnInit {
 	createReport(): void {
 		let report = new Report(null, this.reportSubmitForm.value.reportCategoryId, this.reportSubmitForm.value.reportContent, null, this.reportSubmitForm.value.reportStreetAddress, this.reportSubmitForm.value.reportCity, this.reportSubmitForm.value.reportState, this.reportSubmitForm.value.reportZipCode, null, null);
 
-		this.reportService.createReport(report)
-			.subscribe(status =>{
-				this.status = status;
-				if(this.status.status === 200) {
-					this.reportSubmitForm.reset();
-					alert(this.status.message);
-				}
-			})
+		this.reportService.createReport(this.report)
+			.subscribe(status => {
+					this.status = status;
+					console.log(this.status);
+					if(status.status === 200) {
+						alert("Admin will confirm your report short");
+						this.reportSubmitForm.reset();
+						setTimeout(function() {
+							$("#report-submit-modal").modal('hide');
+						}, 500);
+						this.router.navigate(["home-view"]);
+					} else {
+						alert("Error, there was a problem with one of your entries. Please try again.");
+					}
+				});
+
+		// .subscribe(status =>{
+		// 	this.status = status;
+		// 	if(this.status.status === 200) {
+		// 		this.reportSubmitForm.reset();
+		// 		alert(this.status.message);
+		// 	}
+		// });
 	}
 
 	uploadImage(): void {
