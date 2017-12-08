@@ -49,7 +49,6 @@ export class ReportSubmitComponent implements OnInit {
 		private reportService: ReportService,
 		private categoryService: CategoryService
 		) {
-		this.createReport();
 	}
 
 	ngOnInit() : void {
