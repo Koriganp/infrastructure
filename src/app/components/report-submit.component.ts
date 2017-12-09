@@ -97,6 +97,7 @@ export class ReportSubmitComponent implements OnInit {
 						alert("Admin will confirm your report shortly");
 						this.reportSubmitForm.reset();
 						window.location.replace("");
+					}
 				});
 
 		// .subscribe(status =>{
