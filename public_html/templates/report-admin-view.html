@@ -1,7 +1,14 @@
 <!-- Report Admin View (Pop-Up) -->
-<div class="card admin-report">
+<div class="modal fade" tabindex="-1" role="dialog" id="report-admin-view-modal">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+<div class="modal-header admin-report">
 
-	<h1 class="text-center">Submitted Report</h1>
+	<h1 class="modal-title text-center">Submitted Report</h1>
+
+	<button type="button" class="close" data-dismiss="modal" aria-label="close">
+		<span aria-hidden="true"> &times; </span>
+	</button>
 
 	<div>
 		<h3 class="text-center">Category Title</h3>
@@ -61,8 +68,12 @@
 			<div class="form-group">
 				<label for="comment">Example textarea</label>
 				<textarea class="form-control" id="comment" rows="10"></textarea>
+				<button class="btn btn-info my-0 mr-sm-2" data-toggle="modal" data-target="#comment-modal"><i class="fa fa-pencil-square-o"></i>&nbsp;Report Comment</button>
 			</div>
 		</form>
 	</div>
 
+</div>
+		</div>
+	</div>
 </div>

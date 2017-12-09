@@ -13,7 +13,7 @@
 			</tr>
 		</thead>
 		<tbody class="table-light">
-			<tr *ngFor="let report of reports" [value]="report.reportId">
+			<tr *ngFor="let report of reports">
 				<td>{{ report.categoryName }}</td>
 				<td>{{ report.reportDateTime }}</td>
 				<td>{{ report.reportStatus }}</td>
