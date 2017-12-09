@@ -5,7 +5,7 @@
 <div class="modal fade" tabindex="-1" role="dialog" id="report-admin-view-modal">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
-			<div class="modal-header admin-report">
+			<div class="modal-header">
 
 				<!-- Modal Title -->
 
@@ -16,88 +16,88 @@
 				<button type="button" class="close" data-dismiss="modal" aria-label="close">
 					<span aria-hidden="true"> &times; </span>
 				</button>
+			</div>
 
-				<!-- Modal Content -->
+			<!-- Modal Content -->
 
-				<div class="modal-body">
-					<form class="form-vertical" [formGroup]="reportListedByCategoryForm" (submit)="updateReport();" novalidate>
+			<div class="modal-body">
+				<form class="form-vertical" [formGroup]="reportListedByCategoryForm" (submit)="updateReport();" novalidate>
 
+					<div>
+						<!-- Dynamic Field -->
+
+						<!--<ul *ngFor="let category of categories">-->
+						<!--<li>{{ category.categoryName }}</li>-->
+						<!--</ul>-->
+
+						<!-- Static Field (For Development) -->
+
+						<p class="text-center">Category Title</p>
+					</div>
+
+
+					<div class="form-group">
+						<label for="staticDateReported" class="col-form-label text-center">Date Reported</label>
 						<div>
-							<!-- Dynamic Field -->
-
-							<!--<ul *ngFor="let category of categories">-->
-							<!--<li>{{ category.categoryName }}</li>-->
-							<!--</ul>-->
-
-							<!-- Static Field (For Development) -->
-
-							<p class="text-center">Category Title</p>
+							<input type="text" readonly class="form-control-plaintext" id="staticDateReported"
+									 value="11/28/2017">
 						</div>
+					</div>
 
+					<div class="btn-toolbar" role="toolbar">
+						<div class="btn-group">
+							<button class="btn btn-secondary" type="button">
+								Select Status
+							</button>
+							<button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split"
+									  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="sr-only">Toggle Dropdown</span>
+							</button>
+							<div class="dropdown-menu">
+							</div>
+						</div>
+						<div class="btn-group">
+							<button class="btn btn-secondary" type="button">
+								Select Urgency
+							</button>
+							<button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split"
+									  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="sr-only">Toggle Dropdown</span>
+							</button>
+							<div class="dropdown-menu">
+								...
+							</div>
+						</div>
+					</div>
+
+					<div>
+						<h3>Report Content</h3>
 
 						<div class="form-group">
-							<label for="staticDateReported" class="col-form-label text-center">Date Reported</label>
-							<div>
-								<input type="text" readonly class="form-control-plaintext" id="staticDateReported"
-										 value="11/28/2017">
-							</div>
+							<label for="content">Example textarea</label>
+							<textarea class="form-control" id="content" rows="10"></textarea>
 						</div>
 
-						<div class="btn-toolbar" role="toolbar">
-							<div class="btn-group">
-								<button class="btn btn-secondary" type="button">
-									Select Status
-								</button>
-								<button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split"
-										  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									<span class="sr-only">Toggle Dropdown</span>
-								</button>
-								<div class="dropdown-menu">
-								</div>
-							</div>
-							<div class="btn-group">
-								<button class="btn btn-secondary" type="button">
-									Select Urgency
-								</button>
-								<button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split"
-										  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									<span class="sr-only">Toggle Dropdown</span>
-								</button>
-								<div class="dropdown-menu">
-									...
-								</div>
-							</div>
+					</div>
+
+					<div>
+						<h3>Images</h3>
+						<img src="..." alt="..." class="img-thumbnail">
+						<img src="..." alt="..." class="img-thumbnail">
+					</div>
+
+					<div>
+						<h3>Comment</h3>
+						<div class="form-group">
+							<label for="comment">Example textarea</label>
+							<textarea class="form-control" id="comment" rows="10"></textarea>
+							<button class="btn btn-info my-0 mr-sm-2" data-toggle="modal" data-target="#comment-modal"><i
+								class="fa fa-pencil-square-o"></i>&nbsp;Report Comment
+							</button>
 						</div>
+					</div>
 
-						<div>
-							<h3>Report Content</h3>
-
-							<div class="form-group">
-								<label for="content">Example textarea</label>
-								<textarea class="form-control" id="content" rows="10"></textarea>
-							</div>
-
-						</div>
-
-						<div>
-							<h3>Images</h3>
-							<img src="..." alt="..." class="img-thumbnail">
-							<img src="..." alt="..." class="img-thumbnail">
-						</div>
-
-						<div>
-							<h3>Comment</h3>
-							<div class="form-group">
-								<label for="comment">Example textarea</label>
-								<textarea class="form-control" id="comment" rows="10"></textarea>
-								<button class="btn btn-info my-0 mr-sm-2" data-toggle="modal" data-target="#comment-modal"><i
-									class="fa fa-pencil-square-o"></i>&nbsp;Report Comment
-								</button>
-							</div>
-						</div>
-
-					</form>
-				</div>
+				</form>
 			</div>
 		</div>
 	</div>
