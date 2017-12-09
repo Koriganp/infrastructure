@@ -6,7 +6,6 @@ import {Component, OnInit} from "@angular/core";
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {ReportService} from "../services/report.service";
 import {CategoryService} from "../services/category.service";
-import {ProfileService} from "../services/profile.services";
 import {Report} from "../classes/report";
 import {Category} from "../classes/category";
 import {Status} from "../classes/status";
@@ -27,13 +26,14 @@ export class ReportListedByCategoryComponent implements OnInit {
 
 	status: Status = null;
 
-	category: Category = new Category(null, null);
+	reports: Report[] = [];
 
 	report: Report = new Report(null, null, null, null, null, null, null);
 
-	reports: Report[] = [];
-
 	categories: Category[] = [];
+
+	category: Category = new Category(null, null);
+
 
 	constructor(
 		private router: Router,
@@ -49,10 +49,23 @@ export class ReportListedByCategoryComponent implements OnInit {
 
 		this.getReportByCategoryId();
 
-		this.reportListedByCategoryForm = this.formBuilder.group({
+		this.reloadReports();
 
+		this.reportListedByCategoryForm = this.formBuilder.group({
+			reportCategoryName: ["", [Validators.maxLength(32), Validators.required]],
+			reportDateTime: ["", [Validators.maxLength(6), Validators.required]],
+			reportStatus: ["", [Validators.maxLength(15), Validators.required]],
+			reportUrgency: ["", [Validators.maxLength(3), Validators.required]],
+			reportContent: ["", [Validators.maxLength(3000), Validators.required]],
 		});
+
 	}
+
+	reloadReports() : void {
+		this.reportService.getAllReports()
+			.subscribe(reports => this.reports = reports);
+	}
+
 
 	listCategories() : void {
 		this.categoryService.getAllCategories()
