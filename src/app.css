@@ -17,29 +17,15 @@ h1 {
 	padding-top: 10rem;
 }
 
-/** Report Submit **/
+/** Report View Modals **/
 
-.submitter {
-	margin: 5rem;
-	padding: 5rem;
-	width: 60em;
-	height: 50em;
+.viewHeadings {
+	font-size: 2em;
 }
 
-/** Administrator report pop-up **/
-
-.admin-report {
-	margin: 5rem;
-	padding: 5rem;
-	width: 60em;
-	height: 75em;
-}
-
-/** Public report pop-up **/
-
-.public-report {
-	margin: 5rem;
-	padding: 5rem;
-	width: 60em;
-	height: 75em;
+.modTitle {
+	text-align: center;
+	font-size: 4em;
+	font-weight: bold;
+	padding-top: 0;
 }
