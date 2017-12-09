@@ -9,9 +9,9 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 	selector: "comment"
 })
 
-export class CommentComponent implements OnInit{
+export class CommentComponent implements OnInit {
 
-    commentForm: FormGroup;
+	commentForm: FormGroup;
 
 	deleted: boolean = false;
 
@@ -21,21 +21,16 @@ export class CommentComponent implements OnInit{
 
 	comment: Comment = new Comment(null, null, null, null, null);
 
-	constructor(
-		private commentService: CommentService,
-		private formBuilder: FormBuilder) {
+	constructor(private commentService: CommentService,
+					private formBuilder: FormBuilder) {
 	}
 
 	ngOnInit(): void {
 
-		this.getCommentByProfileId();
-		this.getCommentByReportId();
-
-		this.reportCommentForm = this.formBuilder.group({
-			reportStatus: ["", [Validators.required]],
-			reportUrgency: ["", [Validators.required]],
-			commentContent: ["", [Validators.maxLength(500), Validators.required]]
+		this.commentForm = this.formBuilder.group({
+			commentContent: ["", [Validators.required]]
 		});
+
 	}
 
 	getCommentByProfileId(): void {
@@ -47,15 +42,6 @@ export class CommentComponent implements OnInit{
 		this.commentService.getCommentByCommentReportId(this.comment.commentReportId)
 			.subscribe(comment => this.status = comment);
 	}
-    constructor (private commentService : CommentService, private formBuilder : FormBuilder) {}
-
-    ngOnInit() : void {
-
-        this.commentForm = this.formBuilder.group({
-           commentContent: ["", [Validators.required]]
-        });
-
-    }
 
 	createComment(): void {
 		let comment = new Comment(null, null, null, this.reportCommentForm.value.commentContent, null);
