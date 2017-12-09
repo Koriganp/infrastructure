@@ -24,7 +24,7 @@ export class ReportPublicViewComponent implements OnInit{
 	constructor(private formBuilder: FormBuilder, private reportService: ReportService, private imageService: ImageService){}
 
 	ngOnInit(): void {
-		this.getReportByReportId();
+		// this.getReportByReportId();
 	}
 
 	getReportByReportId(): void {
