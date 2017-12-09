@@ -2,7 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {CommentService} from "../services/comment.service";
 import {Status} from "../classes/status";
 import {Comment} from "../classes/comment";
-import {FormBuilder, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
     templateUrl: "./templates/comment.html",
@@ -11,7 +11,7 @@ import {FormBuilder, Validators} from "@angular/forms";
 
 export class CommentComponent implements OnInit{
 
-    commentForm: FormBuilder;
+    commentForm: FormGroup;
 
     status: Status = null;
 
