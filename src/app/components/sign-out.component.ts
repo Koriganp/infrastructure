@@ -19,6 +19,6 @@ export class SignOutComponent {
 
 	signOut() : void {
 		this.signOutService.getSignOut();
-		window.location.replace("home-view");
+		window.location.replace("");
 	}
 }
