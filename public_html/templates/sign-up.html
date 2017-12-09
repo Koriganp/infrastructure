@@ -1,3 +1,7 @@
+<!--///////////////-->
+<!-- Sign Up Modal -->
+<!--///////////////-->
+
 <div class="modal fade" tabindex="-1" role="dialog" id="signup-modal">
 	<div class="modal-dialog modal-lg" role="document">
 
@@ -5,7 +9,11 @@
 
 			<div class="modal-header">
 
+				<!-- Modal Header -->
+
 				<h4 class="modal-title">Please Enter Profile information</h4>
+
+				<!-- Dismiss Button -->
 
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
@@ -15,10 +23,11 @@
 
 			<div class="modal-body">
 
-				<!-- actual form -->
+				<!-- Sign Up form -->
+
 				<form class="form-horizontal" [formGroup]="signUpForm"  (submit)="signUp();" novalidate>
 
-					<!-- User Name -->
+					<!-- User Name Input -->
 
 					<div class="form-group">
 						<label for="profileUserName" class="sr-only control-label">User Name</label>
@@ -32,7 +41,7 @@
 						</div>
 					</div>
 
-					<!-- users profile email-->
+					<!-- Email Input-->
 
 					<div class="form-group">
 						<label for="profileEmail" class="sr-only control-label">Email</label>
@@ -46,7 +55,7 @@
 						</div>
 					</div>
 
-					<!-- user password -->
+					<!-- Password Input -->
 
 					<div class="form-group">
 						<label for="profilePassword" class="sr-only control-label">Password</label>
@@ -60,7 +69,7 @@
 						</div>
 					</div>
 
-					<!--confirm password -->
+					<!--Confirm Password -->
 
 					<div class="form-group">
 						<label for="profilePasswordConfirm" class="sr-only control-label">Confirm Password</label>
@@ -74,7 +83,7 @@
 						</div>
 					</div>
 
-					<!-- Submit button -->
+					<!-- Submit Button -->
 
 					<div class="form-group">
 						<button type="submit" class="btn btn-info">Sign Up</button>

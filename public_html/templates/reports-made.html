@@ -1,9 +1,15 @@
-<!-- Reports Made/History List (Home View Partial)-->
+<!--/////////////////////-->
+<!-- Public Report Table -->
+<!--/////////////////////-->
+
 <div class="container-fluid mt-3">
 	<h2 class="m-2 p-3">Reports Submitted
 	<button class="btn btn-info my-0 mr-sm-2 d-inline-block ml-auto" data-toggle="modal" data-target="#report-submit-modal"><i class="fa fa-pencil"></i>&nbsp;Submit Report</button>
 	</h2>
 	<table class="table table-bordered table-responsive">
+
+		<!-- Table Head -->
+
 		<thead class="thead-dark">
 			<tr>
 				<th class="text-center px-4">Category</th>
@@ -13,23 +19,29 @@
 				<th class="text-center">View Report</th>
 			</tr>
 		</thead>
+
+		<!-- Table Body -->
+
 		<tbody class="table-light">
+
+			<!-- Dynamic Table Rows -->
+
 			<!--<tr *ngFor="let report of reports">-->
 				<!--<th>{{ report.categoryName }}</th>-->
 				<!--<td>{{ report.reportDateTime }}</td>-->
 				<!--<td>{{ report.reportStatus }}</td>-->
 				<!--<td>{{ report.reportContent }}</td>-->
-				<!--<td>-->
-					<!--<button class="btn btn-info my-0 mr-sm-2" data-toggle="modal" data-target="#report-public-view-modal"><i-->
-						<!--class="fa fa-binoculars"></i>&nbsp;View Report-->
-					<!--</button>-->
-				<!--</td>-->
-			<!--</tr>-->
+
+			<!-- Static Table Rows (For Development) -->
+
 			<tr>
 				<th>Traffic Signs & Signals</th>
 				<td>11/27/2017</td>
 				<td>Reported</td>
 				<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac nunc ut nisi mollis commodo ut ac dolor. Suspendisse lectus odio, eleifend a rhoncus quis, pharetra non dui. Suspendisse faucibus ut dui vitae hendrerit. Nullam id ex nec nisi pretium lacinia. Nam lacinia sollicitudin bibendum. Vivamus pellentesque risus tellus, sit amet dignissim diam finibus vel. Aliquam lacus nisi, posuere ut nunc dignissim, congue imperdiet elit. Donec in blandit arcu, sit amet luctus felis.</td>
+
+				<!-- Report View Modal -->
+
 				<td>
 					<button class="btn btn-info my-0 mr-sm-2" data-toggle="modal" data-target="#report-public-view-modal"><i
 						class="fa fa-binoculars"></i>&nbsp;View Report

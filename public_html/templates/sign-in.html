@@ -1,4 +1,7 @@
-<!-- setting up the modal -->
+<!--///////////////-->
+<!-- Sign In Modal -->
+<!--///////////////-->
+
 <div class="modal fade" id="signin-modal" tabindex="-1" role="dialog">
 
 	<div class="modal-dialog" role="document">
@@ -7,11 +10,11 @@
 
 			<div class="modal-header">
 
-				<!-- header for the modal -->
+				<!-- Modal Header -->
 
 				<h4 class="modal-title">Please Sign In</h4>
 
-				<!-- button to dismiss the modal -->
+				<!-- Dismiss Button -->
 
 				<button type="button" class="close" data-dismiss="modal" aria-label="close">
 					<span aria-hidden="true"> &times; </span>
@@ -22,11 +25,11 @@
 
 			<div class="modal-body">
 
-				<!-- actual login form -->
+				<!-- Login form -->
 
 				<form [formGroup]="signInForm" class="form-horizontal" (submit)="signIn();" novalidate>
 
-					<!-- email goes here -->
+					<!-- Email Input -->
 
 					<div class="form-group">
 						<label for="profileEmail" class="sr-only control-label">Email</label>
@@ -40,7 +43,8 @@
 						</div>
 					</div>
 
-					<!-- password goes here -->
+					<!-- Password Input -->
+
 					<div class="form-group">
 						<label for="profilePassword" class="sr-only control-label">Password</label>
 						<div class="input-group">
@@ -66,12 +70,7 @@
 
 
 				</div>
-
-
 			</div>
 		</div>
-
-
 	</div>
-
 </div>
