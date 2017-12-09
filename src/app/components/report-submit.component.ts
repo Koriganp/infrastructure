@@ -58,15 +58,13 @@ export class ReportSubmitComponent implements OnInit {
 
 		this.listCategories();
 
-		// this.createReport();
-
 		this.reportSubmitForm = this.formBuilder.group({
 			reportCategoryId: ["", [Validators.required]],
-			reportStreetAddress: [" ", [Validators.maxLength(200),Validators.required]],
-			reportCity: [" ",[Validators.maxLength(40), Validators.required]],
-			reportState: [" ",[Validators.maxLength(30), Validators.required]],
-			reportZipCode: [" ",[Validators.max(10), Validators.required]],
-			reportContent: [" ", [Validators.maxLength(3000), Validators.required]],
+			reportStreetAddress: ["", [Validators.maxLength(200),Validators.required]],
+			reportCity: ["",[Validators.maxLength(40), Validators.required]],
+			reportState: ["",[Validators.maxLength(30), Validators.required]],
+			reportZipCode: ["",[Validators.max(10), Validators.required]],
+			reportContent: ["", [Validators.maxLength(3000), Validators.required]],
 		});
 
 		this.applyFormChanges();
