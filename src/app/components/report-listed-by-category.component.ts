@@ -66,22 +66,4 @@ export class ReportListedByCategoryComponent implements OnInit {
 			.subscribe((reports: any) => this.report = reports);
 	}
 
-	updateReport() : void {
-		let report = new Report(null, this.reportListedByCategoryForm.value.reportCategoryId, this.reportListedByCategoryForm.value.reportContent, null, null, this.reportListedByCategoryForm.value.reportStatus, this.reportListedByCategoryForm.value.reportUrgency);
-
-		this.reportService.updateReport(report)
-			.subscribe(status => {
-				this.status = status;
-				console.log(this.status);
-				if(status.status === 200) {
-					alert("Edit Successful");
-					this.reportListedByCategoryForm.reset();
-					setTimeout(function() {
-						$("#report-admin-view-modal").modal('hide');
-					}, 500);
-				} else {
-					alert("Error, there was a problem with one of your entries. Please try again.");
-				}
-			});
-	}
 }
