@@ -30,15 +30,15 @@ export class ReportSubmitComponent implements OnInit {
 		additionalParameter: {}
 	});
 
-	protected cloudinaryPublicId : string = null;
-	protected cloudinaryPublicIdObservable : Observable<string> = new Observable<string>();
+	protected cloudinaryPublicId: string = null;
+	protected cloudinaryPublicIdObservable: Observable<string> = new Observable<string>();
 
 	//declare needed state variables for later use.
 	reportSubmitForm: FormGroup;
 
 	category: Category = new Category(null, null);
 
-	report: Report = new Report( null, null, null, null, null, null, null);
+	report: Report = new Report(null, null, null, null, null, null, null);
 
 	image: Image = new Image(null, null, null, null, null);
 
@@ -46,31 +46,29 @@ export class ReportSubmitComponent implements OnInit {
 
 	categories: Category[] = [];
 
-	constructor(
-		private formBuilder: FormBuilder,
-		private reportService: ReportService,
-		private categoryService: CategoryService,
-		private router: Router
-		) {
+	constructor(private formBuilder: FormBuilder,
+					private reportService: ReportService,
+					private categoryService: CategoryService,
+					private router: Router) {
 	}
 
-	ngOnInit() : void {
+	ngOnInit(): void {
 
 		this.listCategories();
 
 		this.reportSubmitForm = this.formBuilder.group({
 			reportCategoryId: ["", [Validators.required]],
-			reportStreetAddress: ["", [Validators.maxLength(200),Validators.required]],
-			reportCity: ["",[Validators.maxLength(40), Validators.required]],
-			reportState: ["",[Validators.maxLength(30), Validators.required]],
-			reportZipCode: ["",[Validators.max(10), Validators.required]],
+			reportStreetAddress: ["", [Validators.maxLength(200), Validators.required]],
+			reportCity: ["", [Validators.maxLength(40), Validators.required]],
+			reportState: ["", [Validators.maxLength(30), Validators.required]],
+			reportZipCode: ["", [Validators.max(10), Validators.required]],
 			reportContent: ["", [Validators.maxLength(3000), Validators.required]],
 		});
 
 		this.applyFormChanges();
 	}
 
-	applyFormChanges() : void {
+	applyFormChanges(): void {
 		this.reportSubmitForm.valueChanges.subscribe(values => {
 			for(let field in values) {
 				this.report[field] = values[field];
@@ -91,14 +89,14 @@ export class ReportSubmitComponent implements OnInit {
 
 		this.reportService.createReport(report)
 			.subscribe(status => {
-					this.status = status;
-					console.log(this.status);
-					if(status.status === 200) {
-						alert("Admin will confirm your report shortly");
-					}
+				this.status = status;
+				console.log(this.status);
+				if(status.status === 200) {
+					alert("Admin will confirm your report shortly");
+				}
 				this.reportSubmitForm.reset();
 				window.location.replace("");
-				});
+			});
 
 		// .subscribe(status =>{
 		// 	this.status = status;
