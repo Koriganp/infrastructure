@@ -96,13 +96,7 @@ export class ReportSubmitComponent implements OnInit {
 					if(status.status === 200) {
 						alert("Admin will confirm your report shortly");
 						this.reportSubmitForm.reset();
-						setTimeout(function() {
-							$("#report-submit-modal").modal('hide');
-						}, 500);
-						this.router.navigate(["home-view"]);
-					} else {
-						alert("Error, there was a problem with one of your entries. Please try again.");
-					}
+						window.location.replace("");
 				});
 
 		// .subscribe(status =>{
