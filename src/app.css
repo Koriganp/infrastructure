@@ -26,9 +26,18 @@ h1 {
 	height: 50em;
 }
 
-/** Report Listed By Category **/
+/** Administrator report pop-up **/
 
 .admin-report {
+	margin: 5rem;
+	padding: 5rem;
+	width: 60em;
+	height: 75em;
+}
+
+/** Public report pop-up **/
+
+.public-report {
 	margin: 5rem;
 	padding: 5rem;
 	width: 60em;

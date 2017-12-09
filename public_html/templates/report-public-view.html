@@ -1,41 +1,51 @@
 <!-- Report Public View (Pop-Up) -->
-<div class="card" style="width: 50em; height: 50em">
+<div class="modal fade" tabindex="-1" role="dialog" id="report-public-view-modal">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header public-report">
 
-	<h1>Reports Submitted</h1>
+				<h1 class="modal-title">Reports Submitted</h1>
+				<button type="button" class="close" data-dismiss="modal" aria-label="close">
+					<span aria-hidden="true"> &times; </span>
+				</button>
 
-	<div>
-		<h3>Category Title</h3>
-	</div>
+				<div>
+					<h3 class="text-center">Category Title</h3>
+				</div>
 
-	<form>
-		<div class="form-group">
-			<label for="staticDateReported" class="col-form-label">Date Reported</label>
-			<div>
-				<input type="text" readonly class="form-control" id="staticDateReported" value="11/28/2017">
+
+				<form>
+					<div class="form-group">
+						<label for="staticDateReported" class="col-form-label">Date Reported</label>
+						<div>
+							<input type="text" readonly class="form-control" id="staticDateReported" value="11/28/2017">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="staticStatus" class="col-form-label">Status</label>
+						<div>
+							<input type="text" readonly class="form-control" id="staticStatus" value="Reported">
+						</div>
+					</div>
+				</form>
+
+				<div>
+					<h3>Report Content</h3>
+					<div>
+						<div class="form-group">
+							<label for="content">Example textarea</label>
+							<textarea class="form-control" id="content" rows="10"></textarea>
+						</div>
+					</div>
+				</div>
+
+				<div>
+					<h3>Images</h3>
+					<img src="" alt="" class="img-thumbnail">
+					<img src="" alt="" class="img-thumbnail">
+				</div>
+
 			</div>
 		</div>
-		<div class="form-group">
-			<label for="staticStatus" class="col-form-label">Status</label>
-			<div>
-				<input type="text" readonly class="form-control" id="staticStatus" value="Reported">
-			</div>
-		</div>
-	</form>
-
-	<div>
-		<h3>Report Content</h3>
-		<div>
-			<div class="form-group">
-				<label for="content">Example textarea</label>
-				<textarea class="form-control" id="content" rows="10"></textarea>
-			</div>
-		</div>
 	</div>
-
-	<div>
-		<h3>Images</h3>
-		<img src="" alt="" class="img-thumbnail">
-		<img src="" alt="" class="img-thumbnail">
-	</div>
-
 </div>
