@@ -5,18 +5,48 @@ import {Comment} from "../classes/comment";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
-    templateUrl: "./templates/comment.html",
-    selector: "comment"
+	templateUrl: "./templates/comment.html",
+	selector: "comment"
 })
 
 export class CommentComponent implements OnInit{
 
     commentForm: FormGroup;
 
-    status: Status = null;
+	deleted: boolean = false;
 
-    comment: Comment = new Comment(null, null, null, null, null);
+	reportCommentForm: FormGroup;
 
+	status: Status = null;
+
+	comment: Comment = new Comment(null, null, null, null, null);
+
+	constructor(
+		private commentService: CommentService,
+		private formBuilder: FormBuilder) {
+	}
+
+	ngOnInit(): void {
+
+		this.getCommentByProfileId();
+		this.getCommentByReportId();
+
+		this.reportCommentForm = this.formBuilder.group({
+			reportStatus: ["", [Validators.required]],
+			reportUrgency: ["", [Validators.required]],
+			commentContent: ["", [Validators.maxLength(500), Validators.required]]
+		});
+	}
+
+	getCommentByProfileId(): void {
+		this.commentService.getCommentByCommentProfileId(this.comment.commentProfileId)
+			.subscribe(comment => this.status = comment);
+	}
+
+	getCommentByReportId(): void {
+		this.commentService.getCommentByCommentReportId(this.comment.commentReportId)
+			.subscribe(comment => this.status = comment);
+	}
     constructor (private commentService : CommentService, private formBuilder : FormBuilder) {}
 
     ngOnInit() : void {
@@ -27,8 +57,33 @@ export class CommentComponent implements OnInit{
 
     }
 
-    createComment() : void {
-        this.commentService.createComment(this.comment)
-            .subscribe(status => this.status = status);
-    }
+	createComment(): void {
+		let comment = new Comment(null, null, null, this.reportCommentForm.value.commentContent, null);
+
+		this.commentService.createComment(comment)
+			.subscribe(status => {
+				this.status = status;
+				if(this.status.status === 200) {
+					this.reportCommentForm.reset();
+					alert(this.status.message);
+				}
+			})
+	}
+
+	editComment(): void {
+		this.commentService.editComment(this.comment)
+			.subscribe(status => this.status = status);
+	}
+
+	deleteComment(): void {
+		this.commentService.deleteComment(this.comment.commentId)
+			.subscribe(status => {
+				this.status = status;
+				if(this.status.status === 200) {
+					this.deleted = true;
+					this.comment = new Comment(null, null, null, null, null);
+				}
+			})
+	}
+
 }

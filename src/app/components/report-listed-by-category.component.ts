@@ -3,7 +3,7 @@ this is used to list all reports based on category or something
 */
 
 import {Component, OnInit} from "@angular/core";
-import {AuthService} from "../services/auth.service";
+import {JwtHelperService} from '@auth0/angular-jwt';
 import {ReportService} from "../services/report.service";
 import {CategoryService} from "../services/category.service";
 import {ProfileService} from "../services/profile.services";
@@ -36,12 +36,11 @@ export class ReportListedByCategoryComponent implements OnInit {
 	categories: Category[] = [];
 
 	constructor(
-		private authService : AuthService,
 		private router: Router,
 		private formBuilder : FormBuilder,
 		private reportService : ReportService,
 		private categoryService : CategoryService,
-		private profileService : ProfileService) {}
+		private jwtHelperService : JwtHelperService) {}
 
 	// life cycling before George's eyes
 	ngOnInit() : void {

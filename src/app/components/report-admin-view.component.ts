@@ -40,6 +40,8 @@ export class ReportAdminViewComponent implements OnInit {
 
 	ngOnInit() : void {
 
+		this.getReportByReportId();
+
 		this.reportAdminViewForm = this.formBuilder.group({
 			reportStatus: ["", [Validators.required]],
 			reportUrgency: ["", [Validators.required]],
