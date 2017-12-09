@@ -95,9 +95,9 @@ export class ReportSubmitComponent implements OnInit {
 					console.log(this.status);
 					if(status.status === 200) {
 						alert("Admin will confirm your report shortly");
-						this.reportSubmitForm.reset();
-						window.location.replace("");
 					}
+				this.reportSubmitForm.reset();
+				window.location.replace("");
 				});
 
 		// .subscribe(status =>{
