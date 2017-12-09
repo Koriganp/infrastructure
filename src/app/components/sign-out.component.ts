@@ -19,7 +19,6 @@ export class SignOutComponent {
 
 	signOut() : void {
 		this.signOutService.getSignOut();
-		window.location.reload();
-		this.router.navigate(["home-view"]);
+		window.location.replace("home-view");
 	}
 }
