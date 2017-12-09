@@ -6,14 +6,14 @@
 	<table class="table table-bordered table-responsive">
 		<thead class="thead-dark">
 			<tr>
-				<th class="text-center px-4" scope="col-4">Category</th>
-				<th class="text-center" scope="col-2">Date Reported</th>
-				<th class="text-center" scope="col-2">Report Status</th>
-				<th class="text-center" scope="col-4">Report Content</th>
+				<th class="text-center px-4">Category</th>
+				<th class="text-center">Date Reported</th>
+				<th class="text-center">Report Status</th>
+				<th class="text-center">Report Content</th>
 			</tr>
 		</thead>
 		<tbody class="table-light">
-			<tr *ngFor="let report of reports">
+			<tr *ngFor="let report of reports" [value]="report.reportId">
 				<td>{{ report.categoryName }}</td>
 				<td>{{ report.reportDateTime }}</td>
 				<td>{{ report.reportStatus }}</td>
