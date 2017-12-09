@@ -60,6 +60,8 @@ export class ReportSubmitComponent implements OnInit {
 
 		this.listCategories();
 
+		this.createReport();
+
 		this.reportSubmitForm = this.formBuilder.group({
 			reportCategoryId: ["", [Validators.required]],
 			reportStreetAddress: [" ", [Validators.maxLength(200),Validators.required]],
@@ -99,7 +101,7 @@ export class ReportSubmitComponent implements OnInit {
 					this.status = status;
 					console.log(this.status);
 					if(status.status === 200) {
-						alert("Admin will confirm your report short");
+						alert("Admin will confirm your report shortly");
 						this.reportSubmitForm.reset();
 						setTimeout(function() {
 							$("#report-submit-modal").modal('hide');
