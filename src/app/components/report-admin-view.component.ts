@@ -40,21 +40,14 @@ export class ReportAdminViewComponent implements OnInit {
 
 	ngOnInit() : void {
 
-		this.getReportByReportId();
-		this.getCommentByProfileId();
-		this.getCommentByReportId();
-		this.updateReport();
-		this.deleteReport();
-		this.createComment();
-		this.editComment();
-		this.deleteComment();
-
 		this.reportAdminViewForm = this.formBuilder.group({
 			reportStatus: ["", [Validators.required]],
 			reportUrgency: ["", [Validators.required]],
 			commentContent: ["", [Validators.maxLength(500), Validators.required]]
 		});
+
 	}
+
 	getReportByReportId(): void {
 		this.reportService.getReportByReportId(this.report.reportId)
 			.subscribe(report => this.report = report);
