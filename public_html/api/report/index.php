@@ -156,11 +156,10 @@ try {
 				throw(new \InvalidArgumentException("You must choose a category to submit a report", 403));
 			}
 
-			$latObject = getLatLongByAddress($requestObject->reportContentAddress);
-			$longObject = getLatLongByAddress($requestObject->reportContentAddress);
-
+			$latLongObject = getLatLongByAddress($requestObject->reportContentAddress);
+//			var_dump($latLongObject);
 			// create a new report and insert into database
-			$report = new Report(generateUuidV4(), $requestObject->reportCategoryId, $requestObject->reportContent, $requestObject->reportDateTime, $_SERVER["REMOTE_ADDR"], $latObject->reportLat, $longObject->reportLong, $requestObject->reportStatus, $requestObject->reportUrgency, substr($_SERVER["HTTP_USER_AGENT"], 0, 255));
+			$report = new Report(generateUuidV4(), $requestObject->reportCategoryId, $requestObject->reportContent, $requestObject->reportDateTime, $_SERVER["REMOTE_ADDR"], $latLongObject->lat, $latLongObject->long, "new", 1, substr($_SERVER["HTTP_USER_AGENT"], 0, 255));
 			$report->insert($pdo);
 
 			// update reply
