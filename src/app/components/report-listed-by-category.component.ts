@@ -46,7 +46,7 @@ export class ReportListedByCategoryComponent implements OnInit {
 
 	ngOnInit() : void {
 
-		this.reloadReports();
+		this.listReports();
 
 		this.reportListedByCategoryForm = this.formBuilder.group({
 			reportCategoryName: ["", [Validators.maxLength(32), Validators.required]],
@@ -58,11 +58,10 @@ export class ReportListedByCategoryComponent implements OnInit {
 
 	}
 
-	reloadReports() : void {
+	listReports() : void {
 		this.reportService.getAllReports()
 			.subscribe(reports => this.reports = reports);
 	}
-
 
 	listCategories() : void {
 		this.categoryService.getAllCategories()
