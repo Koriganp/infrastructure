@@ -27,8 +27,10 @@ export class ReportPublicViewComponent implements OnInit{
 		//this.getReport()
 	}
 
-	getReport(): void {
-		this.reportService.getReport(this.report.reportId)
-			.subscribe(report => this.report = report);
-	}
+
+
+	// getReport(): void {
+	// 	this.reportService.getReport(this.report.reportId)
+	// 		.subscribe(report => this.report = report);
+	// }
 }
