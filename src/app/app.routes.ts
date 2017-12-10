@@ -8,22 +8,42 @@ import {DeepDiveInterceptor} from "./services/deep.dive.intercepters";
 
 
 // import all components
-import {AdminDashboardComponent} from "./components/admin-dashboard.component";
-import {HomeViewComponent} from "./components/home-view.component";
+import {InfrastructureAppComponent} from "./components/infrastructure-app.component";
 import {NavbarComponent} from "./components/navbar.component";
 import {FootComponent} from "./components/foot.component";
-import {ReportAdminViewComponent} from "./components/report-admin-view.component";
-import {ReportPublicViewComponent} from "./components/report-public-view.component";
+import {HomeViewComponent} from "./components/home-view.component";
 import {ReportsMadeComponent} from "./components/reports-made.component";
+import {ReportPublicViewComponent} from "./components/report-public-view.component";
 import {ReportSubmitComponent} from "./components/report-submit.component";
-import {CommentComponent} from "./components/comment.component";
-import {SignInComponent} from "./components/sign-in.component";
+import {AdminDashboardComponent} from "./components/admin-dashboard.component";
 import {SignUpComponent} from "./components/sign-up.component";
+import {SignInComponent} from "./components/sign-in.component";
 import {SignOutComponent} from "./components/sign-out.component";
-import {ReportListedByCategoryComponent} from "./components/report-listed-by-category.component";
-import {InfrastructureAppComponent} from "./components/infrastructure-app.component";
 import {CategoryComponent} from "./components/category.component";
+import {ReportListedByCategoryComponent} from "./components/report-listed-by-category.component";
+import {ReportAdminViewComponent} from "./components/report-admin-view.component";
+import {CommentComponent} from "./components/comment.component";
 import {FileSelectDirective} from "ng2-file-upload";
+
+
+
+// Previous Order of Components
+// import {AdminDashboardComponent} from "./components/admin-dashboard.component";
+// import {HomeViewComponent} from "./components/home-view.component";
+// import {NavbarComponent} from "./components/navbar.component";
+// import {FootComponent} from "./components/foot.component";
+// import {ReportAdminViewComponent} from "./components/report-admin-view.component";
+// import {ReportPublicViewComponent} from "./components/report-public-view.component";
+// import {ReportsMadeComponent} from "./components/reports-made.component";
+// import {ReportSubmitComponent} from "./components/report-submit.component";
+// import {CommentComponent} from "./components/comment.component";
+// import {SignInComponent} from "./components/sign-in.component";
+// import {SignUpComponent} from "./components/sign-up.component";
+// import {SignOutComponent} from "./components/sign-out.component";
+// import {ReportListedByCategoryComponent} from "./components/report-listed-by-category.component";
+// import {InfrastructureAppComponent} from "./components/infrastructure-app.component";
+// import {CategoryComponent} from "./components/category.component";
+// import {FileSelectDirective} from "ng2-file-upload";
 
 
 // import services
