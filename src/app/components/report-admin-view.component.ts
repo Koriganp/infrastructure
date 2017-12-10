@@ -8,6 +8,8 @@ import {Report} from "../classes/report";
 import {ReportService} from "../services/report.service";
 import {Comment} from "../classes/comment";
 import {CommentService} from "../services/comment.service";
+import {Category} from "../classes/category";
+import {CategoryService} from "../services/category.service";
 import {Image} from "../classes/image";
 import {ImageService} from "../services/image.service";
 import {Status} from "../classes/status";
@@ -27,6 +29,10 @@ export class ReportAdminViewComponent implements OnInit {
 
 	profile: Profile = new Profile(null, null, null, null, null, null);
 
+	category: Category = new Category(null, null);
+
+	categories: Category[] = [];
+
 	report: Report = new Report(null, null, null, null, null, null, null);
 
 	image: Image = new Image(null, null, null, null, null);
@@ -36,13 +42,22 @@ export class ReportAdminViewComponent implements OnInit {
 	//declare needed state variables for later use
 	status: Status = null;
 
-	constructor(private authService: AuthService, private formBuilder: FormBuilder, private profileService: ProfileService, private reportService: ReportService, private commentService: CommentService, private imageService: ImageService) {}
+	constructor(
+		private authService: AuthService,
+		private formBuilder: FormBuilder,
+		private profileService: ProfileService,
+		private reportService: ReportService,
+		private commentService: CommentService,
+		private categoryService: CategoryService,
+		private imageService: ImageService) {}
 
 	ngOnInit() : void {
 
+		this.listCategories();
 		// this.getReportByReportId();
 
 		this.reportAdminViewForm = this.formBuilder.group({
+			reportCategoryId: ["", [Validators.required]],
 			reportStatus: ["", [Validators.required]],
 			reportUrgency: ["", [Validators.required]],
 			commentContent: ["", [Validators.maxLength(500), Validators.required]]
@@ -53,7 +68,11 @@ export class ReportAdminViewComponent implements OnInit {
 	getReportByReportId(): void {
 		this.reportService.getReportByReportId(this.report.reportId)
 			.subscribe(report => this.report = report);
+	}
 
+	listCategories(): void {
+		this.categoryService.getAllCategories()
+			.subscribe(categories => this.categories = categories);
 	}
 
 	updateReport() : void {

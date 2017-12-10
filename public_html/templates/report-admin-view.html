@@ -26,13 +26,18 @@
 					<div>
 						<!-- Dynamic Field -->
 
-						<!--<ul *ngFor="let category of categories">-->
-						<!--<li>{{ report.reportCategoryId }}</li>-->
-						<!--</ul>-->
+						<div class="form-group">
+						<label for="reportCategoryId">Category</label>
+						<select id="reportCategoryId" class="form-control mb-2" name="reportCategoryId" required formControlName="reportCategoryId">
+							<option *ngFor="let category of categories" [value]="category.categoryId">
+								{{category.categoryName}}
+							</option>
+						</select>
+					</div>
 
 						<!-- Static Field (For Development) -->
 
-						<p class="viewHeadings">Category Title</p>
+						<!--<p class="viewHeadings">Category Title</p>-->
 					</div>
 
 

@@ -46,10 +46,11 @@ export class ReportSubmitComponent implements OnInit {
 
 	categories: Category[] = [];
 
-	constructor(private formBuilder: FormBuilder,
-					private reportService: ReportService,
-					private categoryService: CategoryService,
-					private router: Router) {
+	constructor(
+		private formBuilder: FormBuilder,
+		private reportService: ReportService,
+		private categoryService: CategoryService,
+		private router: Router) {
 	}
 
 	ngOnInit(): void {
