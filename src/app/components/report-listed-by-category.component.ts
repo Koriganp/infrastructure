@@ -43,11 +43,8 @@ export class ReportListedByCategoryComponent implements OnInit {
 		private jwtHelperService : JwtHelperService) {}
 
 	// life cycling before George's eyes
+
 	ngOnInit() : void {
-
-		this.listCategories();
-
-		this.getReportByCategoryId();
 
 		this.reloadReports();
 
