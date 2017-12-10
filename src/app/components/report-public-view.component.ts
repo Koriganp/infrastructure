@@ -24,11 +24,11 @@ export class ReportPublicViewComponent implements OnInit{
 	constructor(private formBuilder: FormBuilder, private reportService: ReportService, private imageService: ImageService){}
 
 	ngOnInit(): void {
-		// this.getReportByReportId();
+		//this.getReport()
 	}
 
-	getReportByReportId(): void {
-		this.reportService.getReportByReportId(this.report.reportId)
+	getReport(): void {
+		this.reportService.getReport(this.report.reportId)
 			.subscribe(report => this.report = report);
 	}
 }

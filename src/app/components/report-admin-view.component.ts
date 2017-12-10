@@ -83,7 +83,7 @@ export class ReportAdminViewComponent implements OnInit {
 				this.status = status;
 				console.log(this.status);
 				if(status.status === 200) {
-					alert("Edit Successful");
+					 alert("Edit Successful");
 					this.reportAdminViewForm.reset();
 					setTimeout(function() {
 						$("#report-admin-view-modal").modal('hide');
