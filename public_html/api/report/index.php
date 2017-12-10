@@ -158,7 +158,7 @@ try {
 
 			$latLongObject = getLatLongByAddress($requestObject->reportContentAddress);
 			// create a new report and insert into database
-			$report = new Report(generateUuidV4(), $requestObject->reportCategoryId, $requestObject->reportContent, $requestObject->reportDateTime, $_SERVER["REMOTE_ADDR"], $latLongObject->lat, $latLongObject->long, "new", 1, substr($_SERVER["HTTP_USER_AGENT"], 0, 255));
+			$report = new Report(generateUuidV4(), $requestObject->reportCategoryId, $requestObject->reportContent, $requestObject->reportDateTime, $_SERVER["REMOTE_ADDR"], $latLongObject->lat, $latLongObject->long, "Reported", 1, substr($_SERVER["HTTP_USER_AGENT"], 0, 255));
 			$report->insert($pdo);
 
 			// update reply
