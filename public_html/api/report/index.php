@@ -14,7 +14,7 @@ require_once(dirname(__DIR__, 3) . "/php/lib/jwt.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 use Edu\Cnm\Infrastructure\ {
-	Report, Profile
+	Report
 };
 
 //verify the xsrf challenge
@@ -31,17 +31,16 @@ try {
 	//grab the mySQL connection
 	$pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/abqreport.ini");
 
-	// mock a logged in user by forcing the session. For test purposes and not in live code
-
 	//determine which HTTP method was used
 	$method = array_key_exists("HTTP_X_HTTP_METHOD", $_SERVER) ? $_SERVER["HTTP_X_HTTP_METHOD"] : $_SERVER["REQUEST_METHOD"];
 
 	//sanitize input
 	$id = filter_input(INPUT_GET, "id", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
-	$reportCategoryId = filter_input(INPUT_GET, "reportCategoryid", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	$reportCategoryId = filter_input(INPUT_GET, "reportCategoryId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+	$reportContent = filter_input(INPUT_GET, "reportContent", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$reportStatus = filter_input(INPUT_GET, "reportStatus", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 	$reportUrgency = filter_input(INPUT_GET, "reportUrgency", FILTER_VALIDATE_INT);
-	$reportContent = filter_input(INPUT_GET, "reportContent", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+
 
 	// make sure the id is valid for methods that require it
 	if(($method === "DELETE" || $method === "PUT") && (empty($id) === true)) {
@@ -127,6 +126,7 @@ try {
 			}
 
 			// update status and urgency
+			$report->setReportCategoryId($requestObject->reportCategoryId);
 			$report->setReportStatus($requestObject->reportStatus);
 			$report->setReportUrgency($requestObject->reportUrgency);
 			$report->update($pdo);
@@ -157,7 +157,6 @@ try {
 			}
 
 			$latLongObject = getLatLongByAddress($requestObject->reportContentAddress);
-//			var_dump($latLongObject);
 			// create a new report and insert into database
 			$report = new Report(generateUuidV4(), $requestObject->reportCategoryId, $requestObject->reportContent, $requestObject->reportDateTime, $_SERVER["REMOTE_ADDR"], $latLongObject->lat, $latLongObject->long, "new", 1, substr($_SERVER["HTTP_USER_AGENT"], 0, 255));
 			$report->insert($pdo);
