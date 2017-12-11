@@ -4,9 +4,24 @@
 
 <div class="container-fluid mt-3">
 
-	<h2 class="m-2 p-3 text-light">Reports Submitted
-		<button class="btn btn-info my-0 mr-sm-2 d-inline-block ml-auto"><i class="fa fa-pie-chart"></i>&nbsp;Sort By Category</button>
-	</h2>
+	<!--<h2 class="m-2 p-3 text-light">Reports Submitted-->
+		<!--<button class="btn btn-info my-0 mr-sm-2 d-inline-block ml-auto"><i class="fa fa-pie-chart" (click)="listCategories()"></i>&nbsp;Sort By Category</button>-->
+	<!--</h2>-->
+
+	<!--Category Button Dropdown-->
+	<div class="row">
+		<div class="col-lg-6">
+			<div class="input-group">
+				<div class="input-group-btn">
+					<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Sort Categories
+					</button>
+					<div class="dropdown-menu">
+							<option *ngFor="let category of categories" [value]="category.categoryId">{{category.categoryName}}</option>
+					</div>
+				</div>
+			</div>
+		</div>
 
 	<table class="table table-bordered table-responsive mb-5">
 
