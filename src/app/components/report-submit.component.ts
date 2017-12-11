@@ -13,6 +13,7 @@ import {Status} from "../classes/status";
 import {Data, Router} from "@angular/router";
 import {Observable} from "rxjs";
 import "rxjs/add/observable/from";
+import {temporaryDeclaration} from "@angular/compiler/src/compiler_util/expression_converter";
 
 declare let $: any;
 
@@ -99,29 +100,34 @@ export class ReportSubmitComponent implements OnInit {
 
 		let report = new Report(null, this.reportSubmitForm.value.reportCategoryId, this.reportSubmitForm.value.reportContent, null, reportContentAddress, this.reportSubmitForm.value.reportStatus, this.reportSubmitForm.value.reportUrgency);
 
+
+
 		this.reportService.createReport(report)
-			.subscribe(reply => {
-				this.status = reply.status;
+			.subscribe(status => {
+				this.status = status;
 				console.log(this.status);
 				if(this.status.status === 200) {
-					// this.uploader. = {imageReportId: reply.reportId};
-					this.uploader.uploadAll();
+					console.log(this.status.status);
 					alert("Admin will confirm your report shortly");
 				}
 				this.reportSubmitForm.reset();
+
+				let image = new Image(null, this.status.data, null, null, null);
+
+				this.imageService.uploadImage(image)
+					.subscribe(status => {
+						this.status = status;
+						console.log(this.status);
+						if(status.status === 200) {
+							alert("Images uploaded an will be confirmed by admin shortly.")
+						}
+					})
 			});
 
-		// let image = new Image(null, reply.status, null, null, null);
-		//
-		// this.imageService.uploadImage(image)
-		// 	.subscribe(status => {
-		// 		this.status = status;
-		// 		console.log(this.status);
-		// 		if(status.status === 200) {
-		// 			alert("Images uploaded an will be confirmed by admin shortly.")
-		// 		}
-		// 	})
-	}
+
+
+
+}
 
 
 

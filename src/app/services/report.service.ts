@@ -4,6 +4,7 @@ import {Status} from "../classes/status";
 import {Report} from "../classes/report";
 import {Observable} from "rxjs/Observable";
 import {HttpClient} from "@angular/common/http";
+import {Image} from "../classes/image";
 
 @Injectable ()
 export class ReportService {
@@ -14,6 +15,7 @@ export class ReportService {
 
 	// define the API endpoint
 	private reportUrl = "api/report/";
+	private imageUrl = "api/image/";
 
 
 	// call to the report API and delete the report in question
@@ -48,6 +50,10 @@ export class ReportService {
 	//call to the API and get an array of all the reports in the database
 	getAllReports() : Observable<Report[]> {
 		return(this.http.get<Report[]>(this.reportUrl));
+	}
+
+	uploadImage(image : Image) : Observable<Status> {
+		return(this.http.post<Status>(this.imageUrl, image));
 	}
 
 }
