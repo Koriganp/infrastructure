@@ -28,34 +28,30 @@ export class ReportsMadeComponent implements OnInit{
 
 	reports: Report[] = [];
 
-	 constructor(
+	constructor(
 		private formBuilder : FormBuilder,
 		private reportService : ReportService,
 		private categoryService : CategoryService) {}
 
-	 ngOnInit() : void {
+	ngOnInit() : void {
 
 	 	this.listCategories();
 
 	 	this.listAllReports();
-	 }
+	}
 
-	 listAllReports() : void {
+	listAllReports() : void {
 		this.reportService.getAllReports()
 			.subscribe(reports => this.reports = reports);
-	 }
+	}
+
 	listCategories() : void {
 		this.categoryService.getAllCategories()
 			.subscribe(categories => this.categories = categories);
 	}
 
-	getCategorybyCategoryId(categoryId : string) : Category {
+	getCategoryByCategoryId(categoryId : string) : Category {
 		return (this.categories.find(searchCategory => searchCategory.categoryId === categoryId));
 	}
-
-
-
-
-
 
 }
