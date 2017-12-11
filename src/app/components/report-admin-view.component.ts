@@ -57,7 +57,6 @@ export class ReportAdminViewComponent implements OnInit {
 		// this.getReportByReportId();
 
 		this.reportAdminViewForm = this.formBuilder.group({
-			reportCategoryId: ["", [Validators.required]],
 			reportStatus: ["", [Validators.required]],
 			reportUrgency: ["", [Validators.required]],
 			commentContent: ["", [Validators.maxLength(500), Validators.required]]

@@ -13,7 +13,7 @@
 
 				<!-- Dismiss Button -->
 
-				<button type="button" class="close" data-dismiss="modal" aria-label="close" [formGroup]="reportPublicViewForm">
+				<button type="button" class="close" data-dismiss="modal" aria-label="close">
 					<span aria-hidden="true"> &times; </span>
 				</button>
 			</div>
@@ -25,20 +25,16 @@
 					<div>
 						 <!--Dynamic Field -->
 
-						<ul *ngFor="let category of categories">
-						<li>{{ category.categoryName }}</li>
-						</ul>
-
 						 <!--Static Field (For Development) -->
 
-						<!--<p class="text-center">Category Title</p>-->
+						<p class="text-center">{{ category.categoryName }}</p>
 					</div>
 
 
 					<div class="form-group">
 						<label for="staticDateReported" class="col-form-label">Date Reported</label>
 						<div>
-							<input type="text" readonly class="form-control" id="staticDateReported" value="11/28/2017">
+							<input type="text" readonly class="form-control" id="staticDateReported" value="{{ report.reportDateTime }}">
 						</div>
 					</div>
 					<div class="form-group">

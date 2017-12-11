@@ -2,6 +2,8 @@ import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Report} from "../classes/report";
 import {ReportService} from "../services/report.service";
+import {Category} from "../classes/category";
+import {CategoryService} from "../services/category.service";
 import {Image} from "../classes/image";
 import {ImageService} from "../services/image.service";
 import {Status} from "../classes/status";
@@ -15,6 +17,8 @@ export class ReportPublicViewComponent implements OnInit{
 	reportPublicViewForm: FormGroup;
 
 	report: Report = new Report(null, null, null, null, null, null, null);
+
+	category: Category = new Category(null,null);
 
 	image: Image = new Image(null, null, null, null, null);
 

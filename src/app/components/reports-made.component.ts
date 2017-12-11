@@ -1,16 +1,11 @@
 /*
 this lists all reports
  */
-
 import {Component, OnInit} from "@angular/core";
-
-import {AuthService} from "../services/auth.service";
-import {ReportService} from "../services/report.service";
-import {CategoryService} from "../services/category.service";
-import {ProfileService} from "../services/profile.services";
-
 import {Report} from "../classes/report";
+import {ReportService} from "../services/report.service";
 import {Category} from "../classes/category";
+import {CategoryService} from "../services/category.service";
 import {Status} from "../classes/status";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
@@ -19,7 +14,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 	selector: "reports-made"
 })
 
-export class ReportsMadeComponent implements OnInit {
+export class ReportsMadeComponent implements OnInit{
 
 	reportsMadeForm: FormGroup;
 
@@ -32,25 +27,20 @@ export class ReportsMadeComponent implements OnInit {
 	reports: Report[] = [];
 
 	 constructor(
-	 	private authService : AuthService,
 		private formBuilder : FormBuilder,
 		private reportService : ReportService,
-		private categoryService : CategoryService,
-		private profileService : ProfileService) {}
+		private categoryService : CategoryService) {}
 
-	 // life cycling before george's eyes
 	 ngOnInit() : void {
-		this.listAllReports();
-
-		this.reportsMadeForm = this.formBuilder.group({
-
-		});
+	 	this.listAllReports();
 	 }
 
 	 listAllReports() : void {
 		this.reportService.getAllReports()
 			.subscribe(reports => this.reports = reports);
 	 }
+
+
 
 
 
