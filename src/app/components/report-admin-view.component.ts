@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
+import {ActivatedRoute, Params} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-
 import {AuthService} from "../services/auth.service";
 import {Profile} from "../classes/profile";
 import {ProfileService} from "../services/profile.services";
@@ -49,20 +49,43 @@ export class ReportAdminViewComponent implements OnInit {
 		private reportService: ReportService,
 		private commentService: CommentService,
 		private categoryService: CategoryService,
-		private imageService: ImageService) {}
+		private imageService: ImageService,
+		private route: ActivatedRoute) {}
 
 	ngOnInit() : void {
 
 		this.listCategories();
 		// this.getReportByReportId();
 
+		this.route.params.forEach((params : Params) => {
+			let reportId = params["reportId"];
+			this.reportService.getReport(reportId)
+				.subscribe(report => {
+					this.report = report;
+					this.reportAdminViewForm.patchValue(report);
+				});
+		});
+
 		this.reportAdminViewForm = this.formBuilder.group({
+			reportContent: ["", [Validators.required]],
+			reportDateTime: ["", [Validators.required]],
 			reportStatus: ["", [Validators.required]],
 			reportUrgency: ["", [Validators.required]],
 			reportCategoryId: ["", [Validators.required]],
 			commentContent: ["", [Validators.maxLength(500), Validators.required]]
 		});
 
+		this.applyFormChanges();
+
+
+	}
+
+	applyFormChanges() : void {
+		this.reportAdminViewForm.valueChanges.subscribe(values => {
+			for(let field in values) {
+				this.report[field] = values[field];
+			}
+		})
 	}
 
 	getReportByReportId(): void {
