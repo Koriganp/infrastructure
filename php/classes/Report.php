@@ -734,6 +734,7 @@ class Report implements \JsonSerializable {
 
 		$fields["reportId"] = $this->reportId;
 		$fields["reportCategoryId"] = $this->reportCategoryId;
+		$fields["reportIpAddress"] = inet_ntop($this->reportIpAddress);
 
 		// format the date so that the front end can consume it
 		$fields["reportDateTime"] = round(floatval($this->reportDateTime->format("U.u")) * 1000);
