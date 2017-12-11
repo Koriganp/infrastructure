@@ -103,22 +103,21 @@ export class ReportSubmitComponent implements OnInit {
 				this.status = status;
 				console.log(this.status);
 				if(status.status === 200) {
-					this.uploader.uploadAll();
 					alert("Admin will confirm your report shortly");
 				}
 				this.reportSubmitForm.reset();
 			});
 
-		// let image = new Image(null, this.deepDiveInterceptor.dataEvent, null, null, null);
-		//
-		// this.imageService.uploadImage(image)
-		// 	.subscribe(status => {
-		// 		this.status = status;
-		// 		console.log(this.status);
-		// 		if(status.status === 200) {
-		// 			alert("Images uploaded an will be confirmed by admin shortly.")
-		// 		}
-		// 	})
+		let image = new Image(null, this.status.message, null, null, null);
+
+		this.imageService.uploadImage(image)
+			.subscribe(status => {
+				this.status = status;
+				console.log(this.status);
+				if(status.status === 200) {
+					alert("Images uploaded an will be confirmed by admin shortly.")
+				}
+			})
 	}
 
 

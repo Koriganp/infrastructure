@@ -22,8 +22,8 @@ export class ReportService {
 	}
 
 	// call to the report API and create the report in question
-	createReport(report : Report) : Observable<Status> {
-		return(this.http.post<Status>(this.reportUrl, report));
+	createReport(report : Report) : Observable<any> {
+		return(this.http.post<any>(this.reportUrl, report));
 	}
 
 	// call to the report API and create the report in question
