@@ -32,6 +32,7 @@ export class ReportSubmitComponent implements OnInit {
 	});
 
 	protected cloudinaryPublicId: string = null;
+
 	protected cloudinaryPublicIdObservable: Observable<string> = new Observable<string>();
 
 	//declare needed state variables for later use.
@@ -49,7 +50,6 @@ export class ReportSubmitComponent implements OnInit {
 
 	status: Status = null;
 
-
 	constructor(private formBuilder: FormBuilder,
 					private reportService: ReportService,
 					private categoryService: CategoryService,
@@ -58,6 +58,12 @@ export class ReportSubmitComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+
+		this.uploader.onSuccessItem = (item: any, response: string, status: number, headers: any) => {
+			let reply = JSON.parse(response);
+			this.cloudinaryPublicId = reply.data;
+			this.cloudinaryPublicIdObservable = Observable.from(this.cloudinaryPublicId);
+		};
 
 		this.listCategories();
 
