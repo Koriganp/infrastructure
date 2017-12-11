@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 import {FileUploader} from "ng2-file-upload";
+import {DeepDiveInterceptor} from "../services/deep.dive.intercepters";
 import {Cookie} from "ng2-cookies";
 import {Report} from "../classes/report";
 import {ReportService} from "../services/report.service";
@@ -38,18 +39,24 @@ export class ReportSubmitComponent implements OnInit {
 
 	category: Category = new Category(null, null);
 
+	categories: Category[] = [];
+
 	report: Report = new Report(null, null, null, null, null, null, null);
 
 	image: Image = new Image(null, null, null, null, null);
 
+	images: Image[] = [];
+
 	status: Status = null;
 
-	categories: Category[] = [];
+
 
 	constructor(
 		private formBuilder: FormBuilder,
 		private reportService: ReportService,
 		private categoryService: CategoryService,
+		private imageService: ImageService,
+		private deepDiveInterceptor: DeepDiveInterceptor,
 		private router: Router) {
 	}
 
@@ -64,6 +71,7 @@ export class ReportSubmitComponent implements OnInit {
 			reportState: ["", [Validators.maxLength(30), Validators.required]],
 			reportZipCode: ["", [Validators.max(10), Validators.required]],
 			reportContent: ["", [Validators.maxLength(3000), Validators.required]],
+			reportImage: ["", [Validators.required]]
 		});
 
 		this.applyFormChanges();
@@ -82,6 +90,10 @@ export class ReportSubmitComponent implements OnInit {
 			.subscribe(categories => this.categories = categories);
 	}
 
+	uploadImage(): void {
+		this.uploader.uploadAll();
+	}
+
 	createReport(): void {
 
 		let reportContentAddress = this.reportSubmitForm.value.reportStreetAddress + " " + this.reportSubmitForm.value.reportCity + " " + this.reportSubmitForm.value.reportState + " " + this.reportSubmitForm.value.reportZipCode;
@@ -98,17 +110,18 @@ export class ReportSubmitComponent implements OnInit {
 				this.reportSubmitForm.reset();
 			});
 
-		// .subscribe(status =>{
-		// 	this.status = status;
-		// 	if(this.status.status === 200) {
-		// 		this.reportSubmitForm.reset();
-		// 		alert(this.status.message);
-		// 	}
-		// });
+		let image = new Image(null, this.deepDiveInterceptor.dataEvent, null, null, null);
+
+		this.imageService.uploadImage(image)
+			.subscribe(status => {
+				this.status = status;
+				console.log(this.status);
+				if(status.status === 200) {
+					alert("Images uploaded an will be confirmed by admin shortly.")
+				}
+			})
 	}
 
-	uploadImage(): void {
-		this.uploader.uploadAll();
-	}
+
 
 }

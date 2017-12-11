@@ -59,7 +59,7 @@
 					<div class="row">
 						<div class="col-6">
 							<label for="image" class="ml-5">Upload Image(s)</label>
-							<input type="file" class="form-control-file ml-5" id="image" (submit)="uploadImage()">
+							<input type="file" class="form-control-file ml-5" id="image" name="reportImage" formControlName="reportImage" (submit)="uploadImage()">
 						</div>
 						<div class="col-6">
 							<img src="#image" alt="Review Images">
