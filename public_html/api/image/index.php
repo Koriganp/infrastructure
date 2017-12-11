@@ -77,7 +77,7 @@ try {
 		$tempReport = $_FILES["image"]["tmp_name"];
 
 		//upload the image to cloudinary
-		$cloudinaryResult = \Cloudinary\Uploader::upload($tempReport, array("width" => 500, "crop" => "scale"));
+		$cloudinaryResult = \Cloudinary\Uploader::upload($tempReport, array("width" => 500, "crop" => "scale", "image_metadata" => true));
 
 
 		//make sure image cloudinary is available (required field)
