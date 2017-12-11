@@ -45,7 +45,7 @@
 			<!-- Dynamic Table Rows -->
 
 			<tr *ngFor="let report of reports;">
-				<td>{{ getCategorybyCategoryId(report.reportCategoryId).categoryName }}</td>
+				<td>{{ getCategoryByCategoryId(report.reportCategoryId).categoryName }}</td>
 				<td>{{ report.reportDateTime | date }}</td>
 				<td>{{ report.reportStatus }}</td>
 				<td>{{ report.reportUrgency}}</td>
@@ -54,7 +54,7 @@
 			 <!-- Report Edit Modal  -->
 
 				<td>
-					<button class="btn btn-info my-0 mr-sm-2" data-toggle="modal" data-target="#report-admin-view-modal" ><i class="fa fa-pencil-square-o"></i>&nbsp;Edit Report
+					<button class="btn btn-info my-0 mr-sm-2" data-toggle="modal" data-target="#report-admin-view-modal"><i class="fa fa-pencil-square-o" (click)="getReportByReportId()"></i>Edit Report
 					</button>
 				</td>
 			</tr>
