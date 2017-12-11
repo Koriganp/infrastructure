@@ -120,6 +120,7 @@ export class ReportSubmitComponent implements OnInit {
 
 				this.uploader.options.additionalParameter = additionalParameter;
 				this.uploader.uploadAll();
+				console.log(this.uploader);
 
 
 				// let image = new Image(null, this.status.data, null, null, null);
