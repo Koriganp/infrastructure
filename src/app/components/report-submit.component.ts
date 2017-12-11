@@ -10,7 +10,7 @@ import {CategoryService} from "../services/category.service";
 import {Image} from "../classes/image";
 import {ImageService} from "../services/image.service";
 import {Status} from "../classes/status";
-import {Router} from "@angular/router";
+import {Data, Router} from "@angular/router";
 import {Observable} from "rxjs";
 import "rxjs/add/observable/from";
 
@@ -47,6 +47,7 @@ export class ReportSubmitComponent implements OnInit {
 	images: Image[] = [];
 
 	status: Status = null;
+
 
 
 
@@ -99,25 +100,27 @@ export class ReportSubmitComponent implements OnInit {
 		let report = new Report(null, this.reportSubmitForm.value.reportCategoryId, this.reportSubmitForm.value.reportContent, null, reportContentAddress, this.reportSubmitForm.value.reportStatus, this.reportSubmitForm.value.reportUrgency);
 
 		this.reportService.createReport(report)
-			.subscribe(status => {
-				this.status = status;
+			.subscribe(reply => {
+				this.status = reply.status;
 				console.log(this.status);
-				if(status.status === 200) {
+				if(this.status.status === 200) {
+					// this.uploader. = {imageReportId: reply.reportId};
+					this.uploader.uploadAll();
 					alert("Admin will confirm your report shortly");
 				}
 				this.reportSubmitForm.reset();
 			});
 
-		let image = new Image(null, this.status.message, null, null, null);
-
-		this.imageService.uploadImage(image)
-			.subscribe(status => {
-				this.status = status;
-				console.log(this.status);
-				if(status.status === 200) {
-					alert("Images uploaded an will be confirmed by admin shortly.")
-				}
-			})
+		// let image = new Image(null, reply.status, null, null, null);
+		//
+		// this.imageService.uploadImage(image)
+		// 	.subscribe(status => {
+		// 		this.status = status;
+		// 		console.log(this.status);
+		// 		if(status.status === 200) {
+		// 			alert("Images uploaded an will be confirmed by admin shortly.")
+		// 		}
+		// 	})
 	}
 
 
