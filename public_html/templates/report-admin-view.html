@@ -23,34 +23,28 @@
 			<div class="modal-body">
 				<form class="form-vertical" [formGroup]="reportAdminViewForm" (submit)="updateReport();" novalidate>
 
-					<div>
-						<!-- Dynamic Field -->
-
+					<div><!-- Category Dropdown-->
 						<div class="form-group">
-						<label for="reportCategoryId">Category</label>
-						<select id="reportCategoryId" class="form-control mb-2" name="reportCategoryId" required formControlName="reportCategoryId">
-							<option *ngFor="let category of categories" [value]="category.categoryId">
-								{{category.categoryName}}
-							</option>
-						</select>
-					</div>
-
-						<!-- Static Field (For Development) -->
-
-						<!--<p class="viewHeadings">Category Title</p>-->
-					</div>
-
-
-					<div class="form-group">
-						<label for="staticDateReported" class="viewHeadings">Date Reported</label>
-						<div>
-							<input type="text" readonly class="form-control-plaintext" id="staticDateReported"
-									 value="11/28/2017">
+							<label for="reportCategoryId">Category</label>
+							<select id="reportCategoryId" class="form-control mb-2" name="reportCategoryId" required formControlName="reportCategoryId">
+								<option *ngFor="let category of categories" [value]="category.categoryId">
+									{{category.categoryName}}
+								</option>
+							</select>
 						</div>
-					</div>
+					</div><!-- Category Dropdown-->
+
+
+					<div class="form-group"><!-- Date -->
+						<label for="reportDateTime" class="viewHeadings">Date Reported</label>
+						<div>
+							<input id="reportDateTime" type="text" readonly class="form-control-plaintext" name="reportDateTime" required formControlName="reportDateTime" value="{{reportDateTime}}">
+						</div>
+					</div><!-- Date -->
 
 					<div class="btn-toolbar mb-5" role="toolbar">
-						<div class="btn-group">
+
+						<div class="btn-group"><!-- Status-->
 							<button class="btn btn-secondary" type="button">
 								Select Status
 							</button>
@@ -60,8 +54,9 @@
 							</button>
 							<div class="dropdown-menu">
 							</div>
-						</div>
-						<div class="btn-group">
+						</div><!-- Status -->
+
+						<div class="btn-group"><!-- Urgency -->
 							<button class="btn btn-secondary" type="button">
 								Select Urgency
 							</button>
@@ -72,15 +67,16 @@
 							<div class="dropdown-menu">
 								...
 							</div>
-						</div>
+						</div><!-- Urgency -->
+
 					</div>
 
-					<div>
+					<div><!-- Report Content-->
 						<div class="form-group">
 							<label for="content" class="viewHeadings">Report Content</label>
-							<textarea readonly class="form-control" id="content" rows="10"></textarea>
+							<textarea class="form-control" id="content" rows="10"></textarea>
 						</div>
-					</div>
+					</div><!-- Report Content-->
 
 					<div>
 						<h3 class="viewHeadings">Images</h3>
@@ -92,10 +88,13 @@
 						<div class="form-group">
 							<label for="comment" class="viewHeadings">Comments</label>
 							<textarea readonly class="form-control" id="comment" rows="10"></textarea>
-							<button class="btn btn-info my-3 mr-sm-2" data-toggle="modal" data-target="#comment-modal"><i
-								class="fa fa-pencil-square-o"></i>&nbsp;Add Comment
+							<button class="btn btn-info my-3 mr-sm-2" data-toggle="modal" data-target="#comment-modal" (click)="createComment()"><i
+								class="fa fa-pencil-square-o"></i>Add Comment
 							</button>
-							<button class="btn btn-danger my-3 mr-sm-2" (submit)="deleteReport()"><i
+							<button class="btn btn-info my-3 mr-sm-2" data-toggle="modal" (click)="updateReport()"><i
+								class="fa fa-pencil-square-o"></i>Update Report
+							</button>
+							<button class="btn btn-danger my-3 mr-sm-2" (click)="deleteReport()"><i
 								class="fa fa-minus-circle"></i>&nbsp; Delete Report
 							</button>
 							<button class="btn btn-danger my-3 mr-sm-2 px-5" data-dismiss="modal" type="submit" value="Cancel"><i class="fa fa-ban"></i> Cancel</button>
