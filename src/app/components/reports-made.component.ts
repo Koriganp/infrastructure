@@ -34,9 +34,7 @@ export class ReportsMadeComponent implements OnInit{
 		private categoryService : CategoryService) {}
 
 	ngOnInit() : void {
-
 	 	this.listCategories();
-
 	 	this.listAllReports();
 	}
 
