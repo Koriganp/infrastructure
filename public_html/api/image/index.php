@@ -76,7 +76,7 @@ try {
 		$imageReportId = filter_input(INPUT_POST, "imageReportId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
 		//create a temporary report to attach image to
-		$tempReport = $_FILES["image"]["tmp_name"];
+		$tempReport = $_FILES["reportImage"]["tmp_name"];
 
 		//upload the image to cloudinary
 		$cloudinaryResult = \Cloudinary\Uploader::upload($tempReport, array("width" => 500, "crop" => "scale", "image_metadata" => true));

@@ -25,7 +25,7 @@ declare let $: any;
 export class ReportSubmitComponent implements OnInit {
 
 	public uploader: FileUploader = new FileUploader({
-		itemAlias: "image",
+		itemAlias: "reportImage",
 		url: "./api/image/",
 		headers: [{name: "X-XSRF-TOKEN", value: Cookie.get("XSRF-TOKEN")}],
 		additionalParameter: {}
@@ -60,9 +60,10 @@ export class ReportSubmitComponent implements OnInit {
 	ngOnInit(): void {
 
 		this.uploader.onSuccessItem = (item: any, response: string, status: number, headers: any) => {
-			let reply = JSON.parse(response);
-			this.cloudinaryPublicId = reply.data;
-			this.cloudinaryPublicIdObservable = Observable.from(this.cloudinaryPublicId);
+			// let reply = JSON.parse(response);
+			// this.cloudinaryPublicId = reply.data;
+			// this.cloudinaryPublicIdObservable = Observable.from(this.cloudinaryPublicId);
+			console.log("bloody uploading bloody " + item);
 		};
 
 		this.listCategories();
@@ -112,16 +113,25 @@ export class ReportSubmitComponent implements OnInit {
 				}
 				this.reportSubmitForm.reset();
 
-				let image = new Image(null, this.status.data, null, null, null);
+				let additionalParameter = {
+					imageReportId: this.status.data
+				};
+				console.log(additionalParameter);
 
-				this.imageService.uploadImage(image)
-					.subscribe(status => {
-						this.status = status;
-						console.log(this.status);
-						if(status.status === 200) {
-							alert("Images uploaded an will be confirmed by admin shortly.")
-						}
-					})
+				this.uploader.options.additionalParameter = additionalParameter;
+				this.uploader.uploadAll();
+
+
+				// let image = new Image(null, this.status.data, null, null, null);
+				//
+				// this.imageService.uploadImage(image)
+				// 	.subscribe(status => {
+				// 		this.status = status;
+				// 		console.log(this.status);
+				// 		if(status.status === 200) {
+				// 			alert("Images uploaded an will be confirmed by admin shortly.")
+				// 		}
+				// 	})
 			});
 
 	}
