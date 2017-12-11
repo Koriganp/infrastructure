@@ -45,13 +45,11 @@ export class ReportListedByCategoryComponent implements OnInit {
 	// life cycling before George's eyes
 
 	ngOnInit() : void {
-
-		this.listReports();
-
 		this.listCategories();
+		this.listAllReports();
 	}
 
-	listReports() : void {
+	listAllReports() : void {
 		this.reportService.getAllReports()
 			.subscribe(reports => this.reports = reports);
 	}
