@@ -2,7 +2,6 @@ import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 import {FileUploader} from "ng2-file-upload";
-import {DeepDiveInterceptor} from "../services/deep.dive.intercepters";
 import {Cookie} from "ng2-cookies";
 import {Report} from "../classes/report";
 import {ReportService} from "../services/report.service";
@@ -56,7 +55,6 @@ export class ReportSubmitComponent implements OnInit {
 		private reportService: ReportService,
 		private categoryService: CategoryService,
 		private imageService: ImageService,
-		private deepDiveInterceptor: DeepDiveInterceptor,
 		private router: Router) {
 	}
 
@@ -105,21 +103,22 @@ export class ReportSubmitComponent implements OnInit {
 				this.status = status;
 				console.log(this.status);
 				if(status.status === 200) {
+					this.uploader.uploadAll();
 					alert("Admin will confirm your report shortly");
 				}
 				this.reportSubmitForm.reset();
 			});
 
-		let image = new Image(null, this.deepDiveInterceptor.dataEvent, null, null, null);
-
-		this.imageService.uploadImage(image)
-			.subscribe(status => {
-				this.status = status;
-				console.log(this.status);
-				if(status.status === 200) {
-					alert("Images uploaded an will be confirmed by admin shortly.")
-				}
-			})
+		// let image = new Image(null, this.deepDiveInterceptor.dataEvent, null, null, null);
+		//
+		// this.imageService.uploadImage(image)
+		// 	.subscribe(status => {
+		// 		this.status = status;
+		// 		console.log(this.status);
+		// 		if(status.status === 200) {
+		// 			alert("Images uploaded an will be confirmed by admin shortly.")
+		// 		}
+		// 	})
 	}
 
 

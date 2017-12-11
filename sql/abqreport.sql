@@ -43,8 +43,8 @@ CREATE TABLE image (
 	imageId BINARY(16) NOT NULL ,
 	imageReportId BINARY(16) NOT NULL ,
 	imageCloudinary VARCHAR(255) NOT NULL ,
-	imageLat DECIMAL(9,6) NOT NULL ,
-	imageLong DECIMAL(9,6) NOT NULL ,
+	imageLat DECIMAL(9,6)  ,
+	imageLong DECIMAL(9,6)  ,
 	INDEX (imageReportId) ,
 	FOREIGN KEY (imageReportId) REFERENCES report(reportId) ,
 	PRIMARY KEY (imageId)
