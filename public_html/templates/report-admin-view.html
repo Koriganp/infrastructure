@@ -21,7 +21,7 @@
 			<!-- Modal Content -->
 
 			<div class="modal-body">
-				<form class="form-vertical" [formGroup]="reportAdminViewForm" (submit)="updateReport();" novalidate>
+				<form class="form-vertical" [formGroup]="reportAdminViewForm" novalidate>
 
 					<div><!-- Category Dropdown-->
 						<div class="form-group">
@@ -38,7 +38,7 @@
 					<div class="form-group"><!-- Date -->
 						<label for="reportDateTime" class="viewHeadings">Date Reported</label>
 						<div>
-							<input id="reportDateTime" type="text" readonly class="form-control-plaintext" name="reportDateTime" required formControlName="reportDateTime" value="{{reportDateTime}}">
+							<input id="reportDateTime" type="text" readonly class="form-control-plaintext" name="reportDateTime" required [formControlName]="report.reportDateTime" value="{{ report.reportDateTime | date }}">
 						</div>
 					</div><!-- Date -->
 
