@@ -26,6 +26,11 @@ export class ReportService {
 		return(this.http.post<Status>(this.reportUrl, report));
 	}
 
+	// call to the report API and create the report in question
+	updateReport(report : Report) : Observable<Status> {
+		return(this.http.put<Status>(this.reportUrl, report));
+	}
+
 	getReport(reportId : string) : Observable<Report> {
 		return(this.http.get<Report>(this.reportUrl + reportId));
 	}
@@ -43,11 +48,6 @@ export class ReportService {
 	//call to the API and get an array of all the reports in the database
 	getAllReports() : Observable<Report[]> {
 		return(this.http.get<Report[]>(this.reportUrl));
-	}
-
-	// call to the report API and create the report in question
-	updateReport(report : Report) : Observable<Status> {
-		return(this.http.put<Status>(this.reportUrl, report));
 	}
 
 }
