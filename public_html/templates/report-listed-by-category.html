@@ -23,64 +23,44 @@
 			</div>
 		</div>
 
-	<table class="table table-bordered table-responsive mb-5">
+		<table class="table table-bordered table-responsive mb-5">
 
-		<!-- Table Head -->
+			<!-- Table Head -->
 
-		<thead class="thead-dark">
-			<tr>
-				<th class="px-5 text-center">Category</th>
-				<th class="text-center">Date Reported</th>
-				<th class="text-center">Report Status</th>
-				<th class="text-center">Report Urgency</th>
-				<th class="text-center">Report Content</th>
-				<th class="text-center">View Report</th>
-			</tr>
-		</thead>
+			<thead class="thead-dark">
+				<tr>
+					<th class="px-5 text-center">Category</th>
+					<th class="text-center">Date Reported</th>
+					<th class="text-center">Report Status</th>
+					<th class="text-center">Report Urgency</th>
+					<th class="text-center">Report Content</th>
+					<th class="text-center">View Report</th>
+				</tr>
+			</thead>
 
-		<!-- Table Body -->
+			<!-- Table Body -->
 
-		<tbody class="table-light mb-5">
+			<tbody class="table-light mb-5">
 
-			<!-- Dynamic Table Rows -->
+				<!-- Dynamic Table Rows -->
 
-			<tr *ngFor="let report of reports;">
-				<td>{{ getCategoryByCategoryId(report.reportCategoryId).categoryName }}</td>
-				<td>{{ report.reportDateTime | date }}</td>
-				<td>{{ report.reportStatus }}</td>
-				<td>{{ report.reportUrgency}}</td>
-				<td>{{ report.reportContent }}</td>
+				<tr *ngFor="let report of reports;">
+					<td>{{ getCategoryByCategoryId(report.reportCategoryId).categoryName }}</td>
+					<td>{{ report.reportDateTime | date }}</td>
+					<td>{{ report.reportStatus }}</td>
+					<td>{{ report.reportUrgency}}</td>
+					<td>{{ report.reportContent }}</td>
 
-			 <!-- Report Edit Modal  -->
+				 <!-- Report Edit Modal  -->
 
-				<td>
-					<button class="btn btn-info my-0 mr-sm-2" data-toggle="modal" data-target="#report-admin-view-modal"><i class="fa fa-pencil-square-o" (click)="getReportByReportId()"></i>Edit Report
-					</button>
-				</td>
-			</tr>
+					<td>
+						<button class="btn btn-info my-0 mr-sm-2" data-toggle="modal" data-target="#report-admin-view-modal"><i class="fa fa-pencil-square-o" (click)="getReportByReportId()"></i>Edit Report
+						</button>
+					</td>
+				</tr>
 
-			<!-- Static Table Rows (For Development) -->
+			</tbody>
+		</table>
 
-			<!--<tr>-->
-				<!--<th>Traffic Signs & Signals</th>-->
-				<!--<td>11/27/2017</td>-->
-				<!--<td>Reported</td>-->
-				<!--<td class="text-center">3</td>-->
-				<!--<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac nunc ut nisi mollis commodo ut ac-->
-					<!--dolor. Suspendisse lectus odio, eleifend a rhoncus quis, pharetra non dui. Suspendisse faucibus ut dui-->
-					<!--vitae hendrerit. Nullam id ex nec nisi pretium lacinia. Nam lacinia sollicitudin bibendum. Vivamus-->
-					<!--pellentesque risus tellus, sit amet dignissim diam finibus vel. Aliquam lacus nisi, posuere ut nunc-->
-					<!--dignissim, congue imperdiet elit. Donec in blandit arcu, sit amet luctus felis.-->
-				<!--</td>-->
-
-				<!--&lt;!&ndash;Report Edit Modal &ndash;&gt;-->
-
-				<!--<td>-->
-					<!--<button class="btn btn-info my-0 mr-sm-2" data-toggle="modal" data-target="#report-admin-view-modal"><i class="fa fa-pencil-square-o"></i>&nbsp;Edit Report-->
-					<!--</button>-->
-				<!--</td>-->
-			<!--</tr>-->
-
-		</tbody>
-	</table>
+	</div>
 </div>
