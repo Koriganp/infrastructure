@@ -30,7 +30,7 @@
 			<!-- Dynamic Table Rows -->
 
 			<tr *ngFor="let report of reports;">
-				<td>{{ report.reportCategoryName }}</td>
+				<td>{{ getCategorybyCategoryId(report.reportCategoryId).categoryName }}</td>
 				<td>{{ report.reportDateTime }}</td>
 				<td>{{ report.reportStatus }}</td>
 				<td>{{ report.reportUrgency}}</td>

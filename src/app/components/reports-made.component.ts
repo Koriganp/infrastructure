@@ -22,6 +22,8 @@ export class ReportsMadeComponent implements OnInit{
 
 	category : Category = new Category(null, null);
 
+	categories : Category[] = [];
+
 	report : Report = new Report(null, null, null, null, null, null, null);
 
 	reports: Report[] = [];
@@ -32,6 +34,9 @@ export class ReportsMadeComponent implements OnInit{
 		private categoryService : CategoryService) {}
 
 	 ngOnInit() : void {
+
+	 	this.listCategories();
+
 	 	this.listAllReports();
 	 }
 
@@ -39,6 +44,15 @@ export class ReportsMadeComponent implements OnInit{
 		this.reportService.getAllReports()
 			.subscribe(reports => this.reports = reports);
 	 }
+	listCategories() : void {
+		this.categoryService.getAllCategories()
+			.subscribe(categories => this.categories = categories);
+	}
+
+	getCategorybyCategoryId(categoryId : string) : Category {
+		return (this.categories.find(searchCategory => searchCategory.categoryId === categoryId));
+	}
+
 
 
 

@@ -48,14 +48,7 @@ export class ReportListedByCategoryComponent implements OnInit {
 
 		this.listReports();
 
-		this.reportListedByCategoryForm = this.formBuilder.group({
-			reportCategoryName: ["", [Validators.maxLength(32), Validators.required]],
-			reportDateTime: ["", [Validators.maxLength(6), Validators.required]],
-			reportStatus: ["", [Validators.maxLength(15), Validators.required]],
-			reportUrgency: ["", [Validators.maxLength(3), Validators.required]],
-			reportContent: ["", [Validators.maxLength(3000), Validators.required]],
-		});
-
+		this.listCategories();
 	}
 
 	listReports() : void {
@@ -66,6 +59,10 @@ export class ReportListedByCategoryComponent implements OnInit {
 	listCategories() : void {
 		this.categoryService.getAllCategories()
 			.subscribe(categories => this.categories = categories);
+	}
+
+	getCategorybyCategoryId(categoryId : string) : Category {
+		return (this.categories.find(searchCategory => searchCategory.categoryId === categoryId));
 	}
 
 	// needs to be fixed
