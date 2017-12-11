@@ -61,7 +61,7 @@ export class ReportListedByCategoryComponent implements OnInit {
 			.subscribe(categories => this.categories = categories);
 	}
 
-	getCategorybyCategoryId(categoryId : string) : Category {
+	getCategoryByCategoryId(categoryId : string) : Category {
 		return (this.categories.find(searchCategory => searchCategory.categoryId === categoryId));
 	}
 
