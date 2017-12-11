@@ -63,6 +63,11 @@ export class ReportListedByCategoryComponent implements OnInit {
 		return (this.categories.find(searchCategory => searchCategory.categoryId === categoryId));
 	}
 
+	getReportByReportId(): void {
+		this.reportService.getReportByReportId(this.report.reportId)
+			.subscribe(report => this.report = report);
+	}
+
 	// needs to be fixed
     getReportByCategoryId() : void {
 		this.reportService.getReportByReportCategoryId(this.report.reportCategoryId)

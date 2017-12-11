@@ -50,21 +50,17 @@ export class ReportAdminViewComponent implements OnInit {
 		private commentService: CommentService,
 		private categoryService: CategoryService,
 		private imageService: ImageService,
-		private route: ActivatedRoute) {}
+		private route: ActivatedRoute) {
+
+		const reportStatus: string[] = ['Reported', 'Confirmed', 'Investigating Report', 'In Progress', 'Completed'];
+		const reportUrgency: number[] = [1, 2, 3, 4, 5];
+
+	}
 
 	ngOnInit() : void {
 
 		this.listCategories();
 		// this.getReportByReportId();
-
-		this.route.params.forEach((params : Params) => {
-			let reportId = params["reportId"];
-			this.reportService.getReport(reportId)
-				.subscribe(report => {
-					this.report = report;
-					this.reportAdminViewForm.patchValue(report);
-				});
-		});
 
 		this.reportAdminViewForm = this.formBuilder.group({
 			reportContent: ["", [Validators.required]],
@@ -75,9 +71,16 @@ export class ReportAdminViewComponent implements OnInit {
 			commentContent: ["", [Validators.maxLength(500), Validators.required]]
 		});
 
+		this.route.params.forEach((params : Params) => {
+			let reportId = params["reportId"];
+			this.reportService.getReport(reportId)
+				.subscribe(report => {
+					this.report = report;
+					this.reportAdminViewForm.patchValue(report);
+				});
+		});
+
 		this.applyFormChanges();
-
-
 	}
 
 	applyFormChanges() : void {
