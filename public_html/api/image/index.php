@@ -68,18 +68,18 @@ try {
 		verifyXsrf();
 
 		// Retrieves the JSON package that the front end sent, and stores it in $requestContent. Here we are using file_get_contents("php://input") to get the request from the front end. file_get_contents() is a PHP function that reads a file into a string. The argument for the function, here, is "php://input". This is a read only stream that allows raw data to be read from the front end request which is, in this case, a JSON package.
-//		$requestContent = file_get_contents("php://input");
-//
-//		// This line then decodes the JSON package and stores that result in $requestObject
-//		$requestObject = json_decode($requestContent);
+		$requestContent = file_get_contents("php://input");
+
+		// This line then decodes the JSON package and stores that result in $requestObject
+		$requestObject = json_decode($requestContent);
 
 		$imageReportId = filter_input(INPUT_POST, "imageReportId", FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
 
 		//create a temporary report to attach image to
-//		$tempReport = $_FILES["image"]["tmp_name"];
+		$tempReport = $_FILES["image"]["tmp_name"];
 
 		//upload the image to cloudinary
-		$cloudinaryResult = \Cloudinary\Uploader::upload($imageReportId, array("width" => 500, "crop" => "scale", "image_metadata" => true));
+		$cloudinaryResult = \Cloudinary\Uploader::upload($tempReport, array("width" => 500, "crop" => "scale", "image_metadata" => true));
 
 
 		//make sure image cloudinary is available (required field)

@@ -25,7 +25,7 @@ declare let $: any;
 export class ReportSubmitComponent implements OnInit {
 
 	public uploader: FileUploader = new FileUploader({
-		itemAlias: "",
+		itemAlias: "image",
 		url: "./api/image/",
 		headers: [{name: "X-XSRF-TOKEN", value: Cookie.get("XSRF-TOKEN")}],
 		additionalParameter: {}
@@ -50,14 +50,11 @@ export class ReportSubmitComponent implements OnInit {
 	status: Status = null;
 
 
-
-
-	constructor(
-		private formBuilder: FormBuilder,
-		private reportService: ReportService,
-		private categoryService: CategoryService,
-		private imageService: ImageService,
-		private router: Router) {
+	constructor(private formBuilder: FormBuilder,
+					private reportService: ReportService,
+					private categoryService: CategoryService,
+					private imageService: ImageService,
+					private router: Router) {
 	}
 
 	ngOnInit(): void {
@@ -100,14 +97,11 @@ export class ReportSubmitComponent implements OnInit {
 
 		let report = new Report(null, this.reportSubmitForm.value.reportCategoryId, this.reportSubmitForm.value.reportContent, null, reportContentAddress, this.reportSubmitForm.value.reportStatus, this.reportSubmitForm.value.reportUrgency);
 
-
-
 		this.reportService.createReport(report)
 			.subscribe(status => {
 				this.status = status;
 				console.log(this.status);
 				if(this.status.status === 200) {
-					console.log(this.status.status);
 					alert("Admin will confirm your report shortly");
 				}
 				this.reportSubmitForm.reset();
@@ -124,11 +118,6 @@ export class ReportSubmitComponent implements OnInit {
 					})
 			});
 
-
-
-
-}
-
-
+	}
 
 }
