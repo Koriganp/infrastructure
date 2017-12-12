@@ -25,6 +25,9 @@
 	</div>
 
 	<div class="ml-4">
+
+		<!-- Table Head -->
+
 		<table class="table table-bordered table-responsive mb-5">
 			<thead class="thead-dark"><!-- Table Head -->
 				<tr>
@@ -34,29 +37,22 @@
 					<th class="text-center">Report Content</th>
 					<th class="text-center">View Report</th>
 				</tr>
-			</thead><!-- Table Head -->
+			</thead>
 
 			<tbody class="table-light mb-5"><!-- Table Body -->
 
 				<!-- Dynamic Table Rows -->
+
 				<tr *ngFor="let report of reports;">
 					<td>{{ getCategoryByCategoryId(report.reportCategoryId).categoryName}}</td>
 					<td>{{ report.reportDateTime | date }}</td>
 					<td>{{ report.reportStatus }}</td>
 					<td>{{ report.reportContent }}</td>
 
-					<!-- Static Table Rows (For Development) -->
-
-					<!--<tr>
-						<th>Traffic Signs & Signals</th>
-						<td>11/27/2017</td>
-						<td>Reported</td>
-						<td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ac nunc ut nisi mollis commodo ut ac dolor. Suspendisse lectus odio, eleifend a rhoncus quis, pharetra non dui. Suspendisse faucibus ut dui vitae hendrerit. Nullam id ex nec nisi pretium lacinia. Nam lacinia sollicitudin bibendum. Vivamus pellentesque risus tellus, sit amet dignissim diam finibus vel. Aliquam lacus nisi, posuere ut nunc dignissim, congue imperdiet elit. Donec in blandit arcu, sit amet luctus felis.</td>-->
-
 					<!-- Report View Modal -->
-					<td>
+					<td (click)="setSharedValue(report.reportId);">
 						<button class="btn btn-info my-0 mr-sm-2" data-toggle="modal" data-target="#report-public-view-modal"><i
-							class="fa fa-binoculars" (click)="setSharedValue(report.reportId);" ></i> View Report</button>
+							class="fa fa-binoculars" ></i> View Report</button>
 					</td>
 				</tr>
 			</tbody>
