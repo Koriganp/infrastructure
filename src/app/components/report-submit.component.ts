@@ -60,8 +60,8 @@ export class ReportSubmitComponent implements OnInit {
 	ngOnInit(): void {
 
 		this.uploader.onSuccessItem = (item: any, response: string, status: number, headers: any) => {
-			let reply = JSON.parse(response);
-			this.cloudinaryPublicId = reply.data;
+			// let reply = JSON.parse(response);
+			// this.cloudinaryPublicId = reply.data;
 			// this.cloudinaryPublicIdObservable = Observable.from(this.cloudinaryPublicId);
 			console.log(response);
 		};

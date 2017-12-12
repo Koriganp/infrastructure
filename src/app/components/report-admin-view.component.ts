@@ -73,7 +73,7 @@ export class ReportAdminViewComponent implements OnInit {
 
 		this.route.params.forEach((params : Params) => {
 			let reportId = params["reportId"];
-			this.reportService.getReport(reportId)
+			this.reportService.getReportByReportId(reportId)
 				.subscribe(report => {
 					this.report = report;
 					this.reportAdminViewForm.patchValue(report);

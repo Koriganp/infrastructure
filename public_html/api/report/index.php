@@ -224,7 +224,7 @@ try {
 		// update the $reply->status $reply->message
 		$reply->status = $exception->getCode();
 		$reply->message = $exception->getMessage();
-		$reply->data = $exception->getData();
+//		$reply->data = $exception->getData();
 }
 
 header("Content-type: application/json");
