@@ -20,7 +20,6 @@ import {CommentComponent} from "./components/comment.component";
 import {SignInComponent} from "./components/sign-in.component";
 import {SignUpComponent} from "./components/sign-up.component";
 import {SignOutComponent} from "./components/sign-out.component";
-import {ReportListedByCategoryComponent} from "./components/report-listed-by-category.component";
 import {InfrastructureAppComponent} from "./components/infrastructure-app.component";
 import {CategoryComponent} from "./components/category.component";
 import {FileSelectDirective} from "ng2-file-upload";
@@ -57,7 +56,6 @@ export const allAppComponents = [
 	SignInComponent,
 	SignUpComponent,
 	SignOutComponent,
-	ReportListedByCategoryComponent,
 	CategoryComponent,
 	FileSelectDirective
 ];
@@ -65,13 +63,12 @@ export const allAppComponents = [
 //an array of routes that will be passed of to the module
 export const routes: Routes = [
 	{path: "admin-dashboard", component: AdminDashboardComponent},
-	{path: "report-admin-view", component: ReportAdminViewComponent},
+	{path: "report-admin-view/:reportId", component: ReportAdminViewComponent},
 	{path: "report-public-view", component: ReportPublicViewComponent},
 	{path: "reports-made", component: ReportsMadeComponent},
 	{path: "sign-in", component: SignInComponent},
 	{path: "sign-up", component: SignUpComponent},
 	{path: "sign-out", component: SignOutComponent},
-	{path: "report-listed-by-category", component: ReportListedByCategoryComponent},
 	{path: "report-submit", component: ReportSubmitComponent},
 	{path: "comment", component: CommentComponent},
 	{path: "foot", component: FootComponent},
