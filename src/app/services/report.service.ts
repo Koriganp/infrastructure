@@ -1,4 +1,5 @@
 import {Injectable}  from "@angular/core";
+import {Subject} from 'rxjs/Subject';
 
 import {Status} from "../classes/status";
 import {Report} from "../classes/report";
@@ -16,6 +17,19 @@ export class ReportService {
 	// define the API endpoint
 	private reportUrl = "api/report/";
 	private imageUrl = "api/image/";
+
+	// Observable string source
+	private dataStringSource = new Subject<string>();
+
+	// Observable string stream
+	dataString$ = this.dataStringSource.asObservable();
+
+	// Service message commands
+	insertData(data: string) {
+		console.log(data);
+
+		this.dataStringSource.next(data)
+	}
 
 
 	// call to the report API and delete the report in question

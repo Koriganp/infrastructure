@@ -20,50 +20,49 @@
 			<!-- Modal Content -->
 
 			<div class="modal-body">
-				<form name="reportPublicViewForm" id="reportPublicViewForm" [formGroup]="reportPublicViewForm">
+				<div class="container">
 
-					<div class="form-group">
-						<label for="reportPubViewCategoryId">Category</label>
-						<input id="reportPubViewCategoryId" class="form-control mb-2" readonly name="reportPubViewCategoryId" required formControlName="reportPubViewCategoryId"/>
-						<option *ngFor="let category of categories" [value]="category.categoryId">
-							{{category.categoryName}}
-						</option>
-					</div>
-
-
-					<div class="form-group">
-						<label for="publicViewReportDate" class="col-form-label">Date Reported</label>
-						<div>
-							<input type="text" readonly class="form-control" id="publicViewReportDate" name="publicViewReportDate" formControlName="publicViewReportDate" value="{{ report.reportDateTime }}"/>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="publicViewReportStatus" class="col-form-label">Status</label>
-						<div>
-							<input type="text" readonly class="form-control" id="publicViewReportStatus" name="publicViewReportStatus" formControlName="publicViewReportStatus" value="{{ report.reportStatus }}">
+					<div class="row">
+						<div class="col">
+							<h2>Category</h2>
+							<div id="reportPubViewCategoryId" class="mb-2"></div>
 						</div>
 					</div>
 
 
-					<div>
-						<div class="form-group">
-							<label for="publicViewReportContent">Report Content</label>
-							<textarea class="form-control" readonly rows="10" id="publicViewReportContent" name="publicViewReportContent" formControlName="publicViewReportContent" data-value="{{ report.reportContent }}"></textarea>
+					<div class="row">
+						<div class="col">
+							<h2>Date Reported</h2>
+							<div id="publicViewReportDate"></div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col">
+							<h2>Status</h2>
+							<div id="publicViewReportStatus"></div>
 						</div>
 					</div>
 
-					<div>
-						<div class="form-group">
-							<label for="publicViewReportImage">Report Image</label>
-							<img [src]="this.imageReportId.imageCloudinary" alt="" type="text" readonly class="form-control img-thumbnail" id="publicViewReportImage" name="publicViewReportImage" formControlName="publicViewReportImage">
-						</div>
 
+					<div class="row">
+						<div class="col">
+							<h2>Report Content</h2>
+							<div class="col" id="publicViewReportContent"></div>
+						</div>
 					</div>
+
+					<div class="row">
+						<div class="col">
+							<h2>Report Image</h2>
+							<img [src]="report.publicViewReportImage" alt="Report Image" class="img-thumbnail" id="publicViewReportImage"/>
+						</div>
+					</div>
+
 					<button class="btn btn-danger my-3 mr-sm-2 px-5" data-dismiss="modal" type="submit" value="Cancel"><i class="fa fa-ban"></i> Exit
 					</button>
-				</form>
-			</div>
 
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

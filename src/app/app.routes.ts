@@ -14,7 +14,6 @@ import {NavbarComponent} from "./components/navbar.component";
 import {FootComponent} from "./components/foot.component";
 import {ReportAdminViewComponent} from "./components/report-admin-view.component";
 import {ReportPublicViewComponent} from "./components/report-public-view.component";
-import {ReportsMadeComponent} from "./components/reports-made.component";
 import {ReportSubmitComponent} from "./components/report-submit.component";
 import {CommentComponent} from "./components/comment.component";
 import {SignInComponent} from "./components/sign-in.component";
@@ -48,7 +47,6 @@ export const allAppComponents = [
 	NavbarComponent,
 	ReportAdminViewComponent,
 	ReportPublicViewComponent,
-	ReportsMadeComponent,
 	ReportSubmitComponent,
 	CommentComponent,
 	InfrastructureAppComponent,
@@ -65,7 +63,6 @@ export const routes: Routes = [
 	{path: "admin-dashboard", component: AdminDashboardComponent},
 	{path: "report-admin-view/:reportId", component: ReportAdminViewComponent},
 	{path: "report-public-view", component: ReportPublicViewComponent},
-	{path: "reports-made", component: ReportsMadeComponent},
 	{path: "sign-in", component: SignInComponent},
 	{path: "sign-up", component: SignUpComponent},
 	{path: "sign-out", component: SignOutComponent},
