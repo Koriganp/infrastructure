@@ -15,9 +15,9 @@
 					<h2 class="m-2 p-3 text-light">Reports Submitted
 					<button type="button" class="btn btn-info dropdown-toggle my-0 mr-sm-2 d-inline-block ml-auto" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-pie-chart"></i>&nbsp;Sort By Category
 					</button>
-					<div class="dropdown-menu">
+					<span class="dropdown-menu">
 							<option *ngFor="let category of categories" [value]="category.categoryId">{{category.categoryName}}</option>
-					</div>
+					</span>
 					</h2>
 				</div>
 
