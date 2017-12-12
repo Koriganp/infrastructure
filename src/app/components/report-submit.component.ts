@@ -2,7 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 import {FileUploader} from "ng2-file-upload";
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 import {Cookie} from "ng2-cookies";
 import {Report} from "../classes/report";
 import {ReportService} from "../services/report.service";
@@ -11,14 +11,9 @@ import {CategoryService} from "../services/category.service";
 import {Image} from "../classes/image";
 import {ImageService} from "../services/image.service";
 import {Status} from "../classes/status";
-import {Data, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {Observable} from "rxjs";
 import "rxjs/add/observable/from";
-import { CloudinaryModule } from '@cloudinary/angular-5.x';
-import * as  Cloudinary from 'cloudinary-core';
-import {temporaryDeclaration} from "@angular/compiler/src/compiler_util/expression_converter";
-
-declare let $: any;
 
 @Component({
 	selector: "report-submit",
