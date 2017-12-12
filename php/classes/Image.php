@@ -164,7 +164,7 @@ class Image implements \JsonSerializable {
 	 *
 	 * @return float value of image latitude
 	 **/
-	public function getImageLat() : float {
+	public function getImageLat() : ?float {
 		return($this->imageLat);
 	}
 
@@ -179,7 +179,10 @@ class Image implements \JsonSerializable {
 	public function setImageLat(?float $newImageLat): void {
 
 		// verify the float will fit in the database
-		if(($newImageLat > 90) || ($newImageLat < -90)) {
+		if ($newImageLat === null) {
+			$this->imageLat = null;
+		}
+		elseif(($newImageLat > 90) || ($newImageLat < -90)) {
 			throw(new \RangeException("latitude is too large"));
 		}
 		// store the latitude
@@ -206,7 +209,10 @@ class Image implements \JsonSerializable {
 	public function setImageLong(?float $newImageLong): void {
 
 		// verify the float will fit in the database
-		if(($newImageLong > 180) || ($newImageLong < -180)) {
+		if ($newImageLong === null) {
+			$this->imageLong = null;
+		}
+		elseif(($newImageLong > 180) || ($newImageLong < -180)) {
 			throw(new \RangeException("longitude is too large"));
 		}
 		// store the longitude

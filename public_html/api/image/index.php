@@ -87,7 +87,7 @@ try {
 //			throw(new \InvalidArgumentException ("No cloudinary for Image.", 405));
 //		}
 
-		$cloudinaryResult["secure_url"] = $imageCloudinary;
+		$imageCloudinary = $cloudinaryResult["secure_url"];
 		$reply->foo = $imageCloudinary;
 
 		// create new image and insert into the database
