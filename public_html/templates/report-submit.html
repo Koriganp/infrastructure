@@ -62,7 +62,7 @@
 							<input type="file" class="form-control-file ml-5" id="reportImage" name="reportImage" formControlName="reportImage" ng2FileSelect [uploader]="uploader">
 						</div>
 						<div class="col-6">
-							<img src="#reportImage" alt="Review Images">
+							<img [src]="filePreviewPath" width="200" *ngIf="filePreviewPath" alt="Your image" />
 						</div>
 					</div>
 

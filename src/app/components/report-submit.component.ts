@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 import {FileUploader} from "ng2-file-upload";
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import {Cookie} from "ng2-cookies";
 import {Report} from "../classes/report";
 import {ReportService} from "../services/report.service";
@@ -33,6 +34,8 @@ export class ReportSubmitComponent implements OnInit {
 		additionalParameter: {}
 	});
 
+	public filePreviewPath: SafeUrl;
+
 	protected imageCloudinary: string = null;
 
 	protected imageCloudinaryObservable: Observable<string> = new Observable<string>();
@@ -56,7 +59,12 @@ export class ReportSubmitComponent implements OnInit {
 					private reportService: ReportService,
 					private categoryService: CategoryService,
 					private imageService: ImageService,
+					private sanitizer: DomSanitizer,
 					private router: Router) {
+
+		this.uploader.onAfterAddingFile = (fileItem) => {
+			this.filePreviewPath = this.sanitizer.bypassSecurityTrustUrl((window.URL.createObjectURL(fileItem._file)));
+		}
 	}
 
 	ngOnInit(): void {
@@ -100,6 +108,7 @@ export class ReportSubmitComponent implements OnInit {
 		this.uploader.uploadAll();
 	}
 
+
 	createReport(): void {
 
 		let reportContentAddress = this.reportSubmitForm.value.reportStreetAddress + " " + this.reportSubmitForm.value.reportCity + " " + this.reportSubmitForm.value.reportState + " " + this.reportSubmitForm.value.reportZipCode;
@@ -123,18 +132,6 @@ export class ReportSubmitComponent implements OnInit {
 				this.uploader.options.additionalParameter = additionalParameter;
 				this.uploader.uploadAll();
 				console.log(this.uploader);
-
-
-				// let image = new Image(null, this.status.data, null, null, null);
-				//
-				// this.imageService.uploadImage(image)
-				// 	.subscribe(status => {
-				// 		this.status = status;
-				// 		console.log(this.status);
-				// 		if(status.status === 200) {
-				// 			alert("Images uploaded an will be confirmed by admin shortly.")
-				// 		}
-				// 	})
 			});
 
 	}

@@ -29,3 +29,11 @@ h1 {
 	font-weight: bold;
 	padding-top: 0;
 }
+
+#preview {
+	max-width:180px;
+}
+
+input[type=file] {
+	padding: 1rem;
+}
