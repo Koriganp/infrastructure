@@ -176,7 +176,7 @@ class Image implements \JsonSerializable {
 	 * @throws \RangeException if $newImageLat is > 12 characters
 	 * @throws \TypeError if $newImageLat is not a float
 	 **/
-	public function setImageLat(float $newImageLat): void {
+	public function setImageLat(?float $newImageLat): void {
 
 		// verify the float will fit in the database
 		if(($newImageLat > 90) || ($newImageLat < -90)) {
@@ -203,7 +203,7 @@ class Image implements \JsonSerializable {
 	 * @throws \RangeException if $newImageLong is > 12 characters
 	 * @throws \TypeError if $newImageLong is not a float
 	 **/
-	public function setImageLong(float $newImageLong): void {
+	public function setImageLong(?float $newImageLong): void {
 
 		// verify the float will fit in the database
 		if(($newImageLong > 180) || ($newImageLong < -180)) {

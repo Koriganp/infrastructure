@@ -79,16 +79,18 @@ try {
 		$tempReport = $_FILES["reportImage"]["tmp_name"];
 
 		//upload the image to cloudinary
-		$cloudinaryResult = \Cloudinary\Uploader::upload($tempReport, array("width" => 500, "crop" => "scale", "image_metadata" => true));
+		$cloudinaryResult = \Cloudinary\Uploader::upload($tempReport, array("width" => 500, "crop" => "scale"));
 
 
-		//make sure image cloudinary is available (required field)
-		if(empty($requestObject->imageCloudinary) === true) {
-			throw(new \InvalidArgumentException ("No cloudinary for Image.", 405));
-		}
+//		//make sure image cloudinary is available (required field)
+//		if(empty($requestObject->imageCloudinary) === true) {
+//			throw(new \InvalidArgumentException ("No cloudinary for Image.", 405));
+//		}
+
+		$reply->foo = $cloudinaryResult;
 
 		// create new image and insert into the database
-		$image = new Image(generateUuidV4(), $requestObject->imageReportId, $cloudinaryResult["secure_url"], $requestObject->imageLat, $requestObject->imageLong);
+		$image = new Image(generateUuidV4(), $imageReportId, $cloudinaryResult["secure_url"], $imageLat = null, $imageLong = null);
 
 		$image->insert($pdo);
 		// update reply
