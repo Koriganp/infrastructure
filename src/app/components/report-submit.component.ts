@@ -99,11 +99,6 @@ export class ReportSubmitComponent implements OnInit {
 			.subscribe(categories => this.categories = categories);
 	}
 
-	uploadImage(): void {
-		this.uploader.uploadAll();
-	}
-
-
 	createReport(): void {
 
 		let reportContentAddress = this.reportSubmitForm.value.reportStreetAddress + " " + this.reportSubmitForm.value.reportCity + " " + this.reportSubmitForm.value.reportState + " " + this.reportSubmitForm.value.reportZipCode;
@@ -127,6 +122,7 @@ export class ReportSubmitComponent implements OnInit {
 				this.uploader.options.additionalParameter = additionalParameter;
 				this.uploader.uploadAll();
 				console.log(this.uploader);
+				this.filePreviewPath = null;
 			});
 
 	}
