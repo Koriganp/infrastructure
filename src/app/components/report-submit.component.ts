@@ -61,7 +61,6 @@ export class ReportSubmitComponent implements OnInit {
 			this.filePreviewPath = this.sanitizer.bypassSecurityTrustUrl((window.URL.createObjectURL(fileItem._file)));
 		}
 	}
-
 	ngOnInit(): void {
 
 		this.uploader.onSuccessItem = (item: any, response: string, status: number, headers: any) => {
