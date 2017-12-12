@@ -9,19 +9,18 @@
 	<!--</h2>-->
 
 	<!--Category Button Dropdown-->
-	<div class="row">
-		<div class="col-lg-6">
-			<div class="input-group">
+
+			<div class="input-group d-block ml-4">
 				<div class="input-group-btn">
-					<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Sort Categories
+					<h2 class="m-2 p-3 text-light">Reports Submitted
+					<button type="button" class="btn btn-info dropdown-toggle my-0 mr-sm-2 d-inline-block ml-auto" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-pie-chart"></i>&nbsp;Sort By Category
 					</button>
 					<div class="dropdown-menu">
 							<option *ngFor="let category of categories" [value]="category.categoryId">{{category.categoryName}}</option>
 					</div>
+					</h2>
 				</div>
-			</div>
-		</div>
+
 
 		<table class="table table-bordered table-responsive mb-5">
 
