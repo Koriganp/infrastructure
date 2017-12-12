@@ -13,6 +13,8 @@ import {Status} from "../classes/status";
 import {Data, Router} from "@angular/router";
 import {Observable} from "rxjs";
 import "rxjs/add/observable/from";
+import { CloudinaryModule } from '@cloudinary/angular-5.x';
+import * as  Cloudinary from 'cloudinary-core';
 import {temporaryDeclaration} from "@angular/compiler/src/compiler_util/expression_converter";
 
 declare let $: any;
@@ -31,9 +33,9 @@ export class ReportSubmitComponent implements OnInit {
 		additionalParameter: {}
 	});
 
-	protected cloudinaryPublicId: string = null;
+	protected imageCloudinary: string = null;
 
-	protected cloudinaryPublicIdObservable: Observable<string> = new Observable<string>();
+	protected imageCloudinaryObservable: Observable<string> = new Observable<string>();
 
 	//declare needed state variables for later use.
 	reportSubmitForm: FormGroup;
@@ -60,9 +62,9 @@ export class ReportSubmitComponent implements OnInit {
 	ngOnInit(): void {
 
 		this.uploader.onSuccessItem = (item: any, response: string, status: number, headers: any) => {
-			// let reply = JSON.parse(response);
-			// this.cloudinaryPublicId = reply.data;
-			// this.cloudinaryPublicIdObservable = Observable.from(this.cloudinaryPublicId);
+			let reply = JSON.parse(response);
+			this.imageCloudinary = reply.data;
+			this.imageCloudinaryObservable = Observable.from(this.imageCloudinary);
 			console.log(response);
 		};
 
