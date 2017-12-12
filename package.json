@@ -19,6 +19,8 @@
     "@angular/platform-browser-dynamic": "^5.1.0",
     "@angular/router": "^5.1.0",
     "@auth0/angular-jwt": "^1.0.0-beta.9",
+    "@cloudinary/angular-5.x": "^1.0.0",
+    "cloudinary-core": "^2.4.0",
     "core-js": "^2.5.2",
     "jquery": "^3.2.1",
     "jwt-decode": "^2.2.0",
