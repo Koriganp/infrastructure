@@ -17,7 +17,7 @@ import {Status} from "../classes/status";
 declare let $: any;
 
 @Component({
-	selector: "report-admin-view",
+	// selector: "report-admin-view",
 	templateUrl: "./templates/report-admin-view.html"
 })
 
@@ -49,18 +49,24 @@ export class ReportAdminViewComponent implements OnInit {
 		private reportService: ReportService,
 		private commentService: CommentService,
 		private categoryService: CategoryService,
-		private imageService: ImageService,
-		private route: ActivatedRoute) {
+		private route: ActivatedRoute,
+		private imageService: ImageService) {}
 
-		const reportStatus: string[] = ['Reported', 'Confirmed', 'Investigating Report', 'In Progress', 'Completed'];
-		const reportUrgency: number[] = [1, 2, 3, 4, 5];
-
-	}
+	reportStatusSeed: string[] = ['Reported', 'Confirmed', 'Investigating Report', 'In Progress', 'Completed'];
+	reportUrgencySeed: number[] = [1, 2, 3, 4, 5];
 
 	ngOnInit() : void {
 
 		this.listCategories();
-		// this.getReportByReportId();
+
+		this.route.params.forEach((params : Params) => {
+			let reportId = params["reportId"];
+			this.reportService.getReport(reportId)
+				.subscribe(report => {
+					this.report = report;
+					this.reportAdminViewForm.patchValue(report);
+				})
+		});
 
 		this.reportAdminViewForm = this.formBuilder.group({
 			reportContent: ["", [Validators.required]],
@@ -69,15 +75,6 @@ export class ReportAdminViewComponent implements OnInit {
 			reportUrgency: ["", [Validators.required]],
 			reportCategoryId: ["", [Validators.required]],
 			commentContent: ["", [Validators.maxLength(500), Validators.required]]
-		});
-
-		this.route.params.forEach((params : Params) => {
-			let reportId = params["reportId"];
-			this.reportService.getReportByReportId(reportId)
-				.subscribe(report => {
-					this.report = report;
-					this.reportAdminViewForm.patchValue(report);
-				});
 		});
 
 		this.applyFormChanges();
@@ -91,14 +88,18 @@ export class ReportAdminViewComponent implements OnInit {
 		})
 	}
 
-	getReportByReportId(): void {
-		this.reportService.getReportByReportId(this.report.reportId)
-			.subscribe(report => this.report = report);
-	}
-
 	listCategories(): void {
 		this.categoryService.getAllCategories()
 			.subscribe(categories => this.categories = categories);
+	}
+
+	getReportByReportId(reportId : string): void {
+		this.reportService.getReportByReportId(reportId)
+			.subscribe(report => {
+				console.log(this.report = report);
+				this.reportAdminViewForm.patchValue(report);
+				console.log(this.reportAdminViewForm);
+			});
 	}
 
 	updateReport() : void {
