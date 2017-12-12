@@ -12,7 +12,7 @@ require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 require_once("uuid.php");
 $pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/abqreport.ini");
 
-$namedCategory = ["Pets & Wildlife", "Employment & Education", "Trash & Recycling", "Health, Safety & Social Services", "Parks & Recreation", "Streets & Sidewalks"];
+$namedCategory = ["Pets & Wildlife", "Water & Sewer", "Trash & Recycling", "Health & Safety ", "Parks & Public Land", "Streets & Sidewalks", "Signs & Lights", "Miscellaneous"];
 
 foreach($namedCategory as $newCategory){
 	$category = new Category(generateUuidV4(), $newCategory);
