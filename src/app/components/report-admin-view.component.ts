@@ -17,7 +17,6 @@ import {Status} from "../classes/status";
 declare let $: any;
 
 @Component({
-	// selector: "report-admin-view",
 	templateUrl: "./templates/report-admin-view.html"
 })
 
@@ -69,12 +68,11 @@ export class ReportAdminViewComponent implements OnInit {
 		});
 
 		this.reportAdminViewForm = this.formBuilder.group({
-			reportContent: ["", [Validators.required]],
-			reportDateTime: ["", [Validators.required]],
-			reportStatus: ["", [Validators.required]],
-			reportUrgency: ["", [Validators.required]],
+			reportDateTime: [this.report.reportDateTime],
 			reportCategoryId: ["", [Validators.required]],
-			commentContent: ["", [Validators.maxLength(500), Validators.required]]
+			reportStatus: [this.reportStatusSeed, [Validators.required]],
+			reportUrgency: [this.reportUrgencySeed, [Validators.required]],
+			commentContent: [this.comment.commentContent, [Validators.maxLength(500), Validators.required]]
 		});
 
 		this.applyFormChanges();
@@ -103,22 +101,25 @@ export class ReportAdminViewComponent implements OnInit {
 	}
 
 	updateReport() : void {
-		let report = new Report(null, this.reportAdminViewForm.value.reportCategoryId, this.reportAdminViewForm.value.reportContent, null, null, this.reportAdminViewForm.value.reportStatus, this.reportAdminViewForm.value.reportUrgency);
+		// let report = new Report(null, this.reportAdminViewForm.value.reportCategoryId, this.reportAdminViewForm.value.reportContent, null, null, this.reportAdminViewForm.value.reportStatus, this.reportAdminViewForm.value.reportUrgency);
 
-		this.reportService.updateReport(report)
-			.subscribe(status => {
-				this.status = status;
-				console.log(this.status);
-				if(status.status === 200) {
-					 alert("Edit Successful");
-					this.reportAdminViewForm.reset();
-					setTimeout(function() {
-						$("#report-admin-view-modal").modal('hide');
-					}, 500);
-				} else {
-					alert("Error, there was a problem with one of your entries. Please try again.");
-				}
-			});
+		this.reportService.updateReport(this.report)
+			.subscribe(status => this.status = status);
+
+		// this.reportService.updateReport(report)
+		// 	.subscribe(status => {
+		// 		this.status = status;
+		// 		console.log(this.status);
+		// 		if(status.status === 200) {
+		// 			 alert("Edit Successful");
+		// 			this.reportAdminViewForm.reset();
+		// 			setTimeout(function() {
+		// 				$("#report-admin-view-mod").modal('hide');
+		// 			}, 500);
+		// 		} else {
+		// 			alert("Error, there was a problem with one of your entries. Please try again.");
+		// 		}
+		// 	});
 	}
 
 	deleteReport(): void {
@@ -170,5 +171,4 @@ export class ReportAdminViewComponent implements OnInit {
 				}
 			})
 	}
-
 }
