@@ -14,7 +14,7 @@ require_once(dirname(__DIR__, 3) . "/php/lib/jwt.php");
 require_once("/etc/apache2/capstone-mysql/encrypted-config.php");
 
 use Edu\Cnm\Infrastructure\ {
-	Report
+	Report, Image
 };
 
 //verify the xsrf challenge
@@ -65,6 +65,28 @@ try {
 			$report = Report::getReportByReportId($pdo, $id);
 			// grab all the images for that report based on what report it is
 			if($report !== null) {
+//				$reports = Report::getAllReports($pdo);
+//				$results = [];
+//				foreach($reports as $report) {
+//					$image = Image::getImageByImageReportId($pdo, $report->getReportId());
+//					if ($image === null) {
+//						continue;
+//					}
+//					$result = new stdClass();
+//					$result->reportId = $report->getReportId();
+//					$result->reportCategoryId = $report->getReportCategoryId();
+//					$result->reportContent = $report->getReportContent();
+//					$result->reportDateTime = $report->getReportDateTime();
+//					$result->reportIpAddress = $report->getReportIpAddress();
+//					$result->reportLat = $report->getReportLat();
+//					$result->reportLong = $report->getReportLong();
+//					$result->reportStatus = $report->getReportStatus();
+//					$result->reportUrgency = $report->getReportUrgency();
+//					$result->reportUserAgent = $report->getUserAgent();
+//					$result->imageUrl = "https://res.cloudinary.com/abqreport/image/upload/" . $image->getImageCloudinary();
+//					$results[] = $result;
+//				}
+//				$reply->data = $results;
 				$reply->data = $report;
 			}
 

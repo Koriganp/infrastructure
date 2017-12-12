@@ -87,10 +87,11 @@ try {
 //			throw(new \InvalidArgumentException ("No cloudinary for Image.", 405));
 //		}
 
-		$reply->foo = $cloudinaryResult;
+		$cloudinaryResult["secure_url"] = $imageCloudinary;
+		$reply->foo = $imageCloudinary;
 
 		// create new image and insert into the database
-		$image = new Image(generateUuidV4(), $imageReportId, $cloudinaryResult["secure_url"], $imageLat = null, $imageLong = null);
+		$image = new Image(generateUuidV4(), $imageReportId, $imageCloudinary, $imageLat = null, $imageLong = null);
 
 		$image->insert($pdo);
 		// update reply
@@ -109,6 +110,7 @@ header("Content-type: application/json");
 if($reply->data === null) {
 	unset($reply->data);
 }
+header("Content-type: application/json");
 
 // encode and return reply to front end caller
 echo json_encode($reply);
