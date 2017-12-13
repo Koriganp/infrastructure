@@ -26,11 +26,15 @@ export class ReportAdminViewComponent implements OnInit {
 
 	deleted: boolean = false;
 
+	data: string;
+
 	profile: Profile = new Profile(null, null, null, null, null, null);
 
 	category: Category = new Category(null, null);
 
 	categories: Category[] = [];
+
+	images: Image[] = [];
 
 	report: Report = new Report(null, null, null, null, null, null, null);
 
@@ -57,6 +61,19 @@ export class ReportAdminViewComponent implements OnInit {
 	ngOnInit() : void {
 
 		this.listCategories();
+
+		this.reportService.dataString$.subscribe(
+			data => {
+				this.data = data;
+				console.log(data);
+				this.report.reportId = data;
+				this.reportService.getReportByReportId(this.report.reportId)
+					.subscribe(report => this.report = report);
+				console.log(this.report);
+				this.reportService.getImageByImageReportId(this.report.reportId)
+					.subscribe(images => this.images = images);
+				console.log(this.images);
+			});
 
 		this.route.params.forEach((params : Params) => {
 			let reportId = params["reportId"];
@@ -101,25 +118,25 @@ export class ReportAdminViewComponent implements OnInit {
 	}
 
 	updateReport() : void {
-		// let report = new Report(null, this.reportAdminViewForm.value.reportCategoryId, this.reportAdminViewForm.value.reportContent, null, null, this.reportAdminViewForm.value.reportStatus, this.reportAdminViewForm.value.reportUrgency);
+		let report = new Report(null, this.reportAdminViewForm.value.reportCategoryId, this.reportAdminViewForm.value.reportContent, null, null, this.reportAdminViewForm.value.reportStatus, this.reportAdminViewForm.value.reportUrgency);
 
 		this.reportService.updateReport(this.report)
 			.subscribe(status => this.status = status);
 
-		// this.reportService.updateReport(report)
-		// 	.subscribe(status => {
-		// 		this.status = status;
-		// 		console.log(this.status);
-		// 		if(status.status === 200) {
-		// 			 alert("Edit Successful");
-		// 			this.reportAdminViewForm.reset();
-		// 			setTimeout(function() {
-		// 				$("#report-admin-view-mod").modal('hide');
-		// 			}, 500);
-		// 		} else {
-		// 			alert("Error, there was a problem with one of your entries. Please try again.");
-		// 		}
-		// 	});
+		this.reportService.updateReport(report)
+			.subscribe(status => {
+				this.status = status;
+				console.log(this.status);
+				if(status.status === 200) {
+					 alert("Edit Successful");
+					this.reportAdminViewForm.reset();
+					setTimeout(function() {
+						$("#report-admin-view-mod").modal('hide');
+					}, 500);
+				} else {
+					alert("Error, there was a problem with one of your entries. Please try again.");
+				}
+			});
 	}
 
 	deleteReport(): void {
