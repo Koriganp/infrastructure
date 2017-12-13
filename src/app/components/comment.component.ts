@@ -3,6 +3,10 @@ import {CommentService} from "../services/comment.service";
 import {Status} from "../classes/status";
 import {Comment} from "../classes/comment";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Report} from "../classes/report";
+import {Profile} from "../classes/profile";
+import {ProfileService} from "../services/profile.services";
+
 
 @Component({
 	templateUrl: "./templates/comment.html",
@@ -19,10 +23,16 @@ export class CommentComponent implements OnInit {
 
 	status: Status = null;
 
+	profile: Profile = new Profile(null, null, null, null, null, null);
+
+	report: Report = new Report(null, null, null, null, null, null, null);
+
 	comment: Comment = new Comment(null, null, null, null, null);
 
-	constructor(private commentService: CommentService,
-					private formBuilder: FormBuilder) {
+	constructor(
+		private commentService: CommentService,
+		private formBuilder: FormBuilder,
+		private profileService: ProfileService) {
 	}
 
 	ngOnInit(): void {
@@ -31,11 +41,21 @@ export class CommentComponent implements OnInit {
 			commentContent: ["", [Validators.required]]
 		});
 
+		this.applyFormChanges();
+
+		this.profileService.getProfile(this.comment.commentProfileId)
+			.subscribe(profile => this.profile = profile);
+
+		this.getCommentByReportId();
+
 	}
 
-	getCommentByProfileId(): void {
-		this.commentService.getCommentByCommentProfileId(this.comment.commentProfileId)
-			.subscribe(comment => this.status = comment);
+	applyFormChanges(): void {
+		this.commentForm.valueChanges.subscribe(values => {
+			for(let field in values) {
+				this.comment[field] = values[field];
+			}
+		});
 	}
 
 	getCommentByReportId(): void {
@@ -44,6 +64,7 @@ export class CommentComponent implements OnInit {
 	}
 
 	createComment(): void {
+
 		let comment = new Comment(null, null, null, this.reportCommentForm.value.commentContent, null);
 
 		this.commentService.createComment(comment)
@@ -54,11 +75,6 @@ export class CommentComponent implements OnInit {
 					alert(this.status.message);
 				}
 			})
-	}
-
-	editComment(): void {
-		this.commentService.editComment(this.comment)
-			.subscribe(status => this.status = status);
 	}
 
 	deleteComment(): void {
