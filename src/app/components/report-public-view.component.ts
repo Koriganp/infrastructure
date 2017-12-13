@@ -23,11 +23,13 @@ export class ReportPublicViewComponent implements OnInit{
 
 	categories: Category[] = [];
 
-	image: Image = new Image(null, null, null, null, null);
+	// image: Image = new Image(null, null, null, null, null);
 
 	images: Image[] = [];
 
 	data: string;
+
+	reportImage: string;
 
 	//declare needed state variables for later use
 	status: Status = null;
@@ -50,6 +52,9 @@ export class ReportPublicViewComponent implements OnInit{
 				this.reportService.getReportByReportId(this.report.reportId)
 					.subscribe(report => this.report = report);
 				console.log(this.report);
+				this.reportService.getImageByImageReportId(this.report.reportId)
+					.subscribe(images => this.images = images);
+				console.log(this.images);
 			});
 	}
 

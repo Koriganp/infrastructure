@@ -25,7 +25,7 @@
 					<div class="row">
 						<div class="col">
 							<h2>Category</h2>
-							<div id="reportPubViewCategoryId" class="mb-2"></div>
+							<div id="reportPubViewCategoryId" class="mb-2">{{report.categoryName}}</div>
 						</div>
 					</div>
 
@@ -33,13 +33,13 @@
 					<div class="row">
 						<div class="col">
 							<h2>Date Reported</h2>
-							<div id="publicViewReportDate"></div>
+							<div id="publicViewReportDate">{{report.reportDateTime | date}}</div>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col">
 							<h2>Status</h2>
-							<div id="publicViewReportStatus"></div>
+							<div id="publicViewReportStatus">{{report.reportStatus}}</div>
 						</div>
 					</div>
 
@@ -47,14 +47,15 @@
 					<div class="row">
 						<div class="col">
 							<h2>Report Content</h2>
-							<div class="col" id="publicViewReportContent"></div>
+							<div class="col" id="publicViewReportContent">{{report.reportContent}}</div>
+
 						</div>
 					</div>
 
 					<div class="row">
 						<div class="col">
 							<h2>Report Image</h2>
-							<img [src]="report.publicViewReportImage" alt="Report Image" class="img-thumbnail" id="publicViewReportImage"/>
+							<img *ngFor="let image of images" [src]="image.imageCloudinary" alt="Report Image" class="img-thumbnail" id="publicViewReportImage"/>
 						</div>
 					</div>
 

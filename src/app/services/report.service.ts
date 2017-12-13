@@ -3,9 +3,10 @@ import {Subject} from 'rxjs/Subject';
 
 import {Status} from "../classes/status";
 import {Report} from "../classes/report";
+import {Image} from "../classes/image";
 import {Observable} from "rxjs/Observable";
 import {HttpClient} from "@angular/common/http";
-import {Image} from "../classes/image";
+
 
 @Injectable ()
 export class ReportService {
@@ -66,8 +67,8 @@ export class ReportService {
 		return(this.http.get<Report[]>(this.reportUrl));
 	}
 
-	uploadImage(image : Image) : Observable<Status> {
-		return(this.http.post<Status>(this.imageUrl, image));
+	getImageByImageReportId(imageReportId : string) : Observable<Image[]> {
+		return(this.http.get<Image[]>(this.imageUrl + "?imageReportId="+ imageReportId));
 	}
 
 }
