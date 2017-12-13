@@ -78,6 +78,11 @@ export class AdminDashboardComponent implements OnInit {
 			.subscribe((reports: any) => this.report = reports);
 	}
 
+	setSharedValue(reportId: any){
+		console.log(reportId);
+		this.reportService.insertData(reportId);
+	}
+
 	filterCategory(categoryId: string): void {
 		this.reportService.getReportByReportCategoryId(categoryId)
 			.subscribe(reports => this.reports = reports);

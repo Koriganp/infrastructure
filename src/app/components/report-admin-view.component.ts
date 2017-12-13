@@ -17,6 +17,7 @@ import {Status} from "../classes/status";
 declare let $: any;
 
 @Component({
+	selector: "report-admin-view",
 	templateUrl: "./templates/report-admin-view.html"
 })
 
@@ -75,6 +76,14 @@ export class ReportAdminViewComponent implements OnInit {
 				console.log(this.images);
 			});
 
+		this.reportAdminViewForm = this.formBuilder.group({
+			reportDateTime: [this.report.reportDateTime],
+			reportCategoryId: ["", [Validators.required]],
+			reportStatus: [this.reportStatusSeed, [Validators.required]],
+			reportUrgency: [this.reportUrgencySeed, [Validators.required]],
+			commentContent: [this.comment.commentContent, [Validators.maxLength(500), Validators.required]]
+		});
+
 		this.route.params.forEach((params : Params) => {
 			let reportId = params["reportId"];
 			this.reportService.getReport(reportId)
@@ -82,14 +91,6 @@ export class ReportAdminViewComponent implements OnInit {
 					this.report = report;
 					this.reportAdminViewForm.patchValue(report);
 				})
-		});
-
-		this.reportAdminViewForm = this.formBuilder.group({
-			reportDateTime: [this.report.reportDateTime],
-			reportCategoryId: ["", [Validators.required]],
-			reportStatus: [this.reportStatusSeed, [Validators.required]],
-			reportUrgency: [this.reportUrgencySeed, [Validators.required]],
-			commentContent: [this.comment.commentContent, [Validators.maxLength(500), Validators.required]]
 		});
 
 		this.applyFormChanges();
@@ -108,6 +109,10 @@ export class ReportAdminViewComponent implements OnInit {
 			.subscribe(categories => this.categories = categories);
 	}
 
+	getCategoryByCategoryId(categoryId : string) : Category {
+		return (this.categories.find(searchCategory => searchCategory.categoryId === categoryId));
+	}
+
 	getReportByReportId(reportId : string): void {
 		this.reportService.getReportByReportId(reportId)
 			.subscribe(report => {
@@ -118,7 +123,7 @@ export class ReportAdminViewComponent implements OnInit {
 	}
 
 	updateReport() : void {
-		let report = new Report(null, this.reportAdminViewForm.value.reportCategoryId, this.reportAdminViewForm.value.reportContent, null, null, this.reportAdminViewForm.value.reportStatus, this.reportAdminViewForm.value.reportUrgency);
+		let report = new Report(null, this.reportAdminViewForm.value.reportCategoryId, null, null, null, this.reportAdminViewForm.value.reportStatus, this.reportAdminViewForm.value.reportUrgency);
 
 		this.reportService.updateReport(this.report)
 			.subscribe(status => this.status = status);
@@ -131,7 +136,7 @@ export class ReportAdminViewComponent implements OnInit {
 					 alert("Edit Successful");
 					this.reportAdminViewForm.reset();
 					setTimeout(function() {
-						$("#report-admin-view-mod").modal('hide');
+						$("#report-admin-view-modal").modal('hide');
 					}, 500);
 				} else {
 					alert("Error, there was a problem with one of your entries. Please try again.");
