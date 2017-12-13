@@ -83,14 +83,14 @@ try {
 		 //create the Auth payload
 		 $authObject = (object) [
 			 "profileId" =>$profile->getProfileId(),
-			 "profileAtHandle" => $profile->getProfileUserName()
+			 "profileUserName" => $profile->getProfileUsername()
 		 ];
 
+		 // create and set the JWT TOKEN
 		 setJwtAndAuthHeader("auth",$authObject);
 
 
-
-        $reply->message = "Sign in was successful.";
+		 $reply->message = "Sign in was successful.";
 
     } else {
         throw(new \InvalidArgumentException("Invalid HTTP method request."));
