@@ -42,3 +42,7 @@ input[type=file] {
 	padding-left: 2rem;
 	font-size: 1.25rem;
 }
+
+.reportImg {
+	margin-left: 5rem;
+}
