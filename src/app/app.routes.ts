@@ -61,7 +61,7 @@ export const allAppComponents = [
 //an array of routes that will be passed of to the module
 export const routes: Routes = [
 	{path: "admin-dashboard", component: AdminDashboardComponent},
-	{path: "report-admin-view/:reportId", component: ReportAdminViewComponent},
+	{path: "report-admin-view", component: ReportAdminViewComponent},
 	{path: "report-public-view", component: ReportPublicViewComponent},
 	{path: "sign-in", component: SignInComponent},
 	{path: "sign-up", component: SignUpComponent},
