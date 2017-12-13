@@ -27,7 +27,7 @@
 	<div class="input-group d-block ml-4">
 		<div class="input-group-btn">
 			<h2 class="m-2 p-3 text-light d-inline-block">Reports Submitted</h2>
-				<button type="button" class="btn btn-info mb-2 d-inline-block mr-auto dropdown"><i class="fa fa-pie-chart"></i>&nbsp;Sort By Category
+				<button type="button" class="btn btn-info mb-2 d-inline-block mr-auto rounded"><i class="fa fa-pie-chart"></i>&nbsp;Sort By Category
 				<select title="category" (change)="filterCategory($event.target.value);">
 					<option *ngFor="let category of categories" [value]="category.categoryId">{{category.categoryName}}
 					</option>
