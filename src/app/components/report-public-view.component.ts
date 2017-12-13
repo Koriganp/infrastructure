@@ -46,6 +46,10 @@ export class ReportPublicViewComponent implements OnInit{
 			data => {
 				this.data = data;
 				console.log(data);
+				this.report.reportId = data;
+				this.reportService.getReportByReportId(this.report.reportId)
+					.subscribe(report => this.report = report);
+				console.log(this.report);
 			});
 	}
 

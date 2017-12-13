@@ -47,12 +47,7 @@ try {
 		throw(new InvalidArgumentException("id cannot be empty or negative", 405));
 	}
 
-//	// assigning profile according to session
-//	if(!empty($_SESSION["profile"])) {
-//		if(Profile::getProfileByProfileId($pdo, $_SESSION["profile"]->getProfileId()) === null) {
-//			throw(new InvalidArgumentException("GTFO Hacker", 418));
-//		}
-//		$profile = Profile::getProfileByProfileId($pdo, $_SESSION["profile"]->getProfileId());
+
 //	}
 	// handle GET request - if id is present, the report is returned, otherwise all reports are returned
 	if($method === "GET") {
@@ -65,28 +60,6 @@ try {
 			$report = Report::getReportByReportId($pdo, $id);
 			// grab all the images for that report based on what report it is
 			if($report !== null) {
-//				$reports = Report::getAllReports($pdo);
-//				$results = [];
-//				foreach($reports as $report) {
-//					$image = Image::getImageByImageReportId($pdo, $report->getReportId());
-//					if ($image === null) {
-//						continue;
-//					}
-//					$result = new stdClass();
-//					$result->reportId = $report->getReportId();
-//					$result->reportCategoryId = $report->getReportCategoryId();
-//					$result->reportContent = $report->getReportContent();
-//					$result->reportDateTime = $report->getReportDateTime();
-//					$result->reportIpAddress = $report->getReportIpAddress();
-//					$result->reportLat = $report->getReportLat();
-//					$result->reportLong = $report->getReportLong();
-//					$result->reportStatus = $report->getReportStatus();
-//					$result->reportUrgency = $report->getReportUrgency();
-//					$result->reportUserAgent = $report->getUserAgent();
-//					$result->imageUrl = "https://res.cloudinary.com/abqreport/image/upload/" . $image->getImageCloudinary();
-//					$results[] = $result;
-//				}
-//				$reply->data = $results;
 				$reply->data = $report;
 			}
 
