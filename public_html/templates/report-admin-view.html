@@ -22,18 +22,45 @@
 
 			<div class="modal-body">
 
-				<div><!-- Category Dropdown-->
-					<div class="form-group">
-						<label for="reportCategoryId">Category</label>
-						<select id="reportCategoryId" class="form-control mb-2" name="reportCategoryId" required formControlName="reportCategoryId">
-							<option *ngFor="let category of categories" [value]="category.categoryId">
-								{{category.categoryName}}
-							</option>
-						</select>
-					</div>
-				</div><!-- Category Dropdown-->
+
+
 
 				<form class="form-vertical" [formGroup]="reportAdminViewForm" novalidate> <!-- (submit)="updateReport();" -->
+
+					<div><!-- Category Dropdown-->
+						<div class="form-group">
+							<label for="reportCategoryId">Category</label>
+							<select id="reportCategoryId" class="form-control mb-2" name="reportCategoryId" required formControlName="reportCategoryId">
+								<option *ngFor="let category of categories" [value]="category.categoryId">
+									{{category.categoryName}}
+								</option>
+							</select>
+						</div>
+					</div><!-- Category Dropdown-->
+
+					<!--(change)="filterStatus($event.target.value);"-->
+
+					<div><!-- Category Dropdown-->
+						<div class="form-group">
+							<label for="reportStatus">Status</label>
+							<select id="reportStatus" class="form-control mb-2" name="reportStatus" required formControlName="reportStatus">
+								<option *ngFor="let status of reportStatusSeed" [value]="status">
+									{{status}}
+								</option>
+							</select>
+						</div>
+					</div><!-- Category Dropdown-->
+
+					<div><!-- Category Dropdown-->
+						<div class="form-group">
+							<label for="reportUrgency">Status</label>
+							<select id="reportUrgency" class="form-control mb-2" name="reportUrgency" required formControlName="reportUrgency">
+								<option *ngFor="let urgency of reportUrgencySeed" [value]="urgency">
+									{{urgency}}
+								</option>
+							</select>
+						</div>
+					</div><!-- Category Dropdown-->
 
 
 					<div class="row">

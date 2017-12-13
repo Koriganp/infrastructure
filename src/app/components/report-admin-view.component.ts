@@ -46,6 +46,9 @@ export class ReportAdminViewComponent implements OnInit {
 	//declare needed state variables for later use
 	status: Status = null;
 
+	reportStatus: string;
+	reportUrgency: number;
+
 	constructor(
 		private authService: AuthService,
 		private formBuilder: FormBuilder,
@@ -77,7 +80,6 @@ export class ReportAdminViewComponent implements OnInit {
 			});
 
 		this.reportAdminViewForm = this.formBuilder.group({
-			reportDateTime: [this.report.reportDateTime],
 			reportCategoryId: ["", [Validators.required]],
 			reportStatus: [this.reportStatusSeed, [Validators.required]],
 			reportUrgency: [this.reportUrgencySeed, [Validators.required]],
@@ -93,8 +95,23 @@ export class ReportAdminViewComponent implements OnInit {
 				})
 		});
 
+		this.getProfile();
+
 		this.applyFormChanges();
 	}
+
+	//
+	// filterStatus(statusName: string): void {
+	// 	// this.reportService.getReportByReportId(status)
+	// 		// .subscribe(reportStatus => this.report = reportStatus);`
+	// 	this.reportStatus = statusName;
+	// }
+	//
+	// filterUrgency(urgency: number): void {
+	// 	// this.reportService.getReportByReportId(urgency)
+	// 	// 	.subscribe(reportUrgency => this.reportUrgency = reportUrgency);
+	// 	this.reportUrgency = urgency;
+	// }
 
 	applyFormChanges() : void {
 		this.reportAdminViewForm.valueChanges.subscribe(values => {
@@ -102,6 +119,10 @@ export class ReportAdminViewComponent implements OnInit {
 				this.report[field] = values[field];
 			}
 		})
+	}
+
+	getProfile() : void {
+		this.profileService.getProfile(this.profile.profileId);
 	}
 
 	listCategories(): void {
@@ -123,7 +144,7 @@ export class ReportAdminViewComponent implements OnInit {
 	}
 
 	updateReport() : void {
-		let report = new Report(null, this.reportAdminViewForm.value.reportCategoryId, null, null, null, this.reportAdminViewForm.value.reportStatus, this.reportAdminViewForm.value.reportUrgency);
+		let report = new Report(this.report.reportId, this.reportAdminViewForm.value.reportCategoryId, this.report.reportContent, this.report.reportDateTime, this.report.reportContentAddress, this.reportAdminViewForm.value.reportStatus, this.reportAdminViewForm.value.reportUrgency);
 
 		this.reportService.updateReport(this.report)
 			.subscribe(status => this.status = status);
@@ -135,9 +156,9 @@ export class ReportAdminViewComponent implements OnInit {
 				if(status.status === 200) {
 					 alert("Edit Successful");
 					this.reportAdminViewForm.reset();
-					setTimeout(function() {
-						$("#report-admin-view-modal").modal('hide');
-					}, 500);
+					// setTimeout(function() {
+					// 	$("#report-admin-view-modal").modal('hide');
+					// }, 500);
 				} else {
 					alert("Error, there was a problem with one of your entries. Please try again.");
 				}
