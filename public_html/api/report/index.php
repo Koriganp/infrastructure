@@ -109,15 +109,11 @@ try {
 
 			// enforce the end user has a JWT token
 
+			validateJwtHeader();
+
 			//enforce the user is signed in and only trying to update the status and urgency
 			if(empty($_SESSION["profile"]) === true) {
 				throw(new \InvalidArgumentException("You are not allowed to edit this report", 403));
-			}
-
-			validateJwtHeader();
-
-			if(empty($profile)) {
-				throw(new InvalidArgumentException("You're not allowed to update status or urgency. Please Log In", 403));
 			}
 
 			// update status and urgency

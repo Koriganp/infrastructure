@@ -44,8 +44,8 @@ export class ReportService {
 	}
 
 	// call to the report API and create the report in question
-	updateReport(report : Report) : Observable<Status> {
-		return(this.http.put<Status>(this.reportUrl + report.reportId, report));
+	updateReport(report : Report) : Observable<any> {
+		return(this.http.put<any>(this.reportUrl + report.reportId, report));
 	}
 
 	getReport(reportId : string) : Observable<Report> {
