@@ -37,3 +37,8 @@ h1 {
 input[type=file] {
 	padding: 1rem;
 }
+
+.contentText {
+	padding-left: 2rem;
+	font-size: 1.25rem;
+}
