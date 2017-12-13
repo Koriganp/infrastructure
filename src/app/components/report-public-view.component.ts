@@ -63,10 +63,8 @@ export class ReportPublicViewComponent implements OnInit{
 			.subscribe(categories => this.categories = categories);
 	}
 
-	getReport(): void {
-		this.reportService.getReport(this.report.reportId)
-			.subscribe(report => this.report = report);
-			this.reportPublicViewForm.setValue(this.report);
-
+	getCategoryByCategoryId(categoryId : string) : Category {
+		return (this.categories.find(searchCategory => searchCategory.categoryId === categoryId));
 	}
+
 }
