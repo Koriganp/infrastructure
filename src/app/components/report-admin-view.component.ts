@@ -59,7 +59,7 @@ export class ReportAdminViewComponent implements OnInit {
 		private route: ActivatedRoute,
 		private imageService: ImageService) {}
 
-	reportStatusSeed: string[] = ['Reported', 'Confirmed', 'Investigating Report', 'In Progress', 'Completed'];
+	reportStatusSeed: string[] = ['Reported', 'Confirmed', 'Investigating', 'In Progress', 'Completed'];
 	reportUrgencySeed: number[] = [1, 2, 3, 4, 5];
 
 	ngOnInit() : void {
