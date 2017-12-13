@@ -66,8 +66,8 @@
 
 					<!-- Report Edit Modal  -->
 
-					<td (click)="goToReport(report);">
-						<button class="btn btn-info my-0 mr-sm-2"><i class="fa fa-pencil-square-o"></i>Edit Report
+					<td (click)="setSharedValue(report.reportId);">
+						<button class="btn btn-info my-0 mr-sm-2" data-toggle="modal" data-target="#report-admin-view-modal"><i class="fa fa-pencil-square-o"></i>Edit Report
 						</button>
 					</td>
 				</tr>

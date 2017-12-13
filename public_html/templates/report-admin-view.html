@@ -1,87 +1,106 @@
 <!--////////////////////////////-->
-<!--      Report Admin View     -->
+<!-- Report Admin View (Pop-Up) -->
 <!--////////////////////////////-->
 
-<div>
-	<form name="reportAdminViewForm" id="reportAdminViewForm" [formGroup]="reportAdminViewForm" (submit)="updateReport();" novalidate>
-		<div>
-			<h2>View/Edit Report</h2>
-		</div>
-		<div class="form-group">
-			<label for="reportDateTime">Report Date: </label>
-			<div class="input-group" id="reportDateTime">
-				{{ reportDateTime }}
+<div class="modal fade" tabindex="-1" role="dialog" id="report-admin-view-modal">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header bg-dark">
+
+				<!-- Modal Title -->
+
+				<h1 class="modal-title text-light modTitle">View/Edit Report</h1>
+
+				<!-- Dismiss Button -->
+
+				<button type="button" class="close" data-dismiss="modal" aria-label="close">
+					<span aria-hidden="true"> &times; </span>
+				</button>
+			</div>
+
+			<!-- Modal Content -->
+
+			<div class="modal-body">
+
+				<div><!-- Category Dropdown-->
+					<div class="form-group">
+						<label for="reportCategoryId">Category</label>
+						<select id="reportCategoryId" class="form-control mb-2" name="reportCategoryId" required formControlName="reportCategoryId">
+							<option *ngFor="let category of categories" [value]="category.categoryId">
+								{{category.categoryName}}
+							</option>
+						</select>
+					</div>
+				</div><!-- Category Dropdown-->
+
+				<form class="form-vertical" [formGroup]="reportAdminViewForm" novalidate> <!-- (submit)="updateReport();" -->
+
+
+					<div class="row">
+						<div class="col">
+							<h2>Date Reported</h2>
+							<div id="adminViewReportDateTime" class="mb-2 contentText">{{report.reportDateTime | date}}</div>
+						</div>
+						<div class="col">
+							<h2>Update Status</h2>
+							<div id="adminViewReportStatus" class="mb-2 contentText">{{report.reportStatus}}</div>
+						</div>
+						<div class="col">
+							<h2>Update Urgency</h2>
+							<div id="adminViewReportUrgency">{{report.reportUrgency}}</div>
+						</div>
+					</div>
+
+					<div><!-- Report Content-->
+						<div class="form-group" id="adminViewReportContent">
+							<label for="content" class="viewHeadings">Report Content</label>
+							<textarea class="form-control" id="content" rows="10"readonly>{{report.reportContent}}</textarea>
+						</div>
+					</div><!-- Report Content-->
+
+					<div class="row">
+						<div class="col">
+							<h2>Images</h2>
+							<img *ngFor="let image of images" [src]="image.imageCloudinary" alt="Report Image" class="img-thumbnail" id="publicViewReportImage"/>
+						</div>
+					</div>
+
+					<div>
+						<div class="form-group">
+							<label for="comment" class="viewHeadings">Comment</label>
+							<textarea readonly class="form-control" id="comment" rows="10"></textarea>
+							<button class="btn btn-info my-3 mr-sm-2" data-toggle="modal" data-target="#comment-modal" (click)="createComment()"><i
+								class="fa fa-pencil-square-o"></i>Add Comment
+							</button>
+							<button class="btn btn-info my-3 mr-sm-2" data-toggle="modal" (click)="updateReport()"><i
+								class="fa fa-pencil-square-o"></i>Update Report
+							</button>
+							<button class="btn btn-danger my-3 mr-sm-2" (click)="deleteReport()"><i
+								class="fa fa-minus-circle"></i>&nbsp; Delete Report
+							</button>
+							<button class="btn btn-danger my-3 mr-sm-2 px-5" data-dismiss="modal" type="submit" value="Cancel"><i class="fa fa-ban"></i> Cancel</button>
+						</div>
+					</div>
+
+				</form>
 			</div>
 		</div>
-	</form>
+	</div>
 </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--<div class="fade" tabindex="-1" role="dialog" id="">-->
-	<!--<div class="" role="document">-->
-		<!--<div class="">-->
-			<!--<div class="bg-dark">-->
-
-				<!--&lt;!&ndash; Modal Title &ndash;&gt;-->
-
-				<!--<h1 class=" text-light ">Edit Report</h1>-->
-
-				<!--&lt;!&ndash; Dismiss Button &ndash;&gt;-->
-
-				<!--<button type="button" class="close" data-dismiss="" aria-label="close">-->
-					<!--<span aria-hidden="true"> &times; </span>-->
-				<!--</button>-->
-			<!--</div>-->
-
-			<!--&lt;!&ndash; Modal Content &ndash;&gt;-->
-
-			<!--<div class="">-->
-				<!--<form class="form-vertical" name="reportAdminView" [formGroup]="reportAdminViewForm" novalidate>-->
-
-					<!--<div>&lt;!&ndash; Category Dropdown&ndash;&gt;-->
-						<!--<div class="form-group">-->
-							<!--<label for="reportCategoryId">Category</label>-->
-							<!--<select id="reportCategoryId" class="form-control mb-2" name="reportCategoryId" required formControlName="reportCategoryId">-->
-								<!--<option *ngFor="let category of categories" [value]="category.categoryId">-->
-									<!--{{category.categoryName}}-->
-								<!--</option>-->
-							<!--</select>-->
-						<!--</div>-->
-					<!--</div>&lt;!&ndash; Category Dropdown&ndash;&gt;-->
-
+<!--Excess HTML -->
 
 					<!--<div class="form-group">&lt;!&ndash; Date &ndash;&gt;-->
 						<!--<label for="reportDateTime" class="viewHeadings">Date Reported</label>-->
 						<!--<div>-->
-							<!--<input id="reportDateTime" type="text" readonly class="form-control-plaintext" name="reportDateTime" formControlName="reportDateTime" required>-->
+							<!--<input id="reportDateTime" type="text" readonly class="form-control-plaintext" name="reportDateTime" required formControlName="reportDateTime" value="{{reportDateTime}}">-->
 						<!--</div>-->
 					<!--</div>&lt;!&ndash; Date &ndash;&gt;-->
 
 					<!--<div class="btn-toolbar mb-5" role="toolbar">-->
 
 						<!--<div class="btn-group">&lt;!&ndash; Status&ndash;&gt;-->
-
 							<!--<button class="btn btn-secondary" type="button">-->
 								<!--Select Status-->
 							<!--</button>-->
@@ -91,7 +110,6 @@
 							<!--</button>-->
 							<!--<div class="dropdown-menu">-->
 							<!--</div>-->
-
 						<!--</div>&lt;!&ndash; Status &ndash;&gt;-->
 
 						<!--<div class="btn-group">&lt;!&ndash; Urgency &ndash;&gt;-->
@@ -113,12 +131,7 @@
 
 					<!--</div>-->
 
-					<!--<div>&lt;!&ndash; Report Content&ndash;&gt;-->
-						<!--<div class="form-group">-->
-							<!--<label for="content" class="viewHeadings">Report Content</label>-->
-							<!--<textarea class="form-control" id="content" rows="10"></textarea>-->
-						<!--</div>-->
-					<!--</div>&lt;!&ndash; Report Content&ndash;&gt;-->
+
 
 					<!--<div>-->
 						<!--<h3 class="viewHeadings">Images</h3>-->
@@ -129,7 +142,7 @@
 					<!--<div>-->
 						<!--<div class="form-group">-->
 							<!--<label for="comment" class="viewHeadings">Comments</label>-->
-							<!--<textarea readonly class="form-control" id="comment" rows="10"></textarea>-->
+							<!--<textarea readonly class="form-control" id="" rows="10"></textarea>-->
 							<!--<button class="btn btn-info my-3 mr-sm-2" data-toggle="modal" data-target="#comment-modal" (click)="createComment()"><i-->
 								<!--class="fa fa-pencil-square-o"></i>Add Comment-->
 							<!--</button>-->
@@ -143,8 +156,4 @@
 						<!--</div>-->
 					<!--</div>-->
 
-				<!--</form>-->
-			<!--</div>-->
-		<!--</div>-->
-	<!--</div>-->
-<!--</div>-->
+
