@@ -21,7 +21,7 @@
 			<!-- Location -->
 
 			<div class="container">
-				<form name="reportSubmitForm" id="reportSubmitForm" [formGroup]="reportSubmitForm" (submit)="createReport();">
+				<form name="reportSubmitForm" id="reportSubmitForm" [formGroup]="reportSubmitForm">
 					<div class="form-group">
 						<label for="reportCategoryId">Select Category</label>
 						<select id="reportCategoryId" class="form-control mb-2" name="reportCategoryId" required formControlName="reportCategoryId">
@@ -71,14 +71,13 @@
 					<div class="row">
 						<div class="col">
 							<div class="d-flex justify-content-center my-5">
-								<button class="btn btn-primary mr-3" type="submit" value="Submit"><i class="fa fa-paper-plane"></i> Submit</button>
-								<button class="btn btn-danger ml-3" data-dismiss="modal" type="submit" value="Cancel"><i class="fa fa-ban"></i> Cancel</button>
+								<button class="btn btn-primary mr-3" (click)="createReport()"><i class="fa fa-paper-plane"></i> Submit</button>
+								<button class="btn btn-danger ml-3" data-dismiss="modal"><i class="fa fa-ban"></i> Cancel</button>
 							</div>
 						</div>
 					</div>
 				</form>
 			</div>
-
 
 		</div>
 	</div>
