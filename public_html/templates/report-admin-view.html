@@ -22,9 +22,6 @@
 
 			<div class="modal-body">
 
-
-
-
 				<form class="form-vertical" [formGroup]="reportAdminViewForm" novalidate> <!-- (submit)="updateReport();" -->
 
 					<div><!-- Category Dropdown-->
@@ -40,7 +37,7 @@
 
 					<!--(change)="filterStatus($event.target.value);"-->
 
-					<div><!-- Category Dropdown-->
+					<div><!-- Status Dropdown-->
 						<div class="form-group">
 							<label for="reportStatus">Status</label>
 							<select id="reportStatus" class="form-control mb-2" name="reportStatus" required formControlName="reportStatus">
@@ -49,9 +46,9 @@
 								</option>
 							</select>
 						</div>
-					</div><!-- Category Dropdown-->
+					</div><!-- Status Dropdown-->
 
-					<div><!-- Category Dropdown-->
+					<div><!-- Urgency Dropdown-->
 						<div class="form-group">
 							<label for="reportUrgency">Urgency</label>
 							<select id="reportUrgency" class="form-control mb-2" name="reportUrgency" required formControlName="reportUrgency">
@@ -60,7 +57,7 @@
 								</option>
 							</select>
 						</div>
-					</div><!-- Category Dropdown-->
+					</div><!-- Urgency Dropdown-->
 
 
 					<div class="row">
