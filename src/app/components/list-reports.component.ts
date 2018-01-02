@@ -40,7 +40,6 @@ export class ListReportsComponent implements OnInit{
 		this.categoryService.getCategory(this.report.reportCategoryId)
 	}
 
-
 	listReports(): void {
 		this.reportService.getAllReports()
 			.subscribe(reports => this.reports = reports);
