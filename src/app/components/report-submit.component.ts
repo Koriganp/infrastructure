@@ -15,6 +15,8 @@ import {Router} from "@angular/router";
 import {Observable} from "rxjs";
 import "rxjs/add/observable/from";
 
+declare let $: any;
+
 @Component({
 	selector: "report-submit",
 	templateUrl: "./templates/report-submit.html",
@@ -112,6 +114,9 @@ export class ReportSubmitComponent implements OnInit {
 					alert("Admin will confirm your report shortly");
 				}
 				this.reportSubmitForm.reset();
+				setTimeout(function() {
+					$("#report-submit-modal").modal('hide');
+				}, 300);
 
 				let additionalParameter = {
 					imageReportId: this.status.data
