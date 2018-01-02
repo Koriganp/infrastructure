@@ -24,4 +24,6 @@ export class CategoryComponent {
 			.subscribe(categories => this.categories = categories);
 	}
 
+
+
 }
