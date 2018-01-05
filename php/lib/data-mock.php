@@ -7,9 +7,9 @@ require_once("uuid.php");
 // grab the uuid generator
 require_once( "uuid.php");
 $pdo = connectToEncryptedMySQL("/etc/apache2/capstone-mysql/abqreport.ini");
-$password ="abc123";
+$password ="test";
 $SALT = bin2hex(random_bytes(32));
 $HASH = hash_pbkdf2("sha512", $password, $SALT, 262144);
 
-$profile = new Profile(generateUuidV4(),null,"Joe Mama", "holy@shit.com", $HASH,$SALT);
+$profile = new Profile(generateUuidV4(),null,"test", "test@test.com", $HASH,$SALT);
 $profile->insert($pdo);
