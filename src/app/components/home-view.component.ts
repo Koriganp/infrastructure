@@ -13,7 +13,7 @@ import {ReportPublicViewComponent} from "./report-public-view.component";
 
 @Component({
 	templateUrl: "./templates/home-view.html",
-	selector: "home-view"
+	selector: "home"
 })
 
 export class HomeViewComponent implements OnInit{
