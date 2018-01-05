@@ -25,8 +25,8 @@ function setJwtAndAuthHeader(string $value, stdClass $content): void {
 	$_SESSION["signature"] = $signature->toString();
 	$token = (new Builder())
 		->set($value, $content)
-		->setIssuer("https://bootcamp-coders.cnm.edu")
-		->setAudience("https://bootcamp-coders.cnm.edu")
+		->setIssuer("https://reportabq.com")
+		->setAudience("https://reportabq.com")
 		->setId(session_id())
 		->setIssuedAt(time())
 		->setExpiration(time() + 3600)
