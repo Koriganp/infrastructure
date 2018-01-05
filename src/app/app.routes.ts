@@ -71,8 +71,8 @@ export const routes: Routes = [
 	{path: "foot", component: FootComponent},
 	{path: "category", component: CategoryComponent},
 	{path: "infrastructure-app", component: InfrastructureAppComponent},
-	{path: "home", component: HomeViewComponent},
-	{ path: '', redirectTo: '/home', pathMatch: 'full'}
+	{path: "home-view", component: HomeViewComponent},
+	{ path: '', redirectTo: '/home-view', pathMatch: 'full'}
 ];
 
 // an array of services that will be passed off to the module
