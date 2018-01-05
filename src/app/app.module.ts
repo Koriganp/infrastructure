@@ -15,7 +15,7 @@ const JwtHelper = JwtModule.forRoot({
 			return localStorage.getItem("jwt-token");
 		},
 		skipWhenExpired:true,
-		whitelistedDomains: ["localhost:7272", "https://bootcamp-coders.cnm.edu/"],
+		whitelistedDomains: ["localhost:7272", "https://reportabq.com/"],
 		headerName: "X-JWT-TOKEN",
 		authScheme: ""
 	}
