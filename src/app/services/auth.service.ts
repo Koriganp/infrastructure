@@ -12,33 +12,41 @@ export class AuthService {
 
 
 
-	constructor(private jwtHelperService: JwtHelperService, private http: HttpClient) {}
+	constructor(
+		private jwtHelperService: JwtHelperService,
+		private http: HttpClient) {}
+
+		//token : string = this.jwtHelperService.tokenGetter();
+		public isAuthenticated(): boolean {
+			const token = localStorage.getItem('jwt-token');
+			// Check whether the token is expired and return
+			// true or false
+			return !this.jwtHelperService.isTokenExpired(token);
+		}
 
 	//token : string = this.jwtHelperService.tokenGetter();
-	loggedIn() {
+	// loggedIn() {
+	//
+	// 	if (this.token) {
+	// 		return false;
+	// 	}
+	//
+	// 	const tokenExpired: boolean = this.jwtHelperService.isTokenExpired(this.token);
+	//
+	// 	return !tokenExpired
+	// }
 
 
 
-		if (this.token) {
-			return false;
-		}
-
-		const tokenExpired: boolean = this.jwtHelperService.isTokenExpired(this.token);
-
-		return !tokenExpired
-	}
-
-	decodeJwt() : any {
-		let isLoggedIn : boolean = this.loggedIn();
-
-		if (!isLoggedIn) {
-			return false;
-		}
-		const authObject = this.jwtHelperService.decodeToken(this.token);
-
-		console.log(authObject);
-
-		return authObject;
-	}
+	// decodeJwt() : any {
+	// 	let isLoggedIn : boolean = this.loggedIn();
+	//
+	// 	if (!isLoggedIn) {
+	// 		return false;
+	// 	}
+	// 	const authObject = this.jwtHelperService.decodeToken(this.token);
+	//
+	// 	return authObject;
+	// }
 
 }
