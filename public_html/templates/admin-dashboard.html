@@ -78,6 +78,7 @@
 					<th class="text-center">Report Urgency</th>
 					<th class="text-center">Report Content</th>
 					<th class="text-center">View Report</th>
+					<th class="text-center">Write Comment</th>
 				</tr>
 			</thead>
 
@@ -97,7 +98,12 @@
 					<!-- Report Edit Modal  -->
 
 					<td (click)="setSharedValue(report.reportId);">
-						<button class="btn btn-info my-0 mr-sm-2" data-toggle="modal" data-target="#report-admin-view-modal"><i class="fa fa-pencil-square-o"></i>Edit Report
+						<button class="btn btn-info my-0 mr-sm-2" data-toggle="modal" data-target="#report-admin-view-modal"><i class="fa fa-pencil-square-o"></i> Edit Report
+						</button>
+					</td>
+
+					<td> <!-- (click)="setSharedValue(report.reportId);"-->
+						<button class="btn btn-info my-0 mr-sm-2" data-toggle="modal" data-target="#comment-modal"><i class="fa fa-pencil-square-o"></i> Comment
 						</button>
 					</td>
 				</tr>
