@@ -39,7 +39,7 @@
 
 					<div><!-- Status Dropdown-->
 						<div class="form-group">
-							<label for="reportStatus">Status</label>
+							<label for="reportStatus">Update Status</label>
 							<select id="reportStatus" class="form-control mb-2" name="reportStatus" required formControlName="reportStatus">
 								<option *ngFor="let status of reportStatusSeed" [value]="status">
 									{{status}}
@@ -50,7 +50,7 @@
 
 					<div><!-- Urgency Dropdown-->
 						<div class="form-group">
-							<label for="reportUrgency">Urgency</label>
+							<label for="reportUrgency">Update Urgency</label>
 							<select id="reportUrgency" class="form-control mb-2" name="reportUrgency" required formControlName="reportUrgency">
 								<option *ngFor="let urgency of reportUrgencySeed" [value]="urgency">
 									{{urgency}}
@@ -61,18 +61,18 @@
 
 
 					<div class="row">
-						<div class="col">
+						<div class="col align-content-center">
 							<h2>Date Reported</h2>
 							<div id="adminViewReportDateTime" class="mb-2 contentText">{{report.reportDateTime | date}}</div>
 						</div>
-						<div class="col">
-							<h2>Update Status</h2>
-							<div id="adminViewReportStatus" class="mb-2 contentText">{{report.reportStatus}}</div>
-						</div>
-						<div class="col">
-							<h2>Update Urgency</h2>
-							<div id="adminViewReportUrgency">{{report.reportUrgency}}</div>
-						</div>
+						<!--<div class="col">-->
+							<!--<h2>Update Status</h2>-->
+							<!--<div id="adminViewReportStatus" class="mb-2 contentText">{{report.reportStatus}}</div>-->
+						<!--</div>-->
+						<!--<div class="col">-->
+							<!--<h2>Update Urgency</h2>-->
+							<!--<div id="adminViewReportUrgency">{{report.reportUrgency}}</div>-->
+						<!--</div>-->
 					</div>
 
 					<div><!-- Report Content-->
