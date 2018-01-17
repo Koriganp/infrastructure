@@ -24,7 +24,6 @@ export class ListReportsComponent implements OnInit{
 
 	reports: Report[] = [];
 
-
 	constructor(  private authService : AuthService , private formBuilder: FormBuilder, private categoryService: CategoryService, private reportService: ReportService ) {}
 
 	//life cycling before my eyes
@@ -36,7 +35,7 @@ export class ListReportsComponent implements OnInit{
 		});
 	}
 
-	getReportCategory (): void {
+	getReportCategory(): void {
 		this.categoryService.getCategory(this.report.reportCategoryId)
 	}
 
