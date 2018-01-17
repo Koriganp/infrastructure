@@ -15,6 +15,7 @@ import {Router} from "@angular/router";
 declare let $: any;
 
 @Component({
+	selector: "admin-dashboard",
 	templateUrl: "./templates/admin-dashboard.html",
 })
 
