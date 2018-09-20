@@ -101,7 +101,7 @@ EOF;
 		$swiftMessage = new Swift_Message();
 
 		//attach sender to message
-		$swiftMessage->setFrom(["tpurnell@cnm.edu" => "tpurnell"]);
+		$swiftMessage->setFrom(["kevindewayneatkins@gmail.com" => "katkins"]);
 
 		/**
 		 * attach recipients to the message
